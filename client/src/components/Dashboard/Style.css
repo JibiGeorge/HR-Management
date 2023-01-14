@@ -1,0 +1,60 @@
+.section-body{
+    background: #23272b;
+    position: relative;
+    left: 260px;
+    width: calc(100% - 260px);
+    transition: all 0.5s ease;
+    padding: 30px;
+    min-height: calc(100vh - 60px);
+}
+/* Page header */
+.pageHeader{
+    margin-bottom: 1.87rem;
+}
+.pageHeader .page-title{
+    color: #bbc4cc;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.pageHeader p{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6c757d;
+}
+
+/* Cards */
+.dashboard-card .card{
+    background: #16191c;
+    border: 1px solid #2e3840;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 20%);
+    margin-bottom: 30px;
+}
+.dashboard-card .dash-widget-icon{
+    background: rgba(255, 155, 68, .2);
+    border-radius: 100%;
+    color: #ff9b44;
+    /* display: inline-block; */
+    float: left;
+    font-size: 30px;
+    height: 60px;
+    line-height: 60px;
+    margin-right: 10px;
+    text-align: center;
+    width: 60px;
+}
+.dashboard-card .card-body{
+    font-size: 1rem;
+    color: #bbc4cc;
+}
+.dashboard-card .dash-widget-info{
+    text-align: right;
+}
+.dashboard-card .dash-widget-info h3{
+    font-size: 30px;
+    font-weight: 600;
+}
+.dashboard-card .dash-widget-info span{
+    font-size: 16px;
+    font-weight: 600;
+}

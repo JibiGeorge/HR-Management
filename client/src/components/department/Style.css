@@ -1,0 +1,64 @@
+.pageHeader .add-btn{
+    background-color: #ff9b44;
+    border: 1px solid #ff9b44;
+    border-radius: 50px;
+    color: #fff;
+    float: right;
+    font-weight: 600;
+    min-width: 140px;
+    font-size: 16px;
+}
+.pageHeader .fa-plus{
+    margin-right: 5px;
+}
+
+.pageHeader .modal-content{
+    border-radius: 10px;
+    width: 100%;
+}
+.pageHeader .modal-header{
+    justify-content: center;
+    padding: 30px 30px 0;
+}
+.pageHeader .modal-content .close{
+    background-color: #a0a0a0;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 13px;
+    height: 20px;
+    line-height: 20px;
+    margin: 0;
+    opacity: 1;
+    padding: 0;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+    z-index: 99;
+}
+.pageHeader .modal-content label{
+    color: #333;
+    font-weight: 600;
+}
+.pageHeader .modal-content .form-control{
+    border-color: #e3e3e3;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 15px;
+    height: 44px;
+    background-color: #fff;
+    color: #333;
+}
+.pageHeader .modal-content .submit-section{
+    text-align: center;
+    margin-top: 40px;
+}
+.pageHeader .modal-content .submit-btn{
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    min-width: 200px;
+    padding: 10px 20px;
+    background-color: #ff9b44;
+    border: 1px solid #ff9b44;
+}
