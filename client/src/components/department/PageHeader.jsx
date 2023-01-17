@@ -1,7 +1,23 @@
 import React from 'react'
 import './Style.css'
+import { useFormik } from 'formik'
+import { addDepartment } from '../../helper/Departmenthelper';
+import { useNavigate } from 'react-router-dom';
 
 function PageHeader() {
+  
+  const formik = useFormik({
+    initialValues: {
+      department: ''
+    },
+    onSubmit: async values =>{
+      const res = await addDepartment(values)
+      location.reload();
+      if(res){
+      }
+    }
+  });
+
   return (
     <div className="pageHeader">
       <div className="row">
@@ -27,17 +43,17 @@ function PageHeader() {
                 </button>                
             </div>
             <div class="modal-body">
-              <form action="#">
+              <form onClick={formik.handleSubmit}>
                 <div className="row">
                   <div className="col-sm-12">
                     <div className="form-group">
                       <label>Department Name</label>
-                      <input type="text" className='form-control' />
+                      <input type="text" className='form-control' {...formik.getFieldProps('department')} />
                     </div>
                   </div>
                 </div>
                 <div className="submit-section">
-                  <button className='btn btn-primary submit-btn'>Submit</button>
+                  <button className='btn btn-primary submit-btn' type='submit'>Submit</button>
                 </div>
               </form>
             </div>

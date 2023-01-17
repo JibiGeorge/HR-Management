@@ -40,7 +40,6 @@ export const login = (req, res) => {
 
 export const verifyToken = async (req, res) => {
     let token = req.body.token;
-
     try {
         // eslint-disable-next-line no-undef
         const decoded = await jwt.verify(token, process.env.JWT_TOKEN);
