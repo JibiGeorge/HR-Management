@@ -12,15 +12,18 @@
     margin-right: 5px;
 }
 
-.pageHeader .modal-content{
+.pageHeader .modal-content,
+.modal_body .model-content{
     border-radius: 10px;
     width: 100%;
 }
-.pageHeader .modal-header{
+.pageHeader .modal-header,
+.modal_body .modal-header{
     justify-content: center;
     padding: 30px 30px 0;
 }
-.pageHeader .modal-content .close{
+.pageHeader .modal-content .close,
+.modal_body .modal-content .close{
     background-color: #a0a0a0;
     border-radius: 50%;
     color: #fff;
@@ -36,11 +39,13 @@
     width: 20px;
     z-index: 99;
 }
-.pageHeader .modal-content label{
+.pageHeader .modal-content label,
+.modal_body .modal-content label{
     color: #333;
     font-weight: 600;
 }
-.pageHeader .modal-content .form-control{
+.pageHeader .modal-content .form-control,
+.modal_body .modal-content .form-control{
     border-color: #e3e3e3;
     border-radius: 0;
     box-shadow: none;
@@ -49,11 +54,13 @@
     background-color: #fff;
     color: #333;
 }
-.pageHeader .modal-content .submit-section{
+.pageHeader .modal-content .submit-section,
+.modal_body .modal-content .submit-section{
     text-align: center;
     margin-top: 40px;
 }
-.pageHeader .modal-content .submit-btn{
+.pageHeader .modal-content .submit-btn,
+.modal_body .modal-content .submit-btn{
     border-radius: 50px;
     font-size: 18px;
     font-weight: 600;
@@ -61,4 +68,27 @@
     padding: 10px 20px;
     background-color: #ff9b44;
     border: 1px solid #ff9b44;
+}
+.rdt_TableHeadRow.iSAVrt{
+    color: #fff;
+    background-color: #16191c;
+    font-size: 15px;
+    font-weight: 600;
+}
+.bsUOBL{
+    font-size: 13px;
+}
+.editBtn{
+    font-size: 13px;
+    padding: 3px 10px;
+}
+.deleteBtn{
+    font-size: 13px;
+    padding: 3px 10px;
+}
+.dynHSE {
+    border-radius: 10px 10px 0 0;
+}
+.gKbhqU{
+    border-radius: 0 0 10px 10px;
 }
