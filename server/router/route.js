@@ -6,6 +6,6 @@ const router = express.Router();
 router.post('/login',login);
 router.post('/verifyToken',verifyToken);
 router.post('/addDepartment',addDepartment);
-router.get('/getDepartment',getDepartments)
+router.get('/getAllDepartments',getDepartments)
 
 export default router;

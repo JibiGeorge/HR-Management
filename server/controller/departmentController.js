@@ -23,7 +23,7 @@ export const addDepartment = async (req, res)=>{
 export const getDepartments = async (req, res)=>{
     try {
         const deptList = await departmentModel.find();
-        console.log(deptList);
+        res.status(200).json(deptList);
     } catch (error) {
         console.log(error.message);        
     }

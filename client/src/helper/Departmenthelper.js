@@ -10,3 +10,12 @@ export async function addDepartment({department}){
         return {error: "Not Added"}        
     }
 }
+
+export async function getAllDepartments(){
+    try {
+        const {data} = await axios.get('/api/getAllDepartments')        
+        return data       
+    } catch (error) {
+        console.log("Server Error");        
+    }
+}
