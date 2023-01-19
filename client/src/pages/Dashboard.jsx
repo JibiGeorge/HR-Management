@@ -15,10 +15,8 @@ function Dashboard() {
       const res = await verifyToken(token);
       console.log(res);
       if(res.user){
-        console.log("done");
         navigate('/dashboard');
       }else{
-        console.log("failed");
         navigate('/')
       }
     })();

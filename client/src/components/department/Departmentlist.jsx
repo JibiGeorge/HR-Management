@@ -3,25 +3,28 @@ import { useState } from 'react'
 import { deleteDepartment, getAllDepartments, updateDepartment } from '../../helper/Departmenthelper.js'
 import DataTable from 'react-data-table-component';
 import toast, { Toaster } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { showLoading, hideLoading } from '../../redux/features/alertSlice'
 
 function Departmentlist() {
     const [department, setDepartment] = useState([])
     const [search, setSearch] = useState('')
     const [filteredDepartments, setfilteredDepartments] = useState([]);
-    const [loading, setLoading] = useState(false)
     const [updatedeptValue, setUpdateDeptValue] = useState('');
+    const dispatch = useDispatch();
+    const { loading } = useSelector(state => state.alerts);
 
     // Geting all Department Details from Database
     useEffect(() => {
         try {
             (async () => {
-                setLoading(true)
+                dispatch(showLoading())
                 const depData = await getAllDepartments();
                 setTimeout(() => {
                     setDepartment(depData)
                     setfilteredDepartments(depData)
-                    setLoading(false)
-                }, 1000)
+                    dispatch(hideLoading())
+                }, 500)
             })();
         } catch (error) {
             console.log("Server Error...!");
@@ -44,32 +47,38 @@ function Departmentlist() {
 
     // Handle Delete Department
     const handleDelete = async (depId) => {
-        const result = await deleteDepartment(depId);
-        if (result.deleted) {
-            toast.success('Deleted Successfully...!', {
-                style: {
-                    border: '1px solid #713200',
-                    padding: '16px',
-                    color: '#713200',
-                },
-                iconTheme: {
-                    primary: '#713200',
-                    secondary: '#FFFAEE',
-                },
-            });
-            location.reload()
-        } else {
-            toast.error('Internal Server Error...!', {
-                style: {
-                    border: '1px solid #713200',
-                    padding: '16px',
-                    color: '#713200',
-                },
-                iconTheme: {
-                    primary: '#713200',
-                    secondary: '#FFFAEE',
-                },
-            });
+        try {
+            const result = await deleteDepartment(depId);
+            setTimeout(()=>{
+                if (result.deleted) {
+                    toast.success('Deleted Successfully...!', {
+                        style: {
+                            border: '1px solid #713200',
+                            padding: '16px',
+                            color: '#713200',
+                        },
+                        iconTheme: {
+                            primary: '#713200',
+                            secondary: '#FFFAEE',
+                        },
+                    });
+                    location.reload()
+                } else {
+                    toast.error('Internal Server Error...!', {
+                        style: {
+                            border: '1px solid #713200',
+                            padding: '16px',
+                            color: '#713200',
+                        },
+                        iconTheme: {
+                            primary: '#713200',
+                            secondary: '#FFFAEE',
+                        },
+                    });
+                }
+            },2000)
+        } catch (error) {
+            console.log(error.message);
         }
     }
 
@@ -80,11 +89,11 @@ function Departmentlist() {
         document.getElementById('deptUpdateID').value = depId
     }
 
-    const handleDeptUpdate = async () =>{
+    const handleDeptUpdate = async () => {
         try {
             let deptID = document.getElementById('deptUpdateID').value;
-            const res = await updateDepartment(deptID,updatedeptValue)
-            if(res.updated){
+            const res = await updateDepartment(deptID, updatedeptValue)
+            if (res.updated) {
                 toast.success(res.message, {
                     style: {
                         border: '1px solid #713200',
@@ -96,10 +105,10 @@ function Departmentlist() {
                         secondary: '#FFFAEE',
                     },
                 });
-                setTimeout(()=>{
+                setTimeout(() => {
                     location.reload();
-                },1000)
-            }else{
+                }, 1000)
+            } else {
                 toast.error(res.message, {
                     style: {
                         border: '1px solid #713200',
@@ -113,7 +122,7 @@ function Departmentlist() {
                 });
             }
         } catch (error) {
-            
+
         }
     }
 
@@ -123,7 +132,7 @@ function Departmentlist() {
         {
             name: '#',
             selector: 'serial'
-          },
+        },
         {
             name: "Department",
             selector: row => row.department,
@@ -166,7 +175,7 @@ function Departmentlist() {
                             className='w-25 form-control'
                             value={search}
                             onChange={(e) => setSearch(e.target.value)} />,
-                            <button className='btn btn-sm btn-info ms-3'>Export</button>
+                        <button className='btn btn-sm btn-info ms-3'>Export</button>
                         ]
                     }
                     subHeaderAlign="left"
@@ -188,8 +197,8 @@ function Departmentlist() {
                                     <div className="col-sm-12">
                                         <div className="form-group">
                                             <label>Department Name</label>
-                                            <input type="text" className='form-control' id='deptUpdateValue' value={updatedeptValue} onChange={e=> setUpdateDeptValue(e.target.value)} />
-                                            <input type="text" className='form-control' id='deptUpdateID' style={{display:'none'}} />
+                                            <input type="text" className='form-control' id='deptUpdateValue' value={updatedeptValue} onChange={e => setUpdateDeptValue(e.target.value)} />
+                                            <input type="text" className='form-control' id='deptUpdateID' style={{ display: 'none' }} />
                                         </div>
                                     </div>
                                 </div>
