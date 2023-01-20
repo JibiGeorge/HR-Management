@@ -4,7 +4,7 @@ import { deleteDepartment, getAllDepartments, updateDepartment } from '../../hel
 import DataTable from 'react-data-table-component';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { showLoading, hideLoading } from '../../redux/features/alertSlice'
+import { showLoading, hideLoading } from '../../redux/features/alertSlice';
 
 function Departmentlist() {
     const [department, setDepartment] = useState([])
@@ -43,22 +43,20 @@ function Departmentlist() {
         }
     }, [search]);
 
-
-
     // Handle Delete Department
     const handleDelete = async (depId) => {
         try {
             const result = await deleteDepartment(depId);
-            setTimeout(()=>{
+            setTimeout(() => {
                 if (result.deleted) {
                     toast.success('Deleted Successfully...!', {
                         style: {
                             border: '1px solid #713200',
                             padding: '16px',
-                            color: '#713200',
+                            color: '#25ab11',
                         },
                         iconTheme: {
-                            primary: '#713200',
+                            primary: '#25ab11',
                             secondary: '#FFFAEE',
                         },
                     });
@@ -76,15 +74,24 @@ function Departmentlist() {
                         },
                     });
                 }
-            },2000)
+            }, 2000)
         } catch (error) {
-            console.log(error.message);
+            toast.error('Not Deleted Please Try Again....!', {
+                style: {
+                    border: '1px solid #713200',
+                    padding: '16px',
+                    color: '#713200',
+                },
+                iconTheme: {
+                    primary: '#713200',
+                    secondary: '#FFFAEE',
+                },
+            });
         }
     }
 
     // Handle Edit Department
     const handleEdit = (depId, department) => {
-        console.log('vcdv', depId, department)
         document.getElementById('deptUpdateValue').value = department
         document.getElementById('deptUpdateID').value = depId
     }
@@ -98,10 +105,10 @@ function Departmentlist() {
                     style: {
                         border: '1px solid #713200',
                         padding: '16px',
-                        color: '#713200',
+                        color: '#25ab11',
                     },
                     iconTheme: {
-                        primary: '#713200',
+                        primary: '#25ab11',
                         secondary: '#FFFAEE',
                     },
                 });
@@ -122,7 +129,17 @@ function Departmentlist() {
                 });
             }
         } catch (error) {
-
+            toast.error('Not Updated Please Try Again....!', {
+                style: {
+                    border: '1px solid #713200',
+                    padding: '16px',
+                    color: '#713200',
+                },
+                iconTheme: {
+                    primary: '#713200',
+                    secondary: '#FFFAEE',
+                },
+            });
         }
     }
 

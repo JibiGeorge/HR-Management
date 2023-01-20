@@ -13,11 +13,11 @@ function Sidebar() {
                 <li>
                     <Link>
                         <i class="bx bx-grid-alt"></i>
-                        <span class="link_name">Dashboard</span>
+                        <span class="link_name"><Link to='/dashboard' class="link_name">Dashboard</Link></span>
                     </Link>
                     <ul class="sub-menu">
                         <li>
-                            <Link className='link_name'>Dashboard</Link>
+                            <Link to='/dashboard' className='link_name'>Dashboard</Link>
                         </li>
                     </ul>
                 </li>
@@ -34,7 +34,7 @@ function Sidebar() {
                             <Link class="link_name" >Organization</Link>
                         </li>
                         <li><Link to='/department'>Department</Link></li>
-                        <li><Link>Designation</Link></li>
+                        <li><Link to='/designation'>Designation</Link></li>
                     </ul>
                 </li>
                 <li>

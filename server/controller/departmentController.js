@@ -6,9 +6,7 @@ export const addDepartment = async (req, res)=>{
         const exist = await departmentModel.findOne({department:department});
         if(exist){
             res.json({success:false,message:"Already Exist"})
-            console.log("Already Exist");
         }else{
-            console.log("Not Exist");
             const dept = new departmentModel({
                 department
             })

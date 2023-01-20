@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css'
 import {useFormik} from 'formik'
 import {loginUser} from '../../helper/Userhelper.js'
+import { useDispatch } from 'react-redux';
+import {setAdminDetails} from '../../redux/features/adminLogin'
 
 function Login() {
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -16,6 +20,7 @@ function Login() {
       onSubmit: async values =>{
         const res = await loginUser(values)
         console.log("res",res);
+        dispatch(setAdminDetails(res))
         if(res.loggedIn){
           navigate('/dashboard');
         }else{

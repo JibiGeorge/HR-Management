@@ -19,10 +19,10 @@ function PageHeader() {
             style: {
               border: '1px solid #713200',
               padding: '16px',
-              color: '#713200',
+              color: '#25ab11',
             },
             iconTheme: {
-              primary: '#713200',
+              primary: '#25ab11',
               secondary: '#FFFAEE',
             },
           });
@@ -62,7 +62,7 @@ function PageHeader() {
       <div className="row">
         <div className="col-sm-9">
           <h3 className='page-title'>Department</h3>
-          <p>Dashboard / Department</p>
+          <p>Dashboard / Organization / Department</p>
         </div>
         <div className="col-sm-3">
           <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">

@@ -5,7 +5,6 @@ axios.defaults.baseURL = "http://localhost:8080"
 export async function addDepartment({department}){
     try {
         const {data} = await axios.post('/api/addDepartment',{department})
-        console.log("data",data);
         return data       
     } catch (error) {
         return {error: "Not Added"}        
@@ -33,7 +32,6 @@ export async function deleteDepartment(id){
 export async function updateDepartment(id,value){
     try {
         const response = await axios.put('/api/updateDepartment?id='+id+'&&text='+value) 
-        console.log(response); 
         return response.data;      
     } catch (error) {
         console.log(error.message);        

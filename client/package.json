@@ -18,7 +18,8 @@
     "react-hot-toast": "^2.4.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.2",
-    "react-spinners": "^0.13.8"
+    "react-spinners": "^0.13.8",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
