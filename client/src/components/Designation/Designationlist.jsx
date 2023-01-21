@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
 import { deleteDesignation, getAllDesignation, updateDesignation } from '../../helper/Designationhelper';
 import { getAllDepartments } from '../../helper/Departmenthelper';
+import { deleteDesigntionData, setDesignatonData } from '../../redux/features/designationSlice';
 
 function Designationlist() {
     const dispatch = useDispatch();
@@ -13,30 +14,30 @@ function Designationlist() {
     const [department, setDepartment] = useState([])
 
     const { loading } = useSelector(state => state.alerts);
+    const {designationDetails} = useSelector(state => state.designation)
 
     useEffect(() => {
         (async () => {
             try {
                 dispatch(showLoading());
                 const data = await getAllDesignation()
-                setTimeout(() => {
-                    if (data.success) {
+                if (data.success) {
+                    dispatch(setDesignatonData(data));
                         setDesignation(data.data);
                         setFilteredDesignation(data.data);
                         dispatch(hideLoading());
                     } else {
                         console.log("fasle");
                     }
-                }, 500)
                 console.log('filter', filteredDesignation);
 
             } catch (error) {
-                console.log(error.message);
+                console.log('====>',error.message);
             }
         })();
     }, []);
 
-    filteredDesignation.forEach((photo, index) => { photo.serial = index + 1; });
+    // designationDetails.forEach((photo, index) => { photo.serial = index + 1; });
     //   Data Tables
     const column = [
         {
@@ -64,8 +65,8 @@ function Designationlist() {
     const handleDelete = async (id) => {
         try {
             const result = await deleteDesignation(id);
-            console.log(result);
             if (result.data.success) {
+                dispatch(deleteDesigntionData(id))
                 toast.success(result.data.message, {
                     style: {
                         border: '1px solid #713200',
@@ -77,7 +78,7 @@ function Designationlist() {
                         secondary: '#FFFAEE',
                     },
                 });
-                location.reload();
+                // location.reload();
             } else {
                 toast.error('Internal Server Error....!', {
                     style: {
@@ -162,7 +163,7 @@ function Designationlist() {
                 <DataTable
                     // title="Department List"
                     columns={column}
-                    data={filteredDesignation}
+                    data={designationDetails}
                     pagination
                     fixedHeader
                     fixedHeaderScrollHeight='300px'

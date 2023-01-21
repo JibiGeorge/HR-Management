@@ -5,14 +5,15 @@ import DataTable from 'react-data-table-component';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { showLoading, hideLoading } from '../../redux/features/alertSlice';
+import { setDepartmentData, deleteDepartmentData } from '../../redux/features/departmentSlice.js';
 
 function Departmentlist() {
-    const [department, setDepartment] = useState([])
     const [search, setSearch] = useState('')
     const [filteredDepartments, setfilteredDepartments] = useState([]);
     const [updatedeptValue, setUpdateDeptValue] = useState('');
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.alerts);
+    const { departmentDetails } = useSelector(state => state.department)
 
     // Geting all Department Details from Database
     useEffect(() => {
@@ -20,11 +21,8 @@ function Departmentlist() {
             (async () => {
                 dispatch(showLoading())
                 const depData = await getAllDepartments();
-                setTimeout(() => {
-                    setDepartment(depData)
-                    setfilteredDepartments(depData)
-                    dispatch(hideLoading())
-                }, 500)
+                dispatch(setDepartmentData(depData))
+                dispatch(hideLoading())
             })();
         } catch (error) {
             console.log("Server Error...!");
@@ -47,8 +45,8 @@ function Departmentlist() {
     const handleDelete = async (depId) => {
         try {
             const result = await deleteDepartment(depId);
-            setTimeout(() => {
-                if (result.deleted) {
+            if (result.deleted) {
+                dispatch(deleteDepartmentData(depId))
                     toast.success('Deleted Successfully...!', {
                         style: {
                             border: '1px solid #713200',
@@ -60,7 +58,6 @@ function Departmentlist() {
                             secondary: '#FFFAEE',
                         },
                     });
-                    location.reload()
                 } else {
                     toast.error('Internal Server Error...!', {
                         style: {
@@ -74,7 +71,6 @@ function Departmentlist() {
                         },
                     });
                 }
-            }, 2000)
         } catch (error) {
             toast.error('Not Deleted Please Try Again....!', {
                 style: {
@@ -143,7 +139,7 @@ function Departmentlist() {
         }
     }
 
-    filteredDepartments.forEach((photo, index) => { photo.serial = index + 1; });
+    // departmentDetails.forEach((photo, index) => { photo.serial = index + 1; });
     // Data Table Customization
     const column = [
         {
@@ -177,7 +173,7 @@ function Departmentlist() {
                 <DataTable
                     // title="Department List"
                     columns={column}
-                    data={filteredDepartments}
+                    data={departmentDetails}
                     pagination
                     fixedHeader
                     fixedHeaderScrollHeight='300px'

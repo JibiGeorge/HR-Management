@@ -5,6 +5,8 @@ import { alertSlice } from './features/alertSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 import { combineReducers } from '@reduxjs/toolkit';
+import { departmentSlice } from './features/departmentSlice';
+import { designationSlice } from './features/designationSlice';
 
 const persistConfig = {
     key: 'root',
@@ -14,7 +16,9 @@ const persistConfig = {
 
 const reducer = combineReducers({
     alerts: alertSlice.reducer,
-    admin: adminSlice.reducer
+    admin: adminSlice.reducer,
+    department: departmentSlice.reducer,
+    designation: designationSlice.reducer
 });
 
 const persistReduhcer = persistReducer(persistConfig, reducer);
