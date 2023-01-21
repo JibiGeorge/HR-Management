@@ -49,7 +49,7 @@ function Sidebar() {
                         <li>
                             <Link class="link_name" >Employees</Link>
                         </li>
-                        <li><Link to=''>Employees</Link></li>
+                        <li><Link to='/employee'>Employees</Link></li>
                         <li><Link to=''>Disciplinary</Link></li>
                         <li><Link>Inactive User</Link></li>
                     </ul>

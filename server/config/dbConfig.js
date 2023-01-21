@@ -2,7 +2,7 @@ import { connect } from 'mongoose';
 
 const db = async()=>{
     try {
-        const connection = await connect('mongodb://0.0.0.0:27017/HRManagement', {
+        const connection = await connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
             // useFindAndModify: false,
             useUnifiedTopology: true
