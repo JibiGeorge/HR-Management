@@ -9,22 +9,22 @@ import { verifyToken } from '../helper/Userhelper'
 function Department() {
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    (async()=>{
+  useEffect(() => {
+    (async () => {
       const token = localStorage.getItem('usertoken');
       const res = await verifyToken(token);
-      if(res.user){
+      if (res.user) {
         navigate('/department');
-      }else{
+      } else {
         navigate('/')
       }
     })();
-  },[])
+  }, [])
   return (
     <>
-    <Sidebar/>
-    <Header/>
-    <Content/>
+      <Sidebar />
+      <Header />
+      <Content />
     </>
   )
 }

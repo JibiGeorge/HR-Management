@@ -7,6 +7,7 @@ import { persistReducer } from 'redux-persist';
 import { combineReducers } from '@reduxjs/toolkit';
 import { departmentSlice } from './features/departmentSlice';
 import { designationSlice } from './features/designationSlice';
+import { employeeSlice } from './features/employee';
 
 const persistConfig = {
     key: 'root',
@@ -18,7 +19,8 @@ const reducer = combineReducers({
     alerts: alertSlice.reducer,
     admin: adminSlice.reducer,
     department: departmentSlice.reducer,
-    designation: designationSlice.reducer
+    designation: designationSlice.reducer,
+    employees: employeeSlice.reducer
 });
 
 const persistReduhcer = persistReducer(persistConfig, reducer);

@@ -14,7 +14,7 @@ function Designationlist() {
     const [department, setDepartment] = useState([])
 
     const { loading } = useSelector(state => state.alerts);
-    const {designationDetails} = useSelector(state => state.designation)
+    const { designationDetails } = useSelector(state => state.designation)
 
     useEffect(() => {
         (async () => {
@@ -23,16 +23,34 @@ function Designationlist() {
                 const data = await getAllDesignation()
                 if (data.success) {
                     dispatch(setDesignatonData(data));
-                        setDesignation(data.data);
-                        setFilteredDesignation(data.data);
-                        dispatch(hideLoading());
-                    } else {
-                        console.log("fasle");
-                    }
-                console.log('filter', filteredDesignation);
-
+                    setDesignation(data.data);
+                    setFilteredDesignation(data.data);
+                    dispatch(hideLoading());
+                } else {
+                    toast.error('Internal Server Error....!', {
+                        style: {
+                            border: '1px solid #713200',
+                            padding: '16px',
+                            color: '#713200',
+                        },
+                        iconTheme: {
+                            primary: '#713200',
+                            secondary: '#FFFAEE',
+                        },
+                    });
+                }
             } catch (error) {
-                console.log('====>',error.message);
+                toast.error('Internal Server Error....!', {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#713200',
+                    },
+                    iconTheme: {
+                        primary: '#713200',
+                        secondary: '#FFFAEE',
+                    },
+                });
             }
         })();
     }, []);
@@ -78,7 +96,6 @@ function Designationlist() {
                         secondary: '#FFFAEE',
                     },
                 });
-                // location.reload();
             } else {
                 toast.error('Internal Server Error....!', {
                     style: {
@@ -115,27 +132,46 @@ function Designationlist() {
 
     useEffect(() => {
         try {
-          (async () => {
-            try {
-              const departmentData = await getAllDepartments();
-              setDepartment(departmentData)
-            } catch (error) {
-              console.log(error.message);
-            }
-          })();
+            (async () => {
+                try {
+                    const departmentData = await getAllDepartments();
+                    setDepartment(departmentData)
+                } catch (error) {
+                    toast.error('Internal Server Error....!', {
+                        style: {
+                            border: '1px solid #713200',
+                            padding: '16px',
+                            color: '#713200',
+                        },
+                        iconTheme: {
+                            primary: '#713200',
+                            secondary: '#FFFAEE',
+                        },
+                    });
+                }
+            })();
         } catch (error) {
-          console.log('====>', error.message);
+            toast.error('Internal Server Error....!', {
+                style: {
+                    border: '1px solid #713200',
+                    padding: '16px',
+                    color: '#713200',
+                },
+                iconTheme: {
+                    primary: '#713200',
+                    secondary: '#FFFAEE',
+                },
+            });
         }
-      }, []);
+    }, []);
 
-      const handleUpdate = async (e)=>{
+    const handleUpdate = async (e) => {
         e.preventDefault();
         // try {
         //     (async()=>{
         //         // const result = await updateDesignation(updatingData);
         //     })();
         // } catch (error) {
-        //     console.log(error.message);
         //     toast.error('Not Updated....!', {
         //         style: {
         //             border: '1px solid #713200',
@@ -154,7 +190,8 @@ function Designationlist() {
             <Toaster
                 position="top-right"
                 reverseOrder={false}
-            />{loading && <div class="d-flex justify-content-center">
+            />
+            {loading && <div class="d-flex justify-content-center">
                 <div class="spinner-border text-primary" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
@@ -200,9 +237,9 @@ function Designationlist() {
                                             <label>Department Name*</label>
                                             <select className='form-select' aria-label='Default select example'>
                                                 <option value="" selected>Select A Department</option>
-                                                {department.map( data => {
-                                                return(
-                                                    <option value={data._id}>{data.department}</option>
+                                                {department.map(data => {
+                                                    return (
+                                                        <option value={data._id}>{data.department}</option>
                                                     )
                                                 })
                                                 }
@@ -212,8 +249,8 @@ function Designationlist() {
                                     <div className="col-sm-12">
                                         <div className="form-group">
                                             <label>Designation Name</label>
-                                            <input type="text" className='form-control' id='desiUpdateValue'/>
-                                            <input type="text" className='form-control' id='desiUpdateID' style={{ display: 'none' }}/>
+                                            <input type="text" className='form-control' id='desiUpdateValue' />
+                                            <input type="text" className='form-control' id='desiUpdateID' style={{ display: 'none' }} />
                                         </div>
                                     </div>
                                 </div>

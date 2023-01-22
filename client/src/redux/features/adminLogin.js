@@ -6,10 +6,10 @@ export const adminSlice = createSlice({
         adminDetails: [],
     },
     reducers: {
-        setAdminDetails: (state,response) => {
+        setAdminDetails: (state, response) => {
             state.adminDetails = response.payload;
         }
     }
 })
 
-export const {setAdminDetails} = adminSlice.actions;
+export const { setAdminDetails } = adminSlice.actions;

@@ -25,7 +25,6 @@ function Departmentlist() {
                 dispatch(hideLoading())
             })();
         } catch (error) {
-            console.log("Server Error...!");
         }
     }, []);
 
@@ -37,7 +36,17 @@ function Departmentlist() {
             })
             setfilteredDepartments(result)
         } catch (error) {
-            console.log("Server Error", error.message);
+            toast.error('Cant Filter. Something Wrong....!', {
+                style: {
+                    border: '1px solid #713200',
+                    padding: '16px',
+                    color: '#713200',
+                },
+                iconTheme: {
+                    primary: '#713200',
+                    secondary: '#FFFAEE',
+                },
+            });
         }
     }, [search]);
 
@@ -47,30 +56,30 @@ function Departmentlist() {
             const result = await deleteDepartment(depId);
             if (result.deleted) {
                 dispatch(deleteDepartmentData(depId))
-                    toast.success('Deleted Successfully...!', {
-                        style: {
-                            border: '1px solid #713200',
-                            padding: '16px',
-                            color: '#25ab11',
-                        },
-                        iconTheme: {
-                            primary: '#25ab11',
-                            secondary: '#FFFAEE',
-                        },
-                    });
-                } else {
-                    toast.error('Internal Server Error...!', {
-                        style: {
-                            border: '1px solid #713200',
-                            padding: '16px',
-                            color: '#713200',
-                        },
-                        iconTheme: {
-                            primary: '#713200',
-                            secondary: '#FFFAEE',
-                        },
-                    });
-                }
+                toast.success('Deleted Successfully...!', {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#25ab11',
+                    },
+                    iconTheme: {
+                        primary: '#25ab11',
+                        secondary: '#FFFAEE',
+                    },
+                });
+            } else {
+                toast.error('Internal Server Error...!', {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#713200',
+                    },
+                    iconTheme: {
+                        primary: '#713200',
+                        secondary: '#FFFAEE',
+                    },
+                });
+            }
         } catch (error) {
             toast.error('Not Deleted Please Try Again....!', {
                 style: {

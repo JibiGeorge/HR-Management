@@ -5,8 +5,8 @@ import PageHeader from './Header'
 function Designation() {
   return (
     <div class="section-body">
-        <PageHeader/>
-        <Designationlist/>
+      <PageHeader />
+      <Designationlist />
     </div>
   )
 }

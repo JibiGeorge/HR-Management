@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import { getAllDepartments } from '../../helper/Departmenthelper';
 import { addDesignation } from '../../helper/Designationhelper';
 
@@ -13,10 +14,10 @@ function PageHeader() {
                     <p>Dashboard / Employees / Employees</p>
                 </div>
                 <div className="col-sm-3">
-                    <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <Link to='/addEmployee' class="btn btn-primary add-btn">
                         <i className="fa fa-plus"></i>
                         Add Employee
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

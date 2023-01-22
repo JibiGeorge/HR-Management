@@ -1,16 +1,16 @@
 import React from 'react'
+import AddEmployee from '../components/AddEmployee/AddEmployee'
 import Header from '../components/header/Header'
 import Sidebar from '../Components/Sidebar/Sidebar'
-import Employe from '../components/Employee/Employee'
 
-function Employee() {
+function Employeeadd() {
   return (
     <>
       <Sidebar />
       <Header />
-      <Employe />
+      <AddEmployee />
     </>
   )
 }
 
-export default Employee
+export default Employeeadd

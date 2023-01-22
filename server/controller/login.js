@@ -34,7 +34,7 @@ export const login = (req, res) => {
                 return res.status(404).send({ error: 'Username not found' });
             });
     } catch (error) {
-        console.log(error.message);
+        res.status(401).json({ message: "Internal Server Error...!" });
     }
 };
 
@@ -47,13 +47,13 @@ export const verifyToken = async (req, res) => {
         const username = decoded.username;
         userCredential.findOne({ $and: [{ _id: userId }, { username }] })
             .then((user) => {
-                if(user){
-                    return res.status(200).json({user:true});
-                }else{
-                    return res.status(400).json({user:false});
+                if (user) {
+                    return res.status(200).json({ user: true });
+                } else {
+                    return res.status(400).json({ user: false });
                 }
             });
     } catch (error) {
-        return res.status(401).json({user:false})
+        return res.status(401).json({ user: false })
     }
 };

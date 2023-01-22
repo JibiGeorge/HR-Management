@@ -5,8 +5,8 @@ import PageHeader from './PageHeader'
 function Body() {
   return (
     <div class="section-body">
-      <PageHeader/>
-        <Cards/>
+      <PageHeader />
+      <Cards />
     </div>
   )
 }

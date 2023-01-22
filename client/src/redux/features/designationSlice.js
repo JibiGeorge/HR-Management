@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const designationSlice = createSlice({
     name: 'designation',
@@ -6,14 +6,13 @@ export const designationSlice = createSlice({
         designationDetails: []
     },
     reducers: {
-        setDesignatonData : (state, data)=>{
+        setDesignatonData: (state, data) => {
             state.designationDetails = data.payload.data
-            console.log('===>',state.designationDetails);
         },
-        deleteDesigntionData: (state, id)=>{
+        deleteDesigntionData: (state, id) => {
             state.designationDetails = state.designationDetails.filter(data => data._id !== id.payload)
         }
     }
 })
 
-export const {setDesignatonData, deleteDesigntionData} = designationSlice.actions
+export const { setDesignatonData, deleteDesigntionData } = designationSlice.actions

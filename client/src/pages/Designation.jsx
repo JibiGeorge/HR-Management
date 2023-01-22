@@ -6,9 +6,9 @@ import Sidebar from '../components/sidebar/Sidebar'
 function Designation() {
   return (
     <>
-    <Sidebar/>
-    <Header/>
-    <Content/>
+      <Sidebar />
+      <Header />
+      <Content />
     </>
   )
 }

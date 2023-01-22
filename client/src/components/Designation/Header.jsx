@@ -20,11 +20,9 @@ function PageHeader() {
           const departmentData = await getAllDepartments();
           setDepartment(departmentData)
         } catch (error) {
-          console.log(error.message);
         }
       })();
     } catch (error) {
-      console.log('====>', error.message);
     }
   }, [])
 
@@ -72,7 +70,6 @@ function PageHeader() {
           secondary: '#FFFAEE',
         },
       });
-
     }
   }
 

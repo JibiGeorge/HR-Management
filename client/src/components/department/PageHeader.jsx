@@ -3,43 +3,43 @@ import './Style.css'
 import { useFormik } from 'formik'
 import { addDepartment } from '../../helper/Departmenthelper';
 import { useNavigate } from 'react-router-dom';
-import toast, {Toaster} from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 function PageHeader() {
 
   const [department, setDepartment] = useState('');
 
 
-  const handleDepartmentSubmit = async (e)=>{
+  const handleDepartmentSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await addDepartment({department})
-        if(res.success){
-          toast.success('Successfully Created...!', {
-            style: {
-              border: '1px solid #713200',
-              padding: '16px',
-              color: '#25ab11',
-            },
-            iconTheme: {
-              primary: '#25ab11',
-              secondary: '#FFFAEE',
-            },
-          });
-          location.reload();
-        }else{
-          toast.error(res.message, {
-            style: {
-              border: '1px solid #713200',
-              padding: '16px',
-              color: '#713200',
-            },
-            iconTheme: {
-              primary: '#713200',
-              secondary: '#FFFAEE',
-            },
-          });
-        }
+      const res = await addDepartment({ department })
+      if (res.success) {
+        toast.success('Successfully Created...!', {
+          style: {
+            border: '1px solid #713200',
+            padding: '16px',
+            color: '#25ab11',
+          },
+          iconTheme: {
+            primary: '#25ab11',
+            secondary: '#FFFAEE',
+          },
+        });
+        location.reload();
+      } else {
+        toast.error(res.message, {
+          style: {
+            border: '1px solid #713200',
+            padding: '16px',
+            color: '#713200',
+          },
+          iconTheme: {
+            primary: '#713200',
+            secondary: '#FFFAEE',
+          },
+        });
+      }
     } catch (error) {
       toast.error(error.message, {
         style: {
@@ -54,11 +54,11 @@ function PageHeader() {
       });
     }
   }
-  
+
 
   return (
     <div className="pageHeader">
-      <div><Toaster position="top-right" reverseOrder={false}/></div>
+      <div><Toaster position="top-right" reverseOrder={false} /></div>
       <div className="row">
         <div className="col-sm-9">
           <h3 className='page-title'>Department</h3>
@@ -79,7 +79,7 @@ function PageHeader() {
               <h5 className='modal-title'>Add Department</h5>
               <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">
                 <span>x</span>
-                </button>                
+              </button>
             </div>
             <div class="modal-body">
               <form action="#">
@@ -87,12 +87,12 @@ function PageHeader() {
                   <div className="col-sm-12">
                     <div className="form-group">
                       <label>Department Name</label>
-                      <input type="text" className='form-control' value={department} onChange={e=> setDepartment(e.target.value)} />
+                      <input type="text" className='form-control' value={department} onChange={e => setDepartment(e.target.value)} />
                     </div>
                   </div>
                 </div>
                 <div className="submit-section">
-                  <button className='btn btn-primary submit-btn' type='submit'  onClick={handleDepartmentSubmit}>Submit</button>
+                  <button className='btn btn-primary submit-btn' type='submit' onClick={handleDepartmentSubmit}>Submit</button>
                 </div>
               </form>
             </div>

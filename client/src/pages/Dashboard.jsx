@@ -8,24 +8,22 @@ import { verifyToken } from '../helper/Userhelper'
 
 function Dashboard() {
   const navigate = useNavigate();
-  useEffect(()=>{
-    (async ()=>{
+  useEffect(() => {
+    (async () => {
       const token = localStorage.getItem('usertoken');
-      console.log(token);
       const res = await verifyToken(token);
-      console.log(res);
-      if(res.user){
+      if (res.user) {
         navigate('/dashboard');
-      }else{
+      } else {
         navigate('/')
       }
     })();
-  },[])
+  }, [])
   return (
     <>
-    <Sidebar/>
-    <Header/>
-    <Body/>
+      <Sidebar />
+      <Header />
+      <Body />
     </>
   )
 }

@@ -4,7 +4,7 @@ const app = express();
 import morgan from 'morgan';
 import cors from 'cors';
 import db from './config/dbConfig.js';
-import dotenv from'dotenv';
+import dotenv from 'dotenv';
 import route from './router/route.js';
 
 
@@ -15,11 +15,11 @@ dotenv.config();
 app.use(express.json());
 app.disable('x-powered-by'); //Less hackers know about our stack
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.send('Hello');
 });
 
-app.use('/api',route);
+app.use('/api', route);
 
 db().then(() => {
     try {
@@ -31,5 +31,5 @@ db().then(() => {
         console.log('Cannot connect to the Server');
     }
 }).catch(error => {
-    console.log('Invalid Database Connection',error.message);
+    console.log('Invalid Database Connection', error.message);
 });

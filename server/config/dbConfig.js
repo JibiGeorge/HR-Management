@@ -1,6 +1,6 @@
 import { connect } from 'mongoose';
 
-const db = async()=>{
+const db = async () => {
     try {
         const connection = await connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
@@ -10,7 +10,7 @@ const db = async()=>{
         console.log(`MongoDb Connected Successfully : ${connection.connection.host} `);
 
     } catch (error) {
-        console.log('==========>',error);
+        console.log('==========>', error);
     }
 };
 

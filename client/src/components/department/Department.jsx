@@ -5,8 +5,8 @@ import PageHeader from './PageHeader'
 function Department() {
   return (
     <div class="section-body">
-      <PageHeader/>
-      <Departmentlist/>
+      <PageHeader />
+      <Departmentlist />
     </div>
   )
 }

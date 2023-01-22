@@ -11,29 +11,28 @@ export async function addDesignation({ designationData }) {
     }
 }
 
-export async function getAllDesignation(){
+export async function getAllDesignation() {
     try {
-        const {data} = await axios.get('/api/getAllDesignation')
+        const { data } = await axios.get('/api/getAllDesignation')
         return data;
     } catch (error) {
-        return {error: "Internal Server Error",error:error.message}     
+        return { error: "Internal Server Error", error: error.message }
     }
 }
 
-export async function deleteDesignation(id){
+export async function deleteDesignation(id) {
     try {
-        const response = await axios.delete('/api/deleteDesignation/?designationId='+id);
+        const response = await axios.delete('/api/deleteDesignation/?designationId=' + id);
         return response;
     } catch (error) {
-        
+
     }
 }
 
-export async function updateDesignation(data){
+export async function updateDesignation(data) {
     try {
-        console.log(data);
         const response = await axios.put('/api/updateDesignation/')
     } catch (error) {
-        
+
     }
 }

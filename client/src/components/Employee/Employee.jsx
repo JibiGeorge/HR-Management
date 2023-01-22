@@ -7,9 +7,9 @@ import Cards from './Cards'
 function Employee() {
   return (
     <div class="section-body employee">
-        <PageHeader/>
-        <Filter/>
-        <Cards/>
+      <PageHeader />
+      <Filter />
+      <Cards />
     </div>
   )
 }
