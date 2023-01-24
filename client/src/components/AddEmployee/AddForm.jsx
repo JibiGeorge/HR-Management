@@ -7,26 +7,51 @@ import { getAllDesignation } from '../../helper/Designationhelper';
 import { useState } from 'react';
 import { addEmployee } from '../../helper/Employeehelper';
 import toast, { Toaster } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { hideLoading, showLoading } from '../../redux/features/alertSlice';
 
-const onSubmit = async (values, actions) => {
-    try {
-        const result = await addEmployee(values);
-        console.log('result',result);
-        if (result.data.success) {
-            toast.success(result.data.message, {
-                style: {
-                    border: '1px solid #713200',
-                    padding: '16px',
-                    color: '#25ab11',
-                },
-                iconTheme: {
-                    primary: '#25ab11',
-                    secondary: '#FFFAEE',
-                },
-            });
-            actions.resetForm();
-        } else {
-            toast.error(result.data.message, {
+function AddForm() {
+
+    var dispatch = useDispatch();
+    const { loading } = useSelector(state => state.alerts)
+
+    const [designation, setDesignation] = useState([]);
+    const [department, setDepartment] = useState([]);
+
+    const onSubmit = async (values, actions) => {
+        dispatch(showLoading())
+        try {
+            const result = await addEmployee(values);
+            console.log('result', result);
+            if (result.data.success) {
+                toast.success(result.data.message, {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#25ab11',
+                    },
+                    iconTheme: {
+                        primary: '#25ab11',
+                        secondary: '#FFFAEE',
+                    },
+                });
+                actions.resetForm();
+            } else {
+                toast.error(result.data.message, {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#713200',
+                    },
+                    iconTheme: {
+                        primary: '#713200',
+                        secondary: '#FFFAEE',
+                    },
+                });
+            }
+        } catch (error) {
+            console.log('cdsacvas', error.message);
+            toast.error('Not Added Please Try Again Later', {
                 style: {
                     border: '1px solid #713200',
                     padding: '16px',
@@ -38,27 +63,9 @@ const onSubmit = async (values, actions) => {
                 },
             });
         }
-    } catch (error) {
-        console.log('cdsacvas',error.message);
-        toast.error('Not Added Please Try Again Later', {
-            style: {
-                border: '1px solid #713200',
-                padding: '16px',
-                color: '#713200',
-            },
-            iconTheme: {
-                primary: '#713200',
-                secondary: '#FFFAEE',
-            },
-        });
+        dispatch(hideLoading())
+
     }
-
-}
-
-function AddForm() {
-
-    const [designation, setDesignation] = useState([]);
-    const [department, setDepartment] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -107,6 +114,8 @@ function AddForm() {
         validationSchema: employeeSchema,
         onSubmit
     });
+
+    
 
     return (
         <>
@@ -376,9 +385,15 @@ function AddForm() {
                                     </div>
                                 </div>
                             </div>
+                            {loading && <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>}
+                            {!loading && 
                             <div className='form-button'>
                                 <button type='submit' className='btn btn-primary add-btn'>Submit</button>
-                            </div>
+                            </div>}
                         </div>
                     </form>
                 </div>

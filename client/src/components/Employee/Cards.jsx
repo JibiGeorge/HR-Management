@@ -3,15 +3,18 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAllEmployees } from '../../helper/Employeehelper';
+import { hideLoading, showLoading } from '../../redux/features/alertSlice';
 import { setEmployeesData } from '../../redux/features/employee';
 
 function Cards() {
     const dispatch = useDispatch();
-    const { employeesDetails } = useSelector(state => state.employees)
+    const { employeesDetails } = useSelector(state => state.employees);
+    const {loading} = useSelector(state => state.alerts)
 
     useEffect(() => {
         (async () => {
             try {
+                dispatch(showLoading())
                 const employeeList = await getAllEmployees();
                 if (employeeList.success) {
                     dispatch(setEmployeesData(employeeList.list))
@@ -54,6 +57,7 @@ function Cards() {
                     },
                 });
             }
+            dispatch(hideLoading())
         })();
     }, [])
 
@@ -64,6 +68,12 @@ function Cards() {
                 position="top-right"
                 reverseOrder={false}
             />
+            {loading && <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>}
+            {!loading &&
             <div className="row">
                 {employeesDetails ? employeesDetails.map(values => {
                     return (
@@ -83,7 +93,7 @@ function Cards() {
                     )
                 }) : (''
                 )}
-            </div>
+            </div>}
         </>
     )
 }
