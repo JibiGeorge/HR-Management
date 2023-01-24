@@ -16,7 +16,8 @@ export const addEmployee = async (req, res) => {
         dateofJoin,
         dateofLeave,
         username,
-        email
+        email,
+        image
     } = req.body.values
     try {
         const exist = await Employee.findOne({ username: username });
@@ -38,7 +39,8 @@ export const addEmployee = async (req, res) => {
                 dateofJoin,
                 dateofLeave,
                 username,
-                email
+                email,
+                image
             })
             emp.save().then((response) => {
                 res.status(200).json({ response, success: true, message: 'Successfully Added...!' });
@@ -55,7 +57,7 @@ export const getAllEmployees = async (req, res) => {
         if (list.length > 0) {
             res.status(200).json({ success: true, list })
         } else {
-            res.status(200).json({ data: false, message: 'Not Data' })
+            res.status(200).json({ data: false, message: 'No Data' })
         }
     } catch (error) {
         res.json({ sucess: false, message: 'Internal Server Error...!' })

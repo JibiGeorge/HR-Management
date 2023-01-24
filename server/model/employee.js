@@ -61,6 +61,9 @@ const employeeSchema = Schema({
     email: {
         type: String,
         required: [true]
+    },
+    image: {
+        type: String
     }
 });
 

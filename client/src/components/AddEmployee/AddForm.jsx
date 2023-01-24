@@ -11,6 +11,7 @@ import toast, { Toaster } from 'react-hot-toast';
 const onSubmit = async (values, actions) => {
     try {
         const result = await addEmployee(values);
+        console.log('result',result);
         if (result.data.success) {
             toast.success(result.data.message, {
                 style: {
@@ -38,6 +39,7 @@ const onSubmit = async (values, actions) => {
             });
         }
     } catch (error) {
+        console.log('cdsacvas',error.message);
         toast.error('Not Added Please Try Again Later', {
             style: {
                 border: '1px solid #713200',
@@ -83,7 +85,7 @@ function AddForm() {
 
 
 
-    const { values, errors, touched, handleChange, handleSubmit } = useFormik({
+    const { values, errors, touched, handleChange, handleSubmit, setFieldValue } = useFormik({
         initialValues: {
             firstName: "",
             lastName: "",
@@ -99,7 +101,8 @@ function AddForm() {
             dateofJoin: "",
             dateofLeave: "",
             username: "",
-            email: ""
+            email: "",
+            image: ""
         },
         validationSchema: employeeSchema,
         onSubmit
@@ -367,7 +370,9 @@ function AddForm() {
                                         </label>
                                     </div>
                                     <div className='select '>
-                                        <input type="file" />
+                                        <input type="file" name='image' id='image'
+                                            // value={values.image}
+                                            onChange={(e) => setFieldValue('image', e.target.files[0])} />
                                     </div>
                                 </div>
                             </div>

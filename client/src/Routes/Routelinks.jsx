@@ -5,6 +5,7 @@ import Department from '../pages/Department'
 import Designation from '../pages/Designation'
 import Employee from '../pages/Employee'
 import Employeeadd from '../pages/Employeeadd'
+import EmployeeDetails from '../pages/EmployeeDetails'
 import Login from '../pages/Loginpage'
 
 function Routelinks() {
@@ -17,6 +18,7 @@ function Routelinks() {
                 <Route exact path='/designation' element={<Designation />} />
                 <Route exact path='/employee' element={<Employee />} />
                 <Route exact path='/addEmployee' element={<Employeeadd />} />
+                <Route exact path='/employeeDetails' element={<EmployeeDetails/>} />
             </Routes>
         </BrowserRouter>
     )
