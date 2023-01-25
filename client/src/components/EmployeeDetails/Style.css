@@ -1,5 +1,204 @@
-.profile{
+.profile,
+.row1,
+.row2,
+.row3{
     background: #16191c;
     border: 1px solid #2e3840;
     color: #fff;
+    height: 100%;
+    padding: 1.25rem;
+    margin-bottom: 20px;
+}
+.profile .profile-img{
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    font-weight: 600;
+    object-fit: cover;
+}
+.profile .profile-info .username{
+    color: #bbc4cc;
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+.profile .profile-info .designation{
+    color: #8e8e8e;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.profile .profile-info .department{
+    font-size: 80%;
+    font-weight: 600;
+    color: #8e8e8e;
+    font-weight: 600;
+}
+.profile .profile-info .empID,
+.profile .profile-info .status{
+    font-size: 14px;
+    font-weight: 600;
+    margin: 5px 0 0 0;
+    color: #bbc4cc;
+}
+.profile .profile-info .status span{
+    color: #fd7e14;
+}
+.profile .profile-info .doj{
+    color: #8e8e8e;
+    font-weight: 600;
+    font-size: 80%;
+}
+.profile .personal-info{
+    list-style: none;
+    font-size: .8rem;
+    color: #bbc4cc;
+    font-weight: 600;
+    margin-left: 0;
+    padding-left: 0px;
+}
+.profile .personal-info .title{
+    width: 25%;
+    float: left;
+    margin-right: 30px;
+}
+.profile .personal-info li{
+    margin-bottom: 10px;
+}
+.profile .profile-wrap,
+.profile .personal-wrap{
+    margin-bottom: 20px;
+}
+.profile .edit,
+.row1 .edit,
+.row2 .edit,
+.row3 .edit{
+    text-align: end;
+}
+.profile .edit .edit-btn,
+.row1 .edit .edit-btn,
+.row2 .edit .edit-btn,
+.edit .edit-btn{
+    background-color: transparent;
+    border: 1px solid #e3e3e3;
+    border-radius: 24px;
+    color: #bbb;
+    float: right;
+    font-size: 12px;
+    line-height: 24px;
+    min-height: 26px;
+    text-align: center;
+    width: 26px;
+}
+.profile .edit .edit-btn:hover,
+.row1 .edit .edit-btn:hover,
+.row2 .edit .edit-btn:hover
+.row3 .edit .edit-btn:hover{
+    background: #fd7e14;
+    color: #fff;
+}
+
+/* Row1 Styling */
+.employee .box{
+    margin-bottom: 10px;
+}
+.box1{
+    padding-right: 5px;
+}
+.box2{
+    padding-left: 5px;
+}
+.row1 h3.title,
+.row2 h3.title,
+.row3 h3.title{
+    color: #bbc4cc;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.row1 .personal-info-data .information,
+.row2 .personal-info-data .information,
+.row3 .personal-info-data .information{
+    list-style: none;
+    font-size: .8rem;
+    font-weight: 600;
+    line-height: 2;
+}
+.row1 .personal-info-data .information .title,
+.row2 .personal-info-data .information .title,
+.row3 .personal-info-data .information .title{    
+    width: 30%;
+}
+tbody{
+    width: 100%;
+    display: table;
+    color: #bbc4cc;
+}
+.row1 .sub-title,
+.row2 .sub-title,
+.row3 .sub-title{
+    font-size: .9rem;
+    color: #bbc4cc;
+    font-weight: 600;
+}
+.row1 .permanent-address,
+.row1 .temprory-address,
+.row2 .permanent-address,
+.row2 .temprory-address,
+.row3 .permanent-address,
+.row3 .temprory-address{
+    margin-bottom: 10px;
+}
+.row1 .permanent-address .text,
+.row1 .temprory-address .text,
+.row2 .permanent-address .text,
+.row2 .temprory-address .text,
+.row3 .permanent-address .text,
+.row3 .temprory-address .text{
+    font-size: .8rem;
+    color: #bbc4cc;
+}
+
+.row3 .bar-line{
+    position: relative;
+}
+.row3 .bar-line .list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.row3 .bar-line .list::before{
+    background: #2e3439;
+    bottom: 0;
+    content: '';
+    left: 8px;
+    position: absolute;
+    top: 8px;
+    width: 2px; 
+}
+.row3 .bar-line .list>li{
+    position: relative;
+}
+.row3 .bar-line .list .pro{
+    background: 0 0;
+    height: 10px;
+    left: 4px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 4px;
+    width: 10px;
+}
+.row3 .bar-line .list .pro .circle{
+    background-color: #2e3439;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+}
+.row3 .bar-line .list .content{
+    background-color: transparent;
+    margin: 0 0 20px 40px;
+    padding: 0;
+    position: relative;
+    color: #bbc4cc;
 }
