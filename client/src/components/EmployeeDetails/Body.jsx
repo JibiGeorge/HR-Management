@@ -5,13 +5,15 @@ import Profile from './Profile';
 import Row1 from './Row1';
 import './Style.css'
 import Row3 from './Row3';
+import { useSelector } from 'react-redux';
 
 function Body() {
+  const {employeeData} =  useSelector(state => state.employees);
   return (
     <div class="section-body employee">
       <Header/>
-      <Profile/>
-      <Row1/>
+      <Profile profile={employeeData}/>
+      <Row1 profile={employeeData}/>
       <Row2/>
       <Row3/>
     </div>

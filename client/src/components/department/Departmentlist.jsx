@@ -9,7 +9,6 @@ import { setDepartmentData, deleteDepartmentData } from '../../redux/features/de
 
 function Departmentlist() {
     const [search, setSearch] = useState('')
-    const [filteredDepartments, setfilteredDepartments] = useState([]);
     const [updatedeptValue, setUpdateDeptValue] = useState('');
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.alerts);
@@ -27,28 +26,6 @@ function Departmentlist() {
         } catch (error) {
         }
     }, []);
-
-    // Searching in Department
-    useEffect(() => {
-        try {
-            const result = department.filter((response) => {
-                return response.department.toLowerCase().match(search.toLowerCase());
-            })
-            setfilteredDepartments(result)
-        } catch (error) {
-            toast.error('Cant Filter. Something Wrong....!', {
-                style: {
-                    border: '1px solid #713200',
-                    padding: '16px',
-                    color: '#713200',
-                },
-                iconTheme: {
-                    primary: '#713200',
-                    secondary: '#FFFAEE',
-                },
-            });
-        }
-    }, [search]);
 
     // Handle Delete Department
     const handleDelete = async (depId) => {

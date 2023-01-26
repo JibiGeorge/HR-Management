@@ -3,13 +3,17 @@ import { createSlice } from '@reduxjs/toolkit';
 export const employeeSlice = createSlice({
     name: 'employees',
     initialState: {
-        employeesDetails: []
+        employeesDetails: [],
+        employeeData : []
     },
     reducers: {
         setEmployeesData: (state, data) => {
             state.employeesDetails = data.payload
+        },
+        setEmpIndividualData: (state, data)=>{
+            state.employeeData = data.payload
         }
     }
 })
 
-export const { setEmployeesData } = employeeSlice.actions
+export const { setEmployeesData, setEmpIndividualData } = employeeSlice.actions

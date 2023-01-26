@@ -8,10 +8,13 @@ function Header() {
     sidebar.classList.toggle("close");
   }
   return (
-    <div class="home-section">
+    <div class="home-section d-flex justify-content-between">
       <div class="home-content">
         <i class="bx bx-menu" onClick={navbarbtn}></i>
         <span class="text">Drop Down Menu</span>
+      </div>
+      <div className="logout-btn">
+        <button className='btn btn-primary'>Logout</button>
       </div>
     </div>
   )

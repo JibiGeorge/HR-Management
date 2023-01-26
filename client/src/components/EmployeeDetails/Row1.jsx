@@ -1,6 +1,7 @@
 import React from 'react'
 
-function Row1() {
+function Row1(props) {
+  const profileData = props.profile;
   return (
     <div className="row box">
       <div className="col-lg-6 box1">
@@ -14,35 +15,35 @@ function Row1() {
           <tbody className='personal-info-data'>
             <tr className="information">
               <td className="title">First Name:</td>
-              <td className="text">Jibi</td>
+              <td className="text">{profileData.firstName}</td>
             </tr>
             <tr className="information">
               <td className="title">Last Name:</td>
-              <td className="text">George</td>
+              <td className="text">{profileData.lastName}</td>
             </tr>
             <tr className="information">
               <td className="title">Blood Group:</td>
-              <td className="text">o+</td>
+              <td className="text">{profileData.bloodGroup}</td>
             </tr>
             <tr className="information">
               <td className="title">PAN Number:</td>
-              <td className="text">DHNPG2837L</td>
+              <td className="text">{profileData.panNumber}</td>
             </tr>
             <tr className="information">
               <td className="title">Passport No:</td>
-              <td className="text">FGH6546</td>
+              <td className="text">{profileData.passportNumber ? profileData.passportNumber : 'Nil'}</td>
             </tr>
             <tr className="information">
               <td className="title">Nationality:</td>
-              <td className="text">INDIAN</td>
+              <td className="text">{profileData.nationality ? profileData.nationality : 'Nil'}</td>
             </tr>
             <tr className="information">
               <td className="title">Religion:</td>
-              <td className="text">o+</td>
+              <td className="text">{profileData.religion ? profileData.religion : 'Nil'}</td>
             </tr>
             <tr className="information">
               <td className="title">Maritial Status:</td>
-              <td className="text">Single</td>
+              <td className="text">{profileData.maritial ? profileData.maritial : 'Nil'}</td>
             </tr>
           </tbody>
         </div>

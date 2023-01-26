@@ -63,3 +63,14 @@ export const getAllEmployees = async (req, res) => {
         res.json({ sucess: false, message: 'Internal Server Error...!' })
     }
 }
+
+export const getEmployeeData = async (req,res)=>{
+    try {
+        let id = req.query.id
+        const data = await Employee.findOne({_id:id}).populate('department').populate('designation')
+        console.log(data);
+        return res.status(200).json({success:true, data})
+    } catch (error) {
+        return res.json({success:false, error: 'Internal Server Error...!'})        
+    }
+}

@@ -85,7 +85,7 @@ function Cards() {
                                     </a>
                                 </div>
                                 <h4 className="user-name mt-10 mb-0 text-ellipsis">
-                                    <Link to='/employeeDetails'>{values.firstName} {values.lastName}</Link>
+                                    <Link to='/employeeDetails' state={{id:values._id}}>{values.firstName} {values.lastName}</Link>
                                 </h4>
                                 <div className="small text-muted">{values.contactNumber}</div>
                             </div>
