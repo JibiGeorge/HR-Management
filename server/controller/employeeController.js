@@ -74,3 +74,26 @@ export const getEmployeeData = async (req,res)=>{
         return res.json({success:false, error: 'Internal Server Error...!'})        
     }
 }
+
+export const updateProfile = async (req,res)=>{
+    const userID = req.query.id;
+    const data = req.body;
+    console.log(data);
+    try {
+        const employee = await Employee.findByIdAndUpdate({_id:userID},{
+            department: data.department,
+            designation: data.designation,
+            dateofJoin: data.dateofJoin,
+            contactNumber: data.contactNumber,
+            email: data.email,
+            dateofBirth: data.dateofBirth,
+            address: data.address,
+            gender: data.gender,
+            role: data.role
+        })
+        return res.status(200).json({sucess:true, employee, message:"SuccessFully Updated"})
+    } catch (error) {
+        console.log(error.message);
+        return res.json({sucess:false,  message:"Internal Server Error"})
+    }
+}

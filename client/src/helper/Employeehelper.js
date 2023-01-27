@@ -49,3 +49,19 @@ export const getEmployeeData = async (empID) => {
         return { error: "Internal Server Error...!" }
     }
 }
+
+export const updateProfile = async (data, userID)=>{
+    try {
+        const updateprofileStatus = await axios.put('/api/employee/updateProfile/?id='+userID, data)
+        const result = updateprofileStatus.data
+        console.log(result);
+        if(result.sucess){
+            return (result)
+        }else{
+            return (result)
+        }
+    } catch (error) {
+        
+        return ({message :"internal"})        
+    }
+}

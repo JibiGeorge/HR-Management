@@ -22,6 +22,10 @@ function Row1(props) {
               <td className="text">{profileData.lastName}</td>
             </tr>
             <tr className="information">
+              <td className="title">User Name:</td>
+              <td className="text">{profileData.username}</td>
+            </tr>
+            <tr className="information">
               <td className="title">Blood Group:</td>
               <td className="text">{profileData.bloodGroup}</td>
             </tr>
