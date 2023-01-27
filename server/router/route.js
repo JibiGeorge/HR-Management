@@ -1,4 +1,5 @@
 import express from 'express';
+import { addAssetsCategory, getAllAssetsCategories } from '../controller/assetsController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
 import { addEmployee, getAllEmployees, getEmployeeData, updateProfile } from '../controller/employeeController.js';
@@ -23,5 +24,9 @@ router.post('/employee/add', addEmployee)
 router.get('/employee/getAllEmployees', getAllEmployees)
 router.get('/employee/getEmployeeData',getEmployeeData)
 router.put('/employee/updateProfile',updateProfile)
+
+// Asstes Category
+router.post('/assetsCategory/add',addAssetsCategory)
+router.get('/assetsCategory/get',getAllAssetsCategories)
 
 export default router;

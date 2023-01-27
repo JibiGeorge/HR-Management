@@ -8,6 +8,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { departmentSlice } from './features/departmentSlice';
 import { designationSlice } from './features/designationSlice';
 import { employeeSlice } from './features/employee';
+import { assetsCategorySlice } from './features/assetsCategorySlice';
 
 const persistConfig = {
     key: 'root',
@@ -20,7 +21,8 @@ const reducer = combineReducers({
     admin: adminSlice.reducer,
     department: departmentSlice.reducer,
     designation: designationSlice.reducer,
-    employees: employeeSlice.reducer
+    employees: employeeSlice.reducer,
+    assetsCategory: assetsCategorySlice.reducer
 });
 
 const persistReduhcer = persistReducer(persistConfig, reducer);
