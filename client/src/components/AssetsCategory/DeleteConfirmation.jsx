@@ -7,8 +7,6 @@ import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
 const DeleteConfirmation = ({ closeModal,id }) => {
     const dispatch = useDispatch();
     
-    let { category } = useSelector(state => state.assetsCategory);
-
     const assetsCategoryDelete = async ()=>{
         try {
             const response = await deleteAssetsCategory(id);
@@ -59,11 +57,13 @@ const DeleteConfirmation = ({ closeModal,id }) => {
             <div className="modal-wrapper">
                 <div className="modal-container">
                     <div className="modal-content">
-                        <div className="modal-body">
+                        <div className="modal-header">
                             <div className="form-header">
                                 <h3>Delete Confirmation</h3>
                                 <p>Are you Sure want to Delete?</p>
                             </div>
+                        </div>
+                        <div className="modal-footer">
                             <div className="modal-btn delete-action">
                                 <div className="row">
                                     <div className="col-6">

@@ -35,32 +35,29 @@ a {
     background: #fff;
     background-clip: padding-box;
     outline: 0;
-}
-.modal-wrapper .modal-body{
     padding: 30px;
-    position: relative;
-    flex: 1 1 auto;
 }
-.modal-wrapper .modal-body .form-header{
+.modal-wrapper .modal-header{
+    padding: 0 30px 0;
+}
+.modal-wrapper .modal-header .form-header{
     text-align: center;
-    margin-bottom: 30px;
 }
-.modal-wrapper .modal-body .form-header h3{
+.modal-wrapper .modal-header .form-header h3{
     color: #333;
     font-size: 22px;
     font-weight: 600;
-    margin-bottom: 10px;
 }
-.modal-wrapper .modal-body .form-header p{
+.modal-wrapper .modal-header .form-header p{
     color: #929292;
     font-size: 15px;
     margin-bottom: 0;
 }
-.modal-wrapper .modal-btn .row{
+.modal-wrapper .modal-footer .modal-btn .row{
     margin-left: -8px;
     margin-right: -8px;
 }
-.modal-wrapper .modal-btn button{
+.modal-wrapper .modal-footer .modal-btn button{
     background-color: #fff;
     border: 1px solid #ff9b44;
     border-radius: 50px;
@@ -72,8 +69,13 @@ a {
     text-align: center;
     width: 150px;
 }
-.modal-wrapper .modal-btn button:hover{
+.modal-wrapper .modal-footer .modal-btn button:hover{
     background-color: #ff9b44;
     color: #fff;
 
+}
+
+.modal-wrapper .modal-header,
+.modal-wrapper .modal-body{
+    margin-bottom: 20px;
 }

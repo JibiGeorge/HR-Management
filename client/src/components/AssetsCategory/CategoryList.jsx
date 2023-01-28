@@ -52,12 +52,8 @@ const CategoryList = () => {
     const [id,setId] = useState('')
     // Category Delete
     const handleDelete = (id) => {
-        try {
             setId(id)
             setShowModal(true)
-        } catch (error) {
-
-        }
     }
 
     const column = [
