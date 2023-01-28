@@ -26,3 +26,14 @@ export const getAllAssetsCategories = async (req,res)=>{
         return res.json({message:'Internal Server Error...!'});
     }
 }
+
+export const deleteAssetsCategory = async (req,res)=>{
+    try {
+        const {id} = req.query
+        await AssetsCategory.findByIdAndDelete({_id:id}).then(()=>{
+            res.status(200).json({delete:true, message: 'Deleted Successfully...!'})
+        })
+    } catch (error) {
+        res.json({delete:false, messsage: 'Intenal Server Error...!'})
+    }
+}

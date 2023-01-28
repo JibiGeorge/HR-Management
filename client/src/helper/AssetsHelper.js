@@ -17,3 +17,11 @@ export const getAssetsCategory = async ()=>{
         return message = "Internal Server Error...!"        
     }
 }
+
+export const deleteAssetsCategory = async (id)=>{
+    try {        
+        const deleteCategory = await axios.delete('/api/assetsCategory/delete?id='+id)
+        return deleteCategory.data
+    } catch (error) {        
+    }
+}

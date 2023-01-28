@@ -69,8 +69,8 @@ function Profile(props) {
     dateofBirth = new Date(dateofBirth).toISOString().slice(0, 10)
     const { values, handleChange, handleSubmit } = useFormik({
         initialValues: {
-            department: profileData.department.department,
-            designation: profileData.designation.designation,
+            department: profileData.department._id,
+            designation: profileData.designation._id,
             dateofJoin: dateofjoin,
             contactNumber: profileData.contactNumber,
             email: profileData.email,

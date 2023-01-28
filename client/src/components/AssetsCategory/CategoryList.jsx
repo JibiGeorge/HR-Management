@@ -1,10 +1,12 @@
 import React from 'react'
+import { useState } from 'react'
 import { useEffect } from 'react'
 import DataTable from 'react-data-table-component'
 import { toast, Toaster } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAssetsCategory } from '../../helper/AssetsHelper'
 import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
+import DeleteConfirmation from './DeleteConfirmation'
 
 const CategoryList = () => {
     const dispatch = useDispatch()
@@ -44,7 +46,20 @@ const CategoryList = () => {
             }
         })()
     }, []);
-    
+
+    const [showModal, setShowModal] = useState(false)
+    const closeModal = ()=> setShowModal(false)
+    const [id,setId] = useState('')
+    // Category Delete
+    const handleDelete = (id) => {
+        try {
+            setId(id)
+            setShowModal(true)
+        } catch (error) {
+
+        }
+    }
+
     const column = [
         {
             name: '#',
@@ -57,7 +72,7 @@ const CategoryList = () => {
         {
             name: "Action",
             cell: (row) => ([<button className='btn btn-primary me-2 editBtn'>Edit</button>,
-            <button className='btn btn-danger deleteBtn'>Delete</button>])
+            <button className='btn btn-danger deleteBtn' onClick={() => handleDelete(row._id)} >Delete</button>])
         }
     ]
     return (
@@ -71,6 +86,7 @@ const CategoryList = () => {
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>}
+            <div>
             {!loading &&
                 <DataTable
                     columns={column}
@@ -90,6 +106,8 @@ const CategoryList = () => {
                     }
                     subHeaderAlign='left'
                 />}
+            </div>
+                {showModal && <DeleteConfirmation closeModal={closeModal} id={id}/>} 
         </>
     )
 }

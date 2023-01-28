@@ -6,3 +6,74 @@ a {
 * {
     font-family: circularstd, sans-serif;
 }
+
+/* Modal */
+.modal-wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0,.5);
+}
+
+.modal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.modal-wrapper .modal-content{
+    border: 0;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background: #fff;
+    background-clip: padding-box;
+    outline: 0;
+}
+.modal-wrapper .modal-body{
+    padding: 30px;
+    position: relative;
+    flex: 1 1 auto;
+}
+.modal-wrapper .modal-body .form-header{
+    text-align: center;
+    margin-bottom: 30px;
+}
+.modal-wrapper .modal-body .form-header h3{
+    color: #333;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.modal-wrapper .modal-body .form-header p{
+    color: #929292;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+.modal-wrapper .modal-btn .row{
+    margin-left: -8px;
+    margin-right: -8px;
+}
+.modal-wrapper .modal-btn button{
+    background-color: #fff;
+    border: 1px solid #ff9b44;
+    border-radius: 50px;
+    color: #ff9b44;
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px 20px;
+    text-align: center;
+    width: 150px;
+}
+.modal-wrapper .modal-btn button:hover{
+    background-color: #ff9b44;
+    color: #fff;
+
+}
