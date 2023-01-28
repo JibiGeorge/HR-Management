@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AssetCategory from '../pages/AssetCategory'
+import Assets from '../pages/Assets'
 import Dashboard from '../pages/Dashboard'
 import Department from '../pages/Department'
 import Designation from '../pages/Designation'
@@ -21,6 +22,7 @@ function Routelinks() {
                 <Route exact path='/addEmployee' element={<Employeeadd />} />
                 <Route exact path='/employeeDetails' element={<EmployeeDetails/>} />
                 <Route exact path='/assetsCategory' element={<AssetCategory/>} />
+                <Route exact path='/assets' element={<Assets/>} />
             </Routes>
         </BrowserRouter>
     )

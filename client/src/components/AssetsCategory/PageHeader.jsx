@@ -22,7 +22,6 @@ const PageHeader = () => {
                 </div>
                 <div className="col-sm-3">
                     <button type="button" class="btn btn-primary add-btn" 
-                    // data-bs-toggle="modal" data-bs-target="#assetsCategoryAdd"
                     onClick={handlePopupCategory}>
                         <i className="fa fa-plus"></i>Add Category</button>
                 </div>

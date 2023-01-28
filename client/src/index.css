@@ -72,7 +72,14 @@ a {
 .modal-wrapper .modal-footer .modal-btn button:hover{
     background-color: #ff9b44;
     color: #fff;
+}
 
+.modal-wrapper .modal-btn{
+    width: 100%;
+}
+.modal-wrapper .modal-btn .button{
+    display: flex;
+    justify-content: space-around;
 }
 
 .modal-wrapper .modal-header,

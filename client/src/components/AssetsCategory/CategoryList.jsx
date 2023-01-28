@@ -48,12 +48,12 @@ const CategoryList = () => {
     }, []);
 
     const [showModal, setShowModal] = useState(false)
-    const closeModal = ()=> setShowModal(false)
-    const [id,setId] = useState('')
+    const closeModal = () => setShowModal(false)
+    const [id, setId] = useState('')
     // Category Delete
     const handleDelete = (id) => {
-            setId(id)
-            setShowModal(true)
+        setId(id)
+        setShowModal(true)
     }
 
     const column = [
@@ -83,27 +83,27 @@ const CategoryList = () => {
                 </div>
             </div>}
             <div>
-            {!loading &&
-                <DataTable
-                    columns={column}
-                    data={category}
-                    pagination
-                    fixedHeader
-                    fixedHeaderScrollHeight='300px'
-                    selectableRows
-                    selectableRowsHighlight
-                    highlightOnHover
-                    subHeader
-                    subHeaderComponent={
-                        [<input type='text'
-                            placeHolder='Search By Category'
-                            className='w-25 form-control' />,
-                        <button className='btn btn-sm btn-info ms-3'>Export</button>]
-                    }
-                    subHeaderAlign='left'
-                />}
+                {!loading &&
+                    <DataTable
+                        columns={column}
+                        data={category}
+                        pagination
+                        fixedHeader
+                        fixedHeaderScrollHeight='300px'
+                        selectableRows
+                        selectableRowsHighlight
+                        highlightOnHover
+                        subHeader
+                        subHeaderComponent={
+                            [<input type='text'
+                                placeHolder='Search By Category'
+                                className='w-25 form-control' />,
+                            <button className='btn btn-sm btn-info ms-3'>Export</button>]
+                        }
+                        subHeaderAlign='left'
+                    />}
             </div>
-                {showModal && <DeleteConfirmation closeModal={closeModal} id={id}/>} 
+            {showModal && <DeleteConfirmation closeModal={closeModal} id={id} />}
         </>
     )
 }

@@ -67,7 +67,7 @@ function Sidebar() {
                             <Link class="link_name" >Assets</Link>
                         </li>
                         <li><Link to='/assetsCategory'>Assets Category</Link></li>
-                        <li><Link to=''>Add Assets</Link></li>
+                        <li><Link to='/assets'>Add Assets</Link></li>
                     </ul>
                 </li>
                 <li>

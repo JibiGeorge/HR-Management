@@ -9,6 +9,7 @@ import { departmentSlice } from './features/departmentSlice';
 import { designationSlice } from './features/designationSlice';
 import { employeeSlice } from './features/employee';
 import { assetsCategorySlice } from './features/assetsCategorySlice';
+import { assetsSlice } from './features/assetsSlice';
 
 const persistConfig = {
     key: 'root',
@@ -22,7 +23,8 @@ const reducer = combineReducers({
     department: departmentSlice.reducer,
     designation: designationSlice.reducer,
     employees: employeeSlice.reducer,
-    assetsCategory: assetsCategorySlice.reducer
+    assetsCategory: assetsCategorySlice.reducer,
+    assets: assetsSlice.reducer
 });
 
 const persistReduhcer = persistReducer(persistConfig, reducer);
