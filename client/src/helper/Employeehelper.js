@@ -1,6 +1,7 @@
 import axios from 'axios';
+import instance from '../utils/serverConfig';
 
-axios.defaults.baseURL = "http://localhost:8080";
+// axios.defaults.baseURL = "http://localhost:8080";
 
 export const addEmployee = async (values) => {
     const data = new FormData();
@@ -8,12 +9,15 @@ export const addEmployee = async (values) => {
     data.append('upload_preset', 'opkf0ic5')
     data.append('cloud_name', 'dq9kanqi3');
 
-
     try {
         const upload = await axios.post('https://api.cloudinary.com/v1_1/dq9kanqi3/image/upload', data)
         if (upload.status === 200) {
             values.image = upload.data.url;
-            const response = await axios.post('/api/employee/add', { values });
+            const response = await instance({
+                url: '/api/employee/add',
+                method: 'POST',
+                data: {values}
+            })
             return response;
         } else {
         }
@@ -24,7 +28,10 @@ export const addEmployee = async (values) => {
 
 export const getAllEmployees = async () => {
     try {
-        const response = await axios.get('/api/employee/getAllEmployees');
+        const response = await instance({
+            url: '/api/employee/getAllEmployees',
+            method: 'GET'
+        })
         return response.data;
     } catch (error) {
         return { error: "Internal Server Error...!", err: error.message };
@@ -33,7 +40,10 @@ export const getAllEmployees = async () => {
 
 export const getEmployeeData = async (empID) => {
     try {
-        const response = await axios.get('/api/employee/getEmployeeData/?id=' + empID);
+        const response = await instance({
+            url: '/api/employee/getEmployeeData/?id=' + empID,
+            method: 'GET'
+        })
         response.data.data.dateofBirth = new Date(response.data.data.dateofBirth).toLocaleDateString('en-GB', {
             day: 'numeric', month: 'short', year: 'numeric'
         });
@@ -52,7 +62,11 @@ export const getEmployeeData = async (empID) => {
 
 export const updateProfile = async (data, userID)=>{
     try {
-        const updateprofileStatus = await axios.put('/api/employee/updateProfile/?id='+userID, data)
+        const updateprofileStatus = await instance({
+            url: '/api/employee/updateProfile/?id='+userID,
+            method: 'PUT',
+            data: data
+        })
         const result = updateprofileStatus.data
         console.log(result);
         if(result.sucess){
@@ -60,8 +74,7 @@ export const updateProfile = async (data, userID)=>{
         }else{
             return (result)
         }
-    } catch (error) {
-        
+    } catch (error) {        
         return ({message :"internal"})        
     }
 }

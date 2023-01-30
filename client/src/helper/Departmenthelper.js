@@ -1,12 +1,12 @@
-import axios from "axios";
-
-axios.defaults.baseURL = "http://localhost:8080"
-// axios.create-instance
-// add .env file
+import instance from "../utils/serverConfig";
 
 export async function addDepartment({ department }) {
     try {
-        const { data } = await axios.post('/api/addDepartment', { department })
+        const { data } = await instance({
+            url: '/api/addDepartment',
+            method: 'POST',
+            data: {department}
+        })
         return data
     } catch (error) {
         return { error: "Not Added" };
@@ -15,7 +15,10 @@ export async function addDepartment({ department }) {
 
 export async function getAllDepartments() {
     try {
-        const { data } = await axios.get('/api/getAllDepartments')
+        const { data } = await instance({
+            url: '/api/getAllDepartments',
+            method: 'GET',
+        })
         return data
     } catch (error) {
     }
@@ -23,7 +26,10 @@ export async function getAllDepartments() {
 
 export async function deleteDepartment(id) {
     try {
-        const response = await axios.delete('/api/deleteDepartment?id=' + id);
+        const response = await instance({
+            url: '/api/deleteDepartment?id=' + id,
+            method: 'DELETE'
+        })
         return response.data;
     } catch (error) {
     }
@@ -31,7 +37,10 @@ export async function deleteDepartment(id) {
 
 export async function updateDepartment(id, value) {
     try {
-        const response = await axios.put('/api/updateDepartment?id=' + id + '&&text=' + value)
+        const response = await instance({
+            url: '/api/updateDepartment?id=' + id + '&&text=' + value,
+            method: 'PUT'
+        })
         return response.data;
     } catch (error) {
     }

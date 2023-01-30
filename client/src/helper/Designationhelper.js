@@ -1,10 +1,13 @@
 import axios from 'axios';
-
-axios.defaults.baseURL = "http://localhost:8080";
+import instance from '../utils/serverConfig';
 
 export async function addDesignation({ designationData }) {
     try {
-        const { data } = await axios.post('/api/addDesignation', { designationData })
+        const { data } = await instance({
+            url: '/api/addDesignation',
+            method: 'POST',
+            data: {designationData}
+        })
         return data;
     } catch (error) {
         return { error: "Internal Server Error" }
@@ -13,7 +16,10 @@ export async function addDesignation({ designationData }) {
 
 export async function getAllDesignation() {
     try {
-        const { data } = await axios.get('/api/getAllDesignation')
+        const { data } = await instance({
+            url: '/api/getAllDesignation',
+            method: 'GET'
+        })
         return data;
     } catch (error) {
         return { error: "Internal Server Error", error: error.message }
@@ -22,7 +28,10 @@ export async function getAllDesignation() {
 
 export async function deleteDesignation(id) {
     try {
-        const response = await axios.delete('/api/deleteDesignation/?designationId=' + id);
+        const response = await instance({
+            url: '/api/deleteDesignation/?designationId=' + id,
+            method: 'DELETE',
+        })
         return response;
     } catch (error) {
 
@@ -31,7 +40,10 @@ export async function deleteDesignation(id) {
 
 export async function updateDesignation(data) {
     try {
-        const response = await axios.put('/api/updateDesignation/')
+        const response = await instance({
+            url: '/api/updateDesignation/',
+            method: 'PUT'
+        })
     } catch (error) {
 
     }
