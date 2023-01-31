@@ -139,8 +139,8 @@ function Departmentlist() {
         },
         {
             name: "Action",
-            cell: (row) => ([<button className='btn btn-primary me-2 editBtn' data-bs-toggle="modal" data-bs-target="#updateDepartment" onClick={() => handleEdit(row._id, row.department)}>Edit</button>,
-            <button className='btn btn-danger deleteBtn' onClick={() => handleDelete(row._id)}>Delete</button>])
+            cell: (row) => ([<button className='btn editBtn' data-bs-toggle="modal" data-bs-target="#updateDepartment" onClick={() => handleEdit(row._id, row.department)}><i class="las la-edit"></i></button>,
+            <button className='btn deleteBtn' onClick={() => handleDelete(row._id)}><i class="las la-trash"></i></button>])
         }
     ]
     return (

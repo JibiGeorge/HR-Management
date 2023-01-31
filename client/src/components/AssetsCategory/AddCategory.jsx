@@ -107,7 +107,6 @@ const AddCategory = ({closeModal}) => {
                     </div>
                 </div>
             </div>
-
         </>
     )
 }

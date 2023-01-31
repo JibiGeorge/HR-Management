@@ -48,8 +48,8 @@ const AssetsList = () => {
         },
         {
             name: "Action",
-            cell: (row) => ([<button className='btn btn-primary me-2 editBtn'>Edit</button>,
-            <button className='btn btn-danger deleteBtn' onClick={() => handleDelete(row._id)} >Delete</button>])
+            cell: (row) => ([<button className='btn editBtn'><i class="las la-edit"></i></button>,
+            <button className='btn deleteBtn' onClick={() => handleDelete(row._id)} ><i class="las la-trash"></i></button>])
         }
     ]
     return (

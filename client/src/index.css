@@ -7,6 +7,16 @@ a {
     font-family: circularstd, sans-serif;
 }
 
+/* Edit and Delete Button */
+.editBtn{
+    font-size: 20px;
+    padding: 3px;
+}
+.deleteBtn{
+    font-size: 20px;
+    padding: 3px;
+}
+
 /* Modal */
 .modal-wrapper {
     position: fixed;
