@@ -1,6 +1,76 @@
 import React from 'react'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { getAllAssetsCategory, getAssetCategoryDetails, updateCategoryData } from '../../helper/AssetsHelper'
+import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
 
-const EditCategory = () => {
+const EditCategory = ({closeModal,id}) => {
+
+    const [categoryData, setCategoryData] = useState('')
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        (async()=>{
+            try {
+                const data = await getAssetCategoryDetails(id)
+                if(data.success){
+                    setCategoryData(data.response)
+                }else{
+                    toast.error(data.message, {
+                        style: {
+                          border: '1px solid #713200',
+                          padding: '16px',
+                          color: '#713200',
+                        },
+                        iconTheme: {
+                          primary: '#713200',
+                          secondary: '#FFFAEE',
+                        },
+                      });
+                }
+            } catch (error) {
+                toast.error('Someting went Wrong...!', {
+                    style: {
+                      border: '1px solid #713200',
+                      padding: '16px',
+                      color: '#713200',
+                    },
+                    iconTheme: {
+                      primary: '#713200',
+                      secondary: '#FFFAEE',
+                    },
+                  });                
+            }
+        })()
+    },[])
+
+    const updateData = async ()=>{
+        try {
+            const response = await updateCategoryData(categoryData)
+            if(response.updated){
+                const categories = await getAllAssetsCategory()
+                if(categories.success){
+                    dispatch(setAssetsCategories(categories))
+                    toast.success(response.message, {
+                        style: {
+                          border: '1px solid #713200',
+                          padding: '16px',
+                          color: '#25ab11',
+                        },
+                        iconTheme: {
+                          primary: '#25ab11',
+                          secondary: '#FFFAEE',
+                        },
+                      });
+                      closeModal()
+                }                
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
     return (
         <>
             <div className="modal-wrapper">
@@ -16,7 +86,8 @@ const EditCategory = () => {
                                 <div className="col-sm-12">
                                     <div className="form-group">
                                         <label>Assets Category Name</label>
-                                        <input type="text" className='form-control' id='categoryName' />
+                                        <input type="text" className='form-control' id='categoryName' value={categoryData.categoryName}
+                                        onChange={(e) => setCategoryData({ ...categoryData, categoryName: e.target.value })} />
                                     </div>
                                 </div>
                             </div>
@@ -25,10 +96,10 @@ const EditCategory = () => {
                             <div className="modal-btn delete-action">
                                 <div className="row">
                                     <div className="col-6">
-                                        <button className='btn btn-primary'>Save</button>
+                                        <button className='btn btn-primary' onClick={ ()=> updateData()}>Save</button>
                                     </div>
                                     <div className="col-6">
-                                        <button className='btn btn-primary'>Cancel</button>
+                                        <button className='btn btn-primary' onClick={closeModal}>Cancel</button>
                                     </div>
                                 </div>
                             </div>

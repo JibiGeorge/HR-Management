@@ -4,9 +4,10 @@ import { useEffect } from 'react'
 import DataTable from 'react-data-table-component'
 import { toast, Toaster } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAssetsCategory } from '../../helper/AssetsHelper'
+import { getAllAssetsCategory } from '../../helper/AssetsHelper'
 import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
 import DeleteConfirmation from './DeleteConfirmation'
+import EditCategory from './EditCategory'
 
 const CategoryList = () => {
     const dispatch = useDispatch()
@@ -15,7 +16,7 @@ const CategoryList = () => {
     useEffect(() => {
         (async () => {
             try {
-                const categories = await getAssetsCategory();
+                const categories = await getAllAssetsCategory();
                 if (categories.success) {
                     dispatch(setAssetsCategories(categories))
                 } else {
@@ -47,13 +48,20 @@ const CategoryList = () => {
         })()
     }, []);
 
-    const [showModal, setShowModal] = useState(false)
-    const closeModal = () => setShowModal(false)
+    const [deleteModal, setDeleteModal] = useState(false)
+    const closeDeleteModal = () => setDeleteModal(false)
     const [id, setId] = useState('')
     // Category Delete
     const handleDelete = (id) => {
         setId(id)
-        setShowModal(true)
+        setDeleteModal(true)
+    }
+
+    const [updateModal, setUpdateModal] = useState(false)
+    const closeUpdateModal = () => setUpdateModal(false)
+    const handleEdit = (id) =>{
+        setId(id)
+        setUpdateModal(true)
     }
 
     const column = [
@@ -67,7 +75,7 @@ const CategoryList = () => {
         },
         {
             name: "Action",
-            cell: (row) => ([<button className='btn editBtn'><i class="las la-edit"></i></button>,
+            cell: (row) => ([<button className='btn editBtn' onClick={()=> handleEdit(row._id)}><i class="las la-edit"></i></button>,
             <button className='btn deleteBtn' onClick={() => handleDelete(row._id)} ><i class="las la-trash"></i></button>])
         }
     ]
@@ -103,7 +111,8 @@ const CategoryList = () => {
                         subHeaderAlign='left'
                     />}
             </div>
-            {showModal && <DeleteConfirmation closeModal={closeModal} id={id} />}
+            {deleteModal && <DeleteConfirmation closeModal={closeDeleteModal} id={id} />}
+            {updateModal && <EditCategory closeModal={closeUpdateModal} id={id} /> }
         </>
     )
 }

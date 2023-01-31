@@ -1,7 +1,7 @@
 import React from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteAssetsCategory, getAssetsCategory } from '../../helper/AssetsHelper'
+import { deleteAssetsCategory, getAllAssetsCategory } from '../../helper/AssetsHelper'
 import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
 
 const DeleteConfirmation = ({ closeModal,id }) => {
@@ -11,7 +11,7 @@ const DeleteConfirmation = ({ closeModal,id }) => {
         try {
             const response = await deleteAssetsCategory(id);
             if(response.delete){
-                const categories = await getAssetsCategory();
+                const categories = await getAllAssetsCategory();
                 dispatch(setAssetsCategories(categories))
                 toast.success(response.message, {
                     style: {

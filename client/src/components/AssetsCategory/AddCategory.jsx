@@ -2,7 +2,7 @@ import { useFormik } from 'formik'
 import React from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import { addAssetsCategory, getAssetsCategory } from '../../helper/AssetsHelper'
+import { addAssetsCategory, getAllAssetsCategory } from '../../helper/AssetsHelper'
 import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
 
 const AddCategory = ({closeModal}) => {
@@ -12,7 +12,7 @@ const AddCategory = ({closeModal}) => {
         try {
             const addCategory = await addAssetsCategory(values)
             if (addCategory.success) {
-                const categories = await getAssetsCategory();
+                const categories = await getAllAssetsCategory();
                 dispatch(setAssetsCategories(categories))
                 toast.success(addCategory.message, {
                     style: {
@@ -107,6 +107,7 @@ const AddCategory = ({closeModal}) => {
                     </div>
                 </div>
             </div>
+
         </>
     )
 }

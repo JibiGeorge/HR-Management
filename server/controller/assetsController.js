@@ -20,10 +20,13 @@ export const addAssetsCategory = async (req,res)=>{
 }
 
 export const getAllAssetsCategories = async (req,res)=>{
+    console.log('jvdjk');
     try {
         const allAssetsCategories = await AssetsCategory.find();
+        console.log(allAssetsCategories);
         return res.status(200).json({success: true, allAssetsCategories});
     } catch (error) {
+        console.log(error.message);
         return res.json({message:'Internal Server Error...!'});
     }
 }
@@ -36,6 +39,29 @@ export const deleteAssetsCategory = async (req,res)=>{
         })
     } catch (error) {
         res.json({delete:false, messsage: 'Intenal Server Error...!'})
+    }
+}
+export const getAssetCategoryData = async (req,res)=>{
+    try {
+        const {id} = req.params
+        await AssetsCategory.findById({_id:id}).then((response)=>{
+            res.status(200).json({success: true, response})
+        })
+    } catch (error) {
+        res.json({message: 'Internal Server Error'})
+    }
+}
+export const updateCategory = async (req,res)=>{
+    console.log('ethi',req.body);
+    try {
+        const id = req.body._id
+        const categoryName = req.body.categoryName
+        await AssetsCategory.findByIdAndUpdate({_id:id},{categoryName}).then(()=>{
+            res.json({updated: true, message: 'SuccessFully Updated...!'})
+        })
+    } catch (error) {
+        console.log(error.message);
+        res.json({message: 'Internal Server Error'})        
     }
 }
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { addAssets, getAssets, getAssetsCategory } from '../../helper/AssetsHelper'
+import { addAssets, getAssets, getAllAssetsCategory } from '../../helper/AssetsHelper'
 import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
 import { setAssets } from '../../redux/features/assetsSlice'
 
@@ -13,7 +13,7 @@ const AddAssets = ({ closeModal }) => {
 
     useEffect(() => {
         (async () => {
-            const assetCategory = await getAssetsCategory();
+            const assetCategory = await getAllAssetsCategory();
             dispatch(setAssetsCategories(assetCategory));
         })();
     }, []);

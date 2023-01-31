@@ -13,7 +13,7 @@ export const addAssetsCategory = async (values)=>{
     }
 }
 
-export const getAssetsCategory = async ()=>{
+export const getAllAssetsCategory = async ()=>{
     try {
         const categories = await instance({
             url: '/api/assetsCategory/get',
@@ -34,6 +34,31 @@ export const deleteAssetsCategory = async (id)=>{
         return deleteCategory.data
     } catch (error) {
         return message = "Internal Server Error...!"
+    }
+}
+
+export const getAssetCategoryDetails = async (id) =>{
+    try {
+        const getDetails = await instance({
+            url: '/api/assetsCategory/getData/'+id,
+            method: 'GET'
+        })
+        return getDetails.data
+    } catch (error) { 
+        return {message: 'Server Connection Failed'}       
+    }
+}
+
+export const updateCategoryData = async (newdata)=>{
+    try {
+        const status = await instance({
+            url:'/api/assetsCategory/update',
+            method: 'PUT',
+            data: newdata
+        })
+        return status.data        
+    } catch (error) {        
+        return {message: 'Server Connection Failed'}         
     }
 }
 
