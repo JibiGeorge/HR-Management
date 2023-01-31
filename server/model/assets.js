@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 
 const assetsSchema = Schema({
     assetName: {
@@ -6,14 +6,10 @@ const assetsSchema = Schema({
         require: true
     },
     assetCategory: {
-        type: String,
-        require: true
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'assetscategory'
     },
     brand: {
-        type: String,
-        require: true
-    },
-    modelNo: {
         type: String,
         require: true
     },

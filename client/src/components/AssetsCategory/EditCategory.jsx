@@ -66,9 +66,31 @@ const EditCategory = ({closeModal,id}) => {
                       });
                       closeModal()
                 }                
+            }else{
+                toast.error(response.message, {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#713200',
+                    },
+                    iconTheme: {
+                        primary: '#713200',
+                        secondary: '#FFFAEE',
+                    },
+                });
             }
         } catch (error) {
-            console.log(error.message);
+            toast.error('Someting went Wrong...!', {
+                style: {
+                  border: '1px solid #713200',
+                  padding: '16px',
+                  color: '#713200',
+                },
+                iconTheme: {
+                  primary: '#713200',
+                  secondary: '#FFFAEE',
+                },
+              }); 
         }
     }
     return (

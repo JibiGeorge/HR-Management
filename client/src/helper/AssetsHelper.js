@@ -1,6 +1,6 @@
 import instance from "../utils/serverConfig";
 
-export const addAssetsCategory = async (values)=>{
+export const addAssetsCategory = async (values) => {
     try {
         const addCategory = await instance({
             url: '/api/assetsCategory/add',
@@ -13,7 +13,7 @@ export const addAssetsCategory = async (values)=>{
     }
 }
 
-export const getAllAssetsCategory = async ()=>{
+export const getAllAssetsCategory = async () => {
     try {
         const categories = await instance({
             url: '/api/assetsCategory/get',
@@ -25,10 +25,10 @@ export const getAllAssetsCategory = async ()=>{
     }
 }
 
-export const deleteAssetsCategory = async (id)=>{
+export const deleteAssetsCategory = async (id) => {
     try {
         const deleteCategory = await instance({
-            url: '/api/assetsCategory/delete?id='+id,
+            url: '/api/assetsCategory/delete?id=' + id,
             method: 'DELETE'
         })
         return deleteCategory.data
@@ -37,32 +37,32 @@ export const deleteAssetsCategory = async (id)=>{
     }
 }
 
-export const getAssetCategoryDetails = async (id) =>{
+export const getAssetCategoryDetails = async (id) => {
     try {
         const getDetails = await instance({
-            url: '/api/assetsCategory/getData/'+id,
+            url: '/api/assetsCategory/getData/' + id,
             method: 'GET'
         })
         return getDetails.data
-    } catch (error) { 
-        return {message: 'Server Connection Failed'}       
+    } catch (error) {
+        return { message: 'Server Connection Failed' }
     }
 }
 
-export const updateCategoryData = async (newdata)=>{
+export const updateCategoryData = async (newdata) => {
     try {
         const status = await instance({
-            url:'/api/assetsCategory/update',
+            url: '/api/assetsCategory/update',
             method: 'PUT',
             data: newdata
         })
-        return status.data        
-    } catch (error) {        
-        return {message: 'Server Connection Failed'}         
+        return status.data
+    } catch (error) {
+        return { message: 'Server Connection Failed' }
     }
 }
 
-export const addAssets = async (values)=>{
+export const addAssets = async (values) => {
     try {
         const addAssets = await instance({
             url: '/api/assets/add',
@@ -75,7 +75,7 @@ export const addAssets = async (values)=>{
     }
 }
 
-export const getAssets = async ()=>{
+export const getAssets = async () => {
     try {
         const assets = await instance({
             url: '/api/assets/get',
@@ -83,7 +83,43 @@ export const getAssets = async ()=>{
         })
         return assets.data
     } catch (error) {
-        console.log(error.message);
+        return message = "Internal Server Error...!"
+    }
+}
+
+export const deleteAssets = async (id) => {
+    try {
+        const deleteAssets = await instance({
+            url: '/api/assets/delete/' + id,
+            method: 'DELETE'
+        })
+        return deleteAssets.data
+    } catch (error) {
+        return message = "Internal Server Error...!"
+    }
+}
+
+export const getAssetData = async (id) => {
+    try {
+        const asset = await instance({
+            url: '/api/assets/getData/' + id,
+            method: 'GET'
+        })
+        return asset.data
+    } catch (error) {
+        return message = "Internal Server Error...!"
+    }
+}
+
+export const updateAsset = async (data) => {
+    try {
+        const asset = await instance({
+            url: '/api/assets/update',
+            method: 'PUT',
+            data: data
+        })
+        return asset.data
+    } catch (error) {
         return message = "Internal Server Error...!"
     }
 }

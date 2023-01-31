@@ -1,9 +1,12 @@
 import React from 'react'
+import { useState } from 'react';
 import { useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAssets } from '../../helper/AssetsHelper';
 import { setAssets } from '../../redux/features/assetsSlice';
+import DeleteConfirmation from './DeleteConfirmation';
+import EditAssets from './EditAssets';
 
 const AssetsList = () => {
     const { loading } = useSelector(state => state.alerts);
@@ -17,10 +20,26 @@ const AssetsList = () => {
         })();
     },[]);
 
+    const [id, setId] = useState('')
+    const [deleteModal, setDeleteModal] = useState(false)
+    const [updateModal, setUpdateModal] = useState(false)
+    const closeDeleteModal = () => setDeleteModal(false)
+    const closeUpdateModal = () => setUpdateModal(false)
+
+    const handleDelete = async (id)=>{
+        setId(id)
+        setDeleteModal(true)
+    }
+
+    const handleEdit = async (id) =>{
+        setId(id)
+        setUpdateModal(true)
+    }
+
     const column = [
         {
             name: 'Category',
-            selector: row => row.assetCategory
+            selector: row => row.assetCategory.categoryName
         },
         {
             name: 'Assets Name',
@@ -48,7 +67,7 @@ const AssetsList = () => {
         },
         {
             name: "Action",
-            cell: (row) => ([<button className='btn editBtn'><i class="las la-edit"></i></button>,
+            cell: (row) => ([<button className='btn editBtn' onClick={() => handleEdit(row._id)}><i class="las la-edit"></i></button>,
             <button className='btn deleteBtn' onClick={() => handleDelete(row._id)} ><i class="las la-trash"></i></button>])
         }
     ]
@@ -79,6 +98,9 @@ const AssetsList = () => {
                     subHeaderAlign='left'
                 />
             }
+
+            {deleteModal && <DeleteConfirmation closeModal={closeDeleteModal} id={id} /> }
+            {updateModal && <EditAssets closeModal={closeUpdateModal} id={id}/> }
         </>
     )
 }
