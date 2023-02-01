@@ -4,6 +4,7 @@ import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } fr
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
 import { addEmployee, getAllEmployees, getEmployeeData, updateProfile } from '../controller/employeeController.js';
 import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
+import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
 import { login, verifyToken } from '../controller/login.js';
 const router = express.Router();
 
@@ -46,5 +47,12 @@ router.get('/holidays/getAll',getAllHolidays)
 router.delete('/holidays/delete/:id',deleteHoliday)
 router.get('/holidays/getData/:id',getHolidayData)
 router.put('/holidays/update',updateHolidayData)
+
+// LeaveType
+router.post('/leaveType/add',addLeaveType)
+router.get('/leaveType/getAll',getAllLeaveTypes)
+router.delete('/leaveType/delete/:id',deleteLeaveType)
+router.get('/leaveType/getLeaveTypeData/:id',getLeaveTypeData)
+router.put('/leaveType/update/',updateLeaveType)
 
 export default router;

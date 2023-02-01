@@ -83,7 +83,7 @@ function Sidebar() {
                             <Link class="link_name" >Leave</Link>
                         </li>
                         <li><Link to='/holiday'>Holiday</Link></li>
-                        <li><Link to=''>Leave Type</Link></li>
+                        <li><Link to='/leave'>Leave Type</Link></li>
                         <li><Link>Leave Application</Link></li>
                         <li><Link>Earned Leaves</Link></li>
                     </ul>
