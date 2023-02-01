@@ -1,8 +1,6 @@
 import axios from 'axios';
 import instance from '../utils/serverConfig';
 
-// axios.defaults.baseURL = "http://localhost:8080"
-
 export async function loginUser({ username, password }) {
     try {
         const {data} = await instance({

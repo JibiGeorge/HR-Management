@@ -1,4 +1,3 @@
-import axios from 'axios';
 import instance from '../utils/serverConfig';
 
 export async function addDesignation({ designationData }) {

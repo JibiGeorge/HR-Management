@@ -3,6 +3,7 @@ import { addAssets, addAssetsCategory, deleteAssets, deleteAssetsCategory, getAl
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
 import { addEmployee, getAllEmployees, getEmployeeData, updateProfile } from '../controller/employeeController.js';
+import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
 import { login, verifyToken } from '../controller/login.js';
 const router = express.Router();
 
@@ -38,5 +39,12 @@ router.get('/assets/get',getAssets)
 router.delete('/assets/delete/:id',deleteAssets)
 router.get('/assets/getData/:id',getAssetData)
 router.put('/assets/update',updateAsset)
+
+// Holiday
+router.post('/holiday/add',addHoliday)
+router.get('/holidays/getAll',getAllHolidays)
+router.delete('/holidays/delete/:id',deleteHoliday)
+router.get('/holidays/getData/:id',getHolidayData)
+router.put('/holidays/update',updateHolidayData)
 
 export default router;

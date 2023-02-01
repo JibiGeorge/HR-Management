@@ -78,7 +78,6 @@ export const getEmployeeData = async (req,res)=>{
 export const updateProfile = async (req,res)=>{
     const userID = req.query.id;
     const data = req.body;
-    console.log(data);
     try {
         const employee = await Employee.findByIdAndUpdate({_id:userID},{
             department: data.department,

@@ -22,7 +22,6 @@ function AddForm() {
         dispatch(showLoading())
         try {
             const result = await addEmployee(values);
-            console.log('result', result);
             if (result.data.success) {
                 toast.success(result.data.message, {
                     style: {
@@ -50,7 +49,6 @@ function AddForm() {
                 });
             }
         } catch (error) {
-            console.log('cdsacvas', error.message);
             toast.error('Not Added Please Try Again Later', {
                 style: {
                     border: '1px solid #713200',

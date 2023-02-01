@@ -74,17 +74,18 @@ function Sidebar() {
                     <div class="icon-link">
                         <Link>
                             <i class="bx bx-collection"></i>
-                            <span class="link_name">Attendance</span>
+                            <span class="link_name">Leave</span>
                         </Link>
                         <i class="bx bxs-chevron-down arrow"></i>
                     </div>
                     <ul class="sub-menu">
                         <li>
-                            <Link class="link_name" >Attendance</Link>
+                            <Link class="link_name" >Leave</Link>
                         </li>
-                        <li><Link to=''>Attendance List</Link></li>
-                        <li><Link to=''>Add Attendance</Link></li>
-                        <li><Link>Attendance Report</Link></li>
+                        <li><Link to='/holiday'>Holiday</Link></li>
+                        <li><Link to=''>Leave Type</Link></li>
+                        <li><Link>Leave Application</Link></li>
+                        <li><Link>Earned Leaves</Link></li>
                     </ul>
                 </li>
             </ul>

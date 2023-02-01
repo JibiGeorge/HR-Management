@@ -8,6 +8,7 @@ import Designation from '../pages/Designation'
 import Employee from '../pages/Employee'
 import Employeeadd from '../pages/Employeeadd'
 import EmployeeDetails from '../pages/EmployeeDetails'
+import Holiday from '../pages/Holiday'
 import Login from '../pages/Loginpage'
 
 function Routelinks() {
@@ -23,6 +24,7 @@ function Routelinks() {
                 <Route exact path='/employeeDetails' element={<EmployeeDetails/>} />
                 <Route exact path='/assetsCategory' element={<AssetCategory/>} />
                 <Route exact path='/assets' element={<Assets/>} />
+                <Route exact path='/holiday' element={<Holiday/>} />
             </Routes>
         </BrowserRouter>
     )

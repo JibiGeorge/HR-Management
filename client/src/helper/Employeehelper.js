@@ -1,8 +1,6 @@
 import axios from 'axios';
 import instance from '../utils/serverConfig';
 
-// axios.defaults.baseURL = "http://localhost:8080";
-
 export const addEmployee = async (values) => {
     const data = new FormData();
     data.append('file', values.image)
