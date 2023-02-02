@@ -88,6 +88,23 @@ function Sidebar() {
                         <li><Link>Earned Leaves</Link></li>
                     </ul>
                 </li>
+                
+                <li>
+                    <div class="icon-link">
+                        <Link>
+                            <i class="bx bx-collection"></i>
+                            <span class="link_name">Attendance</span>
+                        </Link>
+                        <i class="bx bxs-chevron-down arrow"></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li>
+                            <Link class="link_name" >Leave</Link>
+                        </li>
+                        <li><Link to='/attendance'>Attendance</Link></li>
+                        <li><Link>Attendance Report</Link></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     )

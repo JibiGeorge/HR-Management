@@ -1,5 +1,6 @@
 import express from 'express';
 import { addAssets, addAssetsCategory, deleteAssets, deleteAssetsCategory, getAllAssetsCategories, getAssetCategoryData, getAssetData, getAssets, updateAsset, updateCategory } from '../controller/assetsController.js';
+import { addAttendance, getAttendanceList } from '../controller/attendanceController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
 import { addEmployee, getAllEmployees, getEmployeeData, updateProfile } from '../controller/employeeController.js';
@@ -54,5 +55,10 @@ router.get('/leaveType/getAll',getAllLeaveTypes)
 router.delete('/leaveType/delete/:id',deleteLeaveType)
 router.get('/leaveType/getLeaveTypeData/:id',getLeaveTypeData)
 router.put('/leaveType/update/',updateLeaveType)
+
+// Attendance
+router.post('/attendance/add',addAttendance )
+router.get('/attendance/getAll',getAttendanceList)
+
 
 export default router;

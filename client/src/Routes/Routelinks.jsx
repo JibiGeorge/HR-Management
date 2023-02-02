@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AssetCategory from '../pages/AssetCategory'
 import Assets from '../pages/Assets'
+import Attendance from '../pages/Attendance'
 import Dashboard from '../pages/Dashboard'
 import Department from '../pages/Department'
 import Designation from '../pages/Designation'
@@ -27,6 +28,7 @@ function Routelinks() {
                 <Route exact path='/assets' element={<Assets/>} />
                 <Route exact path='/holiday' element={<Holiday/>} />
                 <Route exact path='/leave' element={<LeaveType/>} />
+                <Route exact path='/attendance' element={<Attendance/>} />
             </Routes>
         </BrowserRouter>
     )
