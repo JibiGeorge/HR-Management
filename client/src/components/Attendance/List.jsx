@@ -1,10 +1,13 @@
 import React from 'react'
+import { useState } from 'react'
 import { useEffect } from 'react'
 import DataTable from 'react-data-table-component'
 import { toast, Toaster } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { attendanceList } from '../../helper/AttendanceHelper'
 import { setAllAttendance } from '../../redux/features/attendanceSlice'
+import DeleteConfirmation from './DeleteConfirmation'
+import EditForm from './EditForm'
 
 const List = () => {
   const { loading } = useSelector(state => state.alerts)
@@ -15,7 +18,6 @@ const List = () => {
     (async () => {
       try {
         const attendance = await attendanceList()
-        console.log(attendance);
         if (attendance.success) {
           dispatch(setAllAttendance(attendance.data))          
         } else {
@@ -32,7 +34,6 @@ const List = () => {
           });
         }
       } catch (error) {
-        console.log(error.message);
         toast.error('Something Wrong', {
           style: {
             border: '1px solid #713200',
@@ -48,10 +49,30 @@ const List = () => {
     })()
   }, [])
 
+  const [attendanceDeleteModal, setAttendanceDeleteModal] = useState(false);
+  const [attendanceUpdateModal, setAttendanceUpdateModal] = useState(false)
+  const [id, setId] = useState('')
+  const closeDeleteModal = () => setAttendanceDeleteModal(false)
+  const closeUpdateModal = () => setAttendanceUpdateModal(false)
+
+  const handleDelete = (id)=>{
+    setId(id)
+    setAttendanceDeleteModal(true)
+  }
+
+  const handleUpdate = (id)=>{
+    setId(id)
+    setAttendanceUpdateModal(true)
+  }
+
   const column = [
     {
       name: 'Employee Name',
       selector: row => row.employee.username
+    },
+    {
+      name: 'Date',
+      selector: row => row.date
     },
     {
       name: 'Sign In',
@@ -67,8 +88,8 @@ const List = () => {
     },
     {
       name: "Action",
-      cell: (row) => ([<button className='btn editBtn'><i class="las la-edit"></i></button>,
-      <button className='btn deleteBtn' ><i class="las la-trash"></i></button>])
+      cell: (row) => ([<button className='btn editBtn' onClick={()=> handleUpdate(row._id)}><i class="las la-edit"></i></button>,
+      <button className='btn deleteBtn' onClick={()=> handleDelete(row._id)} ><i class="las la-trash"></i></button>])
     }
   ]
   return (
@@ -101,6 +122,9 @@ const List = () => {
           }
           subHeaderAlign='left'
         />}
+
+        {attendanceDeleteModal && <DeleteConfirmation closeModal={closeDeleteModal} id={id} /> }
+        {attendanceUpdateModal && <EditForm closeModal={closeUpdateModal} id={id} /> }
     </>
   )
 }

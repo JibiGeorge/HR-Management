@@ -1,25 +1,29 @@
-import { useFormik } from 'formik'
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
-import { addAttendance, attendanceList } from '../../helper/AttendanceHelper'
+import { attendanceList, getAttendanceData, updateAttendance } from '../../helper/AttendanceHelper'
+import { useFormik } from 'formik'
 import { getAllEmployees } from '../../helper/Employeehelper'
+import { useDispatch } from 'react-redux'
 import { setAllAttendance } from '../../redux/features/attendanceSlice'
 
-const AddModal = ({closeModal}) => {
+const EditForm = ({ closeModal, id }) => {
+    const [attendanceUpdateData, setAttendanceUpdateData] = useState('')
     const [employees, setEmployees] = useState([])
-
     const dispatch = useDispatch()
 
-    useEffect(()=>{
-        (async()=>{
+    useEffect(() => {
+        (async () => {
             try {
+                const attendanceData = await getAttendanceData(id)
                 const employee = await getAllEmployees()
                 setEmployees(employee.list)
+                if (attendanceData.success) {
+                    setAttendanceUpdateData(attendanceData.data);
+                }
             } catch (error) {
-                toast.error('Smomething Wrong...!', {
+                toast.error('Something Wrong', {
                     style: {
                         border: '1px solid #713200',
                         padding: '16px',
@@ -32,15 +36,15 @@ const AddModal = ({closeModal}) => {
                 });
             }
         })()
-    },[])
+    }, [])
 
-    const onSubmit = async (values)=>{
+    const handleSubmit = async () => {
         try {
-            const add = await addAttendance(values)
-            if(add.success){
+            const updating = await updateAttendance(attendanceUpdateData)
+            if(updating.success){
                 const attendance = await attendanceList()
-                dispatch(setAllAttendance(attendance.data))                
-                toast.success(add.message, {
+                dispatch(setAllAttendance(attendance.data))
+                toast.success(updating.message, {
                     style: {
                         border: '1px solid #713200',
                         padding: '16px',
@@ -53,7 +57,7 @@ const AddModal = ({closeModal}) => {
                 });
                 closeModal()
             }else{
-                toast.error(add.message, {
+                toast.error(updating.message, {
                     style: {
                         border: '1px solid #713200',
                         padding: '16px',
@@ -66,7 +70,7 @@ const AddModal = ({closeModal}) => {
                 });
             }
         } catch (error) {
-            toast.error('Not Added. Smomething Went Wrong...!', {
+            toast.error('Not Updated. Something Wrong', {
                 style: {
                     border: '1px solid #713200',
                     padding: '16px',
@@ -80,15 +84,6 @@ const AddModal = ({closeModal}) => {
         }
     }
 
-    const { values, handleSubmit, handleChange} = useFormik({
-        initialValues: {
-            employee: '',
-            date: '',
-            signIn: '',
-            signOut: ''
-        },
-        onSubmit
-    })
     return (
         <>
             <div className="modal-wrapper">
@@ -96,7 +91,7 @@ const AddModal = ({closeModal}) => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <div className="form-header">
-                                <h3>Add Attendance</h3>
+                                <h3>Update Attendance</h3>
                             </div>
                         </div>
                         <div className="modal-body">
@@ -105,11 +100,12 @@ const AddModal = ({closeModal}) => {
                                     <div className="form-group">
                                         <label>Name of the Employee</label>
                                         <select name="employee" id="employee"
-                                        value={values.employee} onChange={handleChange} >
+                                            value={attendanceUpdateData ? attendanceUpdateData.employee : ''}
+                                            onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, employee: e.target.value })} >
                                             <option value="">Select A Category</option>
-                                            {employees? employees.map(values =>{
-                                            return(
-                                                <option value={values._id} >{values.username}</option>
+                                            {employees ? employees.map(values => {
+                                                return (
+                                                    <option value={values._id}>{values.username}</option>
                                                 )
                                             }) : ''}
                                         </select>
@@ -119,21 +115,24 @@ const AddModal = ({closeModal}) => {
                                     <div className="form-group">
                                         <label>Date</label>
                                         <input type="date" className='form-control' id='date'
-                                        value={values.date} onChange={handleChange} />
+                                            defaultValue={attendanceUpdateData ? new Date(attendanceUpdateData.date).toISOString().slice(0, 10) : ''}
+                                            onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, date: e.target.value })} />
                                     </div>
                                 </div>
                                 <div className="col-sm-6 mb-2">
                                     <div className="form-group">
                                         <label>Sign In Time</label>
                                         <input type="time" className='form-control' id='signIn'
-                                        value={values.signIn} onChange={handleChange} />
+                                            value={attendanceUpdateData ? attendanceUpdateData.signIn : ''}
+                                            onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, signIn: e.target.value })}  />
                                     </div>
                                 </div>
                                 <div className="col-sm-6 mb-2">
                                     <div className="form-group">
                                         <label>Sign Out Time</label>
                                         <input type="time" className='form-control' id='signOut'
-                                        value={values.signOut} onChange={handleChange} />
+                                            value={attendanceUpdateData ? attendanceUpdateData.signOut : ''}
+                                            onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, signOut: e.target.value })}  />
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +141,7 @@ const AddModal = ({closeModal}) => {
                             <div className="modal-btn delete-action">
                                 <div className="row">
                                     <div className="col-6">
-                                        <button className='btn btn-primary' onClick={handleSubmit}>Save</button>
+                                        <button className='btn btn-primary' onClick={handleSubmit}>Update</button>
                                     </div>
                                     <div className="col-6">
                                         <button className='btn btn-primary' onClick={closeModal}>Cancel</button>
@@ -157,4 +156,4 @@ const AddModal = ({closeModal}) => {
     )
 }
 
-export default AddModal
+export default EditForm
