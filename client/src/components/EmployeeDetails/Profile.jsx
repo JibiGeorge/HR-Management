@@ -1,11 +1,10 @@
 import { useFormik } from 'formik';
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProfile } from '../../helper/Employeehelper';
+import { getEmployeeData, updateProfile } from '../../helper/Employeehelper';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
-import { useEffect } from 'react';
+import { setEmpIndividualData } from '../../redux/features/employee';
 
 function Profile(props) {
     const profileData = props.profile;
@@ -14,7 +13,6 @@ function Profile(props) {
     const { loading } = useSelector(state => state.alerts);
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     // Profile Updation
     let empID = profileData._id
@@ -23,6 +21,9 @@ function Profile(props) {
         try {
             const status = await updateProfile(values, empID)
             if (status.sucess) {
+                const employeeData = await getEmployeeData(empID);
+                let result = employeeData.data;
+                dispatch(setEmpIndividualData(result.data));
                 toast.success(status.message, {
                     style: {
                         border: '1px solid #713200',
@@ -34,7 +35,8 @@ function Profile(props) {
                         secondary: '#FFFAEE',
                     },
                 });
-                navigate('/employee')
+                closeProfileUpdateModal()
+                dispatch(hideLoading())
             } else {
                 toast.error(status.message, {
                     style: {
@@ -47,6 +49,7 @@ function Profile(props) {
                         secondary: '#FFFAEE',
                     },
                 });
+                dispatch(hideLoading())
             }
         } catch (error) {
             toast.error('Something Wrong...!', {
@@ -72,12 +75,15 @@ function Profile(props) {
             contactNumber: profileData?.contactNumber,
             email: profileData?.email,
             dateofBirth: profileData?.dateofBirth,
-            address: profileData?.address,
+            place: profileData?.place,
             gender: profileData?.gender,
             role: profileData?.role
         },
         onSubmit
     })
+
+    const [showProfileUpddateModal, setShowProfileUpddateModal] = useState(false);
+    const closeProfileUpdateModal = () => setShowProfileUpddateModal(false);
 
     return (
         <>
@@ -88,7 +94,7 @@ function Profile(props) {
             <div className="profile">
                 <div className="row">
                     <div className="edit">
-                        <button className='edit-btn' data-bs-toggle="modal" data-bs-target="#profileModal">
+                        <button className='edit-btn' onClick={() => setShowProfileUpddateModal(true)}>
                             <i className='fa fa-pencil'></i>
                         </button>
                     </div>
@@ -104,7 +110,8 @@ function Profile(props) {
                                 <div className='empID'>Employee ID : {profileData?.empCode}</div>
                                 <div className='doj'>Date of join :{profileData?.dateofJoin ?
                                     new Date(profileData.dateofJoin).toLocaleDateString('en-GB', {
-                                        day: 'numeric', month: 'short', year: 'numeric' }) : ''}
+                                        day: 'numeric', month: 'short', year: 'numeric'
+                                    }) : ''}
                                 </div>
                                 <div className='status'>Status : <span>Active</span></div>
                             </div>
@@ -122,13 +129,14 @@ function Profile(props) {
                             </li>
                             <li>
                                 <div className="title">Birthday:</div>
-                                <div className="text">{profileData?.dateofBirth ? 
-                                new Date(profileData?.dateofBirth).toLocaleDateString('en-GB', {
-                                day: 'numeric', month: 'short', year: 'numeric'}) : '' }</div>
+                                <div className="text">{profileData?.dateofBirth ?
+                                    new Date(profileData?.dateofBirth).toLocaleDateString('en-GB', {
+                                        day: 'numeric', month: 'short', year: 'numeric'
+                                    }) : ''}</div>
                             </li>
                             <li>
-                                <div className="title">Address:</div>
-                                <div className="text">{profileData.address ? profileData.address : 'Nil'}</div>
+                                <div className="title">Place:</div>
+                                <div className="text">{profileData.place ? profileData.place : 'Nil'}</div>
                             </li>
                             <li>
                                 <div className="title">Gender:</div>
@@ -142,18 +150,16 @@ function Profile(props) {
                     </div>
                 </div>
 
-                {/* Modal */}
-                <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 className='modal-title'>Update Profile Info</h5>
-                                <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">
-                                    <span>x</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form onSubmit={handleSubmit}>
+                {showProfileUpddateModal &&
+                    <div className="modal-wrapper">
+                        <div className="modal-container">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <div className="form-header">
+                                        <h3>Update Profile Info</h3>
+                                    </div>
+                                </div>
+                                <div className="modal-body">
                                     <div className="row">
                                         <div className="col-sm-6">
                                             <div className="form-group">
@@ -189,8 +195,8 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Date of Join</label>
                                                 <input type="date" className='form-control' id='dateofJoin'
-                                                    defaultValue={values.dateofJoin ? 
-                                                    new Date(values?.dateofJoin).toISOString().slice(0,10) : ''}
+                                                    defaultValue={values.dateofJoin ?
+                                                        new Date(values?.dateofJoin).toISOString().slice(0, 10) : ''}
                                                     onChange={handleChange} />
                                             </div>
                                         </div>
@@ -214,8 +220,8 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Date of Birthday</label>
                                                 <input type="date" className='form-control' id='dateofBirth'
-                                                    defaultValue={values?.dateofBirth ? 
-                                                        new Date(values.dateofBirth).toISOString().slice(0,10) : ''}
+                                                    defaultValue={values?.dateofBirth ?
+                                                        new Date(values.dateofBirth).toISOString().slice(0, 10) : ''}
                                                     onChange={handleChange} />
                                             </div>
                                         </div>
@@ -223,7 +229,7 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Address</label>
                                                 <input type="text" className='form-control' id='address'
-                                                    value={values?.address}
+                                                    value={values?.place}
                                                     onChange={handleChange} />
                                             </div>
                                         </div>
@@ -254,19 +260,30 @@ function Profile(props) {
                                             </div>
                                         </div>
                                     </div>
-                                    {loading && <div class="d-flex justify-content-center">
-                                        <div class="spinner-border text-primary" role="status">
-                                            <span class="sr-only">Loading...</span>
+                                </div>
+                                <div className="modal-footer">
+                                    <div className="modal-btn delete-action">
+                                        <div className="row">
+                                            {loading && <div class="d-flex justify-content-center">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>}
+                                            {!loading &&
+                                                <div className='d-flex'>
+                                                    <div className="col-6">
+                                                        <button className='btn btn-primary' onClick={handleSubmit}>Update</button>
+                                                    </div>
+                                                    <div className="col-6">
+                                                        <button className='btn btn-primary' onClick={closeProfileUpdateModal}>Cancel</button>
+                                                    </div>
+                                                </div>}
                                         </div>
-                                    </div>}
-                                    {!loading && <div className="submit-section">
-                                        <button className='btn btn-primary submit-btn' type='submit'>Submit</button>
-                                    </div>}
-                                </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>}
             </div>
         </>
     )

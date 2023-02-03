@@ -56,13 +56,12 @@ export const updateProfile = async (data, userID)=>{
             data: data
         })
         const result = updateprofileStatus.data
-        console.log(result);
         if(result.sucess){
             return (result)
         }else{
             return (result)
         }
-    } catch (error) {        
-        return ({message :"internal"})        
+    } catch (error) {
+        return { error: "Internal Server Error...!" }
     }
 }

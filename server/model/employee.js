@@ -64,6 +64,9 @@ const employeeSchema = Schema({
     },
     image: {
         type: String
+    },
+    place: {
+        type: String
     }
 });
 
