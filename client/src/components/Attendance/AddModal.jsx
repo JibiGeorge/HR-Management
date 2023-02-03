@@ -141,7 +141,7 @@ const AddModal = ({closeModal}) => {
                         <div className="modal-footer">
                             <div className="modal-btn delete-action">
                                 <div className="row">
-                                    <div className="col-6">
+                                    <div className="col-6 justify-center">
                                         <button className='btn btn-primary' onClick={handleSubmit}>Save</button>
                                     </div>
                                     <div className="col-6">

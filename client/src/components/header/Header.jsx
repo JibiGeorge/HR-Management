@@ -31,10 +31,10 @@ function Header() {
   setInterval(updateTime, 1000)
 
   return (
-    <div class="home-section d-flex justify-content-between">
-      <div class="home-content">
-        <i class="bx bx-menu" onClick={navbarbtn}></i>
-        <span class="text">Drop Down Menu</span>
+    <div className="home-section d-flex justify-content-between">
+      <div className="home-content">
+        <i className="bx bx-menu" onClick={navbarbtn}></i>
+        <span className="text">Drop Down Menu</span>
       </div>
       <div className='d-flex home-content'>
         <div className="timer">

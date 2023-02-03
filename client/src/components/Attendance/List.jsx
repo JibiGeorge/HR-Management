@@ -68,23 +68,23 @@ const List = () => {
   const column = [
     {
       name: 'Employee Name',
-      selector: row => row.employee.username
+      selector: row => row.employee?.username
     },
     {
       name: 'Date',
-      selector: row => row.date
+      selector: row => row?.date
     },
     {
       name: 'Sign In',
-      selector: row => row.signIn
+      selector: row => row?.signIn
     },
     {
       name: 'Sign Out',
-      selector: row => row.signOut
+      selector: row => row?.signOut
     },
     {
       name: 'Total Time',
-      selector: row => row.totalTime
+      selector: row => row?.totalTime
     },
     {
       name: "Action",

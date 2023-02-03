@@ -7,7 +7,8 @@
     margin-bottom: 1rem;
 }
 
-.employee input.form-control {
+.employee input.form-control,
+.employee select.form-control {
     height: 50px;
     padding: 21px 12px 6px;
     background: #2e3439;
@@ -33,7 +34,8 @@
     margin-bottom: 0;
 }
 
-.employee input.form-control:focus {
+.employee input.form-control:focus,
+.employee select.form-control:focus {
     background-color: transparent;
     border-color: #ff9b44;
     box-shadow: none;
@@ -41,13 +43,21 @@
     outline: 0;
 }
 
-.employee .form-focus .form-control:focus~.focus-label {
+.employee .form-focus.focused .focus-label{
+    opacity: 1;
+    font-weight: 300;
+    top: -14px;
+    font-size: 12px;
+    z-index: 1
+}
+
+/* .employee .form-focus .form-control:focus~.focus-label {
     opacity: 1;
     font-weight: 300;
     top: -14px;
     font-size: 12px;
     z-index: 1;
-}
+} */
 
 .employee .profile-widget {
     background-color: #16191c;
@@ -121,4 +131,19 @@
     color: #8e8e8e !important;
     font-size: 80%;
     font-weight: 400;
+}
+
+.employee .search-btn button{
+    min-height: 50px;
+    background: #55ce63;
+    padding: 12px;
+    text-transform: uppercase;
+    border: 1px solid #55ce63;
+    border-radius: 5px;
+    width: 100%;
+    color: #fff;
+    font-weight: 600;
+}
+.employee .search-btn button:hover{
+    background: #29b039;
 }

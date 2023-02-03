@@ -4,7 +4,7 @@ import PageHeader from './PageHeader'
 
 function Body() {
   return (
-    <div class="section-body">
+    <div className="section-body">
       <PageHeader />
       <Cards />
     </div>
