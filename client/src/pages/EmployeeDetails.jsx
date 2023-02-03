@@ -8,6 +8,10 @@ import { getEmployeeData } from '../helper/Employeehelper'
 import toast,{ Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { setEmpIndividualData } from '../redux/features/employee'
+import { getAllDepartments } from '../helper/Departmenthelper'
+import { getAllDesignation } from '../helper/Designationhelper'
+import { setDepartmentData } from '../redux/features/departmentSlice'
+import { setDesignatonData } from '../redux/features/designationSlice'
 
 function EmployeeDetails() {
     const dispatch = useDispatch();
@@ -16,10 +20,14 @@ function EmployeeDetails() {
     useEffect(() => {
         (async () => {
             try {
-                const employeeData = await getEmployeeData(empID)
+                const employeeData = await getEmployeeData(empID);
+                const departmentList = await getAllDepartments();
+                const designationList = await getAllDesignation();
                 let result = employeeData.data
                 if(result.success){
-                    dispatch(setEmpIndividualData(result.data))
+                    dispatch(setEmpIndividualData(result.data));
+                    dispatch(setDepartmentData(departmentList));
+                    dispatch(setDesignatonData(designationList.data));
                 }else{
                     toast.error('result.data.message', {
                         style: {

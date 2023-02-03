@@ -42,16 +42,6 @@ export const getEmployeeData = async (empID) => {
             url: '/api/employee/getEmployeeData/?id=' + empID,
             method: 'GET'
         })
-        response.data.data.dateofBirth = new Date(response.data.data.dateofBirth).toLocaleDateString('en-GB', {
-            day: 'numeric', month: 'short', year: 'numeric'
-        });
-        response.data.data.dateofJoin = new Date(response.data.data.dateofJoin).toLocaleDateString('en-GB', {
-            day: 'numeric', month: 'short', year: 'numeric'
-        });
-        
-        response.data.data.dateofLeave = new Date(response.data.data.dateofLeave).toLocaleDateString('en-GB', {
-            day: 'numeric', month: 'short', year: 'numeric'
-        });
         return (response)
     } catch (error) {
         return { error: "Internal Server Error...!" }

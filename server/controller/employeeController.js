@@ -68,7 +68,6 @@ export const getEmployeeData = async (req,res)=>{
     try {
         let id = req.query.id
         const data = await Employee.findOne({_id:id}).populate('department').populate('designation')
-        console.log(data);
         return res.status(200).json({success:true, data})
     } catch (error) {
         return res.json({success:false, error: 'Internal Server Error...!'})        
@@ -92,7 +91,6 @@ export const updateProfile = async (req,res)=>{
         })
         return res.status(200).json({sucess:true, employee, message:"SuccessFully Updated"})
     } catch (error) {
-        console.log(error.message);
         return res.json({sucess:false,  message:"Internal Server Error"})
     }
 }

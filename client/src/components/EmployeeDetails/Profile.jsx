@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from '../../helper/Employeehelper';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
+import { useEffect } from 'react';
 
 function Profile(props) {
     const profileData = props.profile;
@@ -63,24 +64,21 @@ function Profile(props) {
         dispatch(hideLoading())
     }
 
-    let dateofjoin = profileData.dateofJoin;
-    dateofjoin = new Date(dateofjoin).toISOString().slice(0, 10)
-    let dateofBirth = profileData.dateofBirth;
-    dateofBirth = new Date(dateofBirth).toISOString().slice(0, 10)
     const { values, handleChange, handleSubmit } = useFormik({
         initialValues: {
-            department: profileData.department._id,
-            designation: profileData.designation._id,
-            dateofJoin: dateofjoin,
-            contactNumber: profileData.contactNumber,
-            email: profileData.email,
-            dateofBirth: dateofBirth,
-            address: profileData.address,
-            gender: profileData.gender,
-            role: profileData.role
+            department: profileData.department?._id,
+            designation: profileData.designation?._id,
+            dateofJoin: profileData?.dateofJoin,
+            contactNumber: profileData?.contactNumber,
+            email: profileData?.email,
+            dateofBirth: profileData?.dateofBirth,
+            address: profileData?.address,
+            gender: profileData?.gender,
+            role: profileData?.role
         },
         onSubmit
     })
+
     return (
         <>
             <Toaster
@@ -97,14 +95,17 @@ function Profile(props) {
                     <div className='col-lg-5 profile-wrap'>
                         <div className="row">
                             <div className='col-lg-4'>
-                                <img className="profile-img" src={profileData.image} alt="" />
+                                <img className="profile-img" src={profileData?.image} alt="" />
                             </div>
                             <div className='col-lg-8 profile-info'>
-                                <h3 className='username'>{profileData.firstName} {profileData.lastName}</h3>
-                                <h6 className='designation'>{profileData.designation.designation}</h6>
-                                <div className='department'>{profileData.department.department}</div>
-                                <div className='empID'>Employee ID : {profileData.empCode}</div>
-                                <div className='doj'>Date of join : {profileData.dateofJoin}</div>
+                                <h3 className='username'>{profileData?.firstName} {profileData?.lastName}</h3>
+                                <h6 className='designation'>{profileData.designation?.designation}</h6>
+                                <div className='department'>{profileData.department?.department}</div>
+                                <div className='empID'>Employee ID : {profileData?.empCode}</div>
+                                <div className='doj'>Date of join :{profileData?.dateofJoin ?
+                                    new Date(profileData.dateofJoin).toLocaleDateString('en-GB', {
+                                        day: 'numeric', month: 'short', year: 'numeric' }) : ''}
+                                </div>
                                 <div className='status'>Status : <span>Active</span></div>
                             </div>
                         </div>
@@ -113,15 +114,17 @@ function Profile(props) {
                         <ul className="personal-info">
                             <li>
                                 <div className="title">Phone No:</div>
-                                <div className="text">{profileData.contactNumber}</div>
+                                <div className="text">{profileData?.contactNumber}</div>
                             </li>
                             <li>
                                 <div className="title">Email:</div>
-                                <div className="text">{profileData.email}</div>
+                                <div className="text">{profileData?.email}</div>
                             </li>
                             <li>
                                 <div className="title">Birthday:</div>
-                                <div className="text">{profileData.dateofBirth}</div>
+                                <div className="text">{profileData?.dateofBirth ? 
+                                new Date(profileData?.dateofBirth).toLocaleDateString('en-GB', {
+                                day: 'numeric', month: 'short', year: 'numeric'}) : '' }</div>
                             </li>
                             <li>
                                 <div className="title">Address:</div>
@@ -129,11 +132,11 @@ function Profile(props) {
                             </li>
                             <li>
                                 <div className="title">Gender:</div>
-                                <div className="text">{profileData.gender}</div>
+                                <div className="text">{profileData?.gender}</div>
                             </li>
                             <li>
                                 <div className="title">User Type:</div>
-                                <div className="text">{profileData.role}</div>
+                                <div className="text">{profileData?.role}</div>
                             </li>
                         </ul>
                     </div>
@@ -156,12 +159,12 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Designation</label>
                                                 <select name="" id="designation"
-                                                    value={values.designation}
+                                                    value={values?.designation}
                                                     onChange={handleChange}>
                                                     <option value="">Select Designation</option>
                                                     {designationDetails.map(values => {
                                                         return (
-                                                            <option value={values._id}>{values.designation}</option>
+                                                            <option value={values?._id}>{values?.designation}</option>
                                                         )
                                                     })}
                                                 </select>
@@ -171,12 +174,12 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Department</label>
                                                 <select name="" id="department"
-                                                    value={values.department}
+                                                    value={values?.department}
                                                     onChange={handleChange}>
                                                     <option value="">Select Department</option>
                                                     {departmentDetails.map(values => {
                                                         return (
-                                                            <option value={values._id}>{values.department}</option>
+                                                            <option value={values?._id}>{values?.department}</option>
                                                         )
                                                     })}
                                                 </select>
@@ -186,7 +189,8 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Date of Join</label>
                                                 <input type="date" className='form-control' id='dateofJoin'
-                                                    defaultValue={values.dateofJoin}
+                                                    defaultValue={values.dateofJoin ? 
+                                                    new Date(values?.dateofJoin).toISOString().slice(0,10) : ''}
                                                     onChange={handleChange} />
                                             </div>
                                         </div>
@@ -194,7 +198,7 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Phone No</label>
                                                 <input type="number" className='form-control' id='contactNumber'
-                                                    value={values.contactNumber}
+                                                    value={values?.contactNumber}
                                                     onChange={handleChange} />
                                             </div>
                                         </div>
@@ -202,7 +206,7 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Email</label>
                                                 <input type="email" className='form-control' id='email'
-                                                    value={values.email}
+                                                    value={values?.email}
                                                     onChange={handleChange} />
                                             </div>
                                         </div>
@@ -210,7 +214,8 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Date of Birthday</label>
                                                 <input type="date" className='form-control' id='dateofBirth'
-                                                    value={values.dateofBirth}
+                                                    defaultValue={values?.dateofBirth ? 
+                                                        new Date(values.dateofBirth).toISOString().slice(0,10) : ''}
                                                     onChange={handleChange} />
                                             </div>
                                         </div>
@@ -218,7 +223,7 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Address</label>
                                                 <input type="text" className='form-control' id='address'
-                                                    value={values.address}
+                                                    value={values?.address}
                                                     onChange={handleChange} />
                                             </div>
                                         </div>
@@ -226,7 +231,7 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>Gender</label>
                                                 <select name="" id="gender"
-                                                    value={values.gender}
+                                                    value={values?.gender}
                                                     onChange={handleChange}>
                                                     <option value="">Select Gender</option>
                                                     <option value="Male">Male</option>
@@ -239,7 +244,7 @@ function Profile(props) {
                                             <div className="form-group">
                                                 <label>UserType</label>
                                                 <select name="" id="role"
-                                                    value={values.role}
+                                                    value={values?.role}
                                                     onChange={handleChange}>
                                                     <option value="">Select Role</option>
                                                     <option value="Employee">Employee</option>
