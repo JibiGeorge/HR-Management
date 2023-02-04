@@ -88,7 +88,7 @@ const EditAddress = ({ closeModal, id }) => {
                                     <div className="form-group">
                                         <label>Permanent Address</label>
                                         <textarea class="form-control" placeholder="Permanent Address"
-                                            value={updatingData.permanentAddress}
+                                            value={updatingData?.permanentAddress}
                                             onChange={(e)=> setUpdatingData({...updatingData, permanentAddress: e.target.value})}
                                         ></textarea>
                                     </div>
@@ -97,7 +97,7 @@ const EditAddress = ({ closeModal, id }) => {
                                     <div className="form-group">
                                         <label>Temprory Address</label>
                                         <textarea class="form-control" placeholder="Temprory Address"
-                                            value={updatingData.temproryAddress}
+                                            value={updatingData?.temproryAddress}
                                             onChange={(e)=> setUpdatingData({...updatingData, temproryAddress: e.target.value})}
                                         ></textarea>
                                     </div>

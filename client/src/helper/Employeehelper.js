@@ -104,3 +104,28 @@ export const employeeAddressAdd = async (datas, id)=>{
         return {message: "Connection Error..!"}
     }
 }
+
+export const getBankAccount = async (id)=>{
+    try {
+        const getAccountData = await instance({
+            url: '/api/employee/bankAccount/get/'+id,
+            method: 'GET'
+        })
+        return getAccountData.data
+    } catch (error) {
+        return {message: 'Connection Error'};
+    }
+}
+
+export const updateBankAccount = async (datas, empID)=>{
+    try {
+        const update = await instance({
+            url: '/api/employee/bankAccount/add/'+empID,
+            method: 'PUT',
+            data: datas
+        })
+        return update.data;
+    } catch (error) {
+        return {message: 'Connection Error'};
+    }
+}

@@ -158,11 +158,11 @@ function Row1(props) {
             <h3 className='title'>Address</h3>
             <div className="permanent-address">
               <h4 className="sub-title">Permanent Address</h4>
-              <span className='text'>{employeeAddress?.permanentAddress}</span>
+              <span className='text'>{employeeAddress?.permanentAddress ? employeeAddress.permanentAddress : 'Nill'}</span>
             </div>
             <div className="temprory-address">
               <h4 className="sub-title">Temprory Address</h4>
-              <span className='text'>{employeeAddress?.temproryAddress}</span>
+              <span className='text'>{employeeAddress?.temproryAddress ? employeeAddress.temproryAddress : 'Nill'}</span>
             </div>
           </div>
         </div>

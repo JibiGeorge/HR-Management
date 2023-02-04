@@ -10,11 +10,11 @@ import { useSelector } from 'react-redux';
 function Body() {
   const {employeeData} =  useSelector(state => state.employees);
   return (
-    <div class="section-body employee">
+    <div className="section-body employee">
       <Header/>
       <Profile profile={employeeData}/>
       <Row1 profile={employeeData}/>
-      <Row2/>
+      <Row2 profile={employeeData}/>
       <Row3/>
     </div>
   )
