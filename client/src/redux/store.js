@@ -13,6 +13,7 @@ import { assetsSlice } from './features/assetsSlice';
 import { holidaySlice } from './features/holidaySlice';
 import { leaveTypeSlice } from './features/leaveTypeSlice';
 import { attendanceSlice } from './features/attendanceSlice';
+import { addressSlice } from './features/employeeAddress';
 
 const persistConfig = {
     key: 'root',
@@ -30,7 +31,8 @@ const reducer = combineReducers({
     assets: assetsSlice.reducer,
     holiday: holidaySlice.reducer,
     leaveType: leaveTypeSlice.reducer,
-    attendance: attendanceSlice.reducer
+    attendance: attendanceSlice.reducer,
+    employeeAddress: addressSlice.reducer
 });
 
 const persistReduhcer = persistReducer(persistConfig, reducer);

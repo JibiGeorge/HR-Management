@@ -67,7 +67,14 @@ const employeeSchema = Schema({
     },
     place: {
         type: String
-    }
+    },
+    nationality:{
+        type: String
+    },
+    religion: String,
+    maritialStatus: String,
+    passportNumber: String
+
 });
 
 const Employee = model('Employee', employeeSchema);

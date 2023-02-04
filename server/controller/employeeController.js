@@ -64,21 +64,21 @@ export const getAllEmployees = async (req, res) => {
     }
 }
 
-export const getEmployeeData = async (req,res)=>{
+export const getEmployeeData = async (req, res) => {
     try {
         let id = req.query.id
-        const data = await Employee.findOne({_id:id}).populate('department').populate('designation')
-        return res.status(200).json({success:true, data})
+        const data = await Employee.findOne({ _id: id }).populate('department').populate('designation')
+        return res.status(200).json({ success: true, data })
     } catch (error) {
-        return res.json({success:false, error: 'Internal Server Error...!'})        
+        return res.json({ success: false, error: 'Internal Server Error...!' })
     }
 }
 
-export const updateProfile = async (req,res)=>{
+export const updateProfile = async (req, res) => {
     const userID = req.query.id;
     const data = req.body;
     try {
-        const employee = await Employee.findByIdAndUpdate({_id:userID},{
+        const employee = await Employee.findByIdAndUpdate({ _id: userID }, {
             department: data.department,
             designation: data.designation,
             dateofJoin: data.dateofJoin,
@@ -89,8 +89,30 @@ export const updateProfile = async (req,res)=>{
             gender: data.gender,
             role: data.role
         })
-        return res.status(200).json({sucess:true, employee, message:"SuccessFully Updated"})
+        return res.status(200).json({ sucess: true, employee, message: "SuccessFully Updated" })
     } catch (error) {
-        return res.json({sucess:false,  message:"Internal Server Error"})
+        return res.json({ sucess: false, message: "Internal Server Error" })
+    }
+}
+
+export const updatePersonal = async (req, res) => {
+    const empID = req.params.id;
+    const data = req.body;
+    try {
+        const update = await Employee.findByIdAndUpdate({ _id: empID }, {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            username: data.username,
+            bloodGroup: data.bloodGroup,
+            panNumber: data.panNumber,
+            passportNumber: data.passportNumber,
+            nationality: data.nationality,
+            religion: data.religion,
+            maritialStatus: data.maritialStatus
+        }).then((response)=>{
+            res.status(200).json({success: true, message: "Updated Successfully❤❤"})
+        })
+    } catch (error) {
+        return res.json({ success: false, message: "Internal Server Error..!" })
     }
 }

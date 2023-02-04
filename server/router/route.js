@@ -3,7 +3,8 @@ import { addAssets, addAssetsCategory, deleteAssets, deleteAssetsCategory, getAl
 import { addAttendance, deleteAttendance, getAttendanceData, getAttendanceList, updateAttendance } from '../controller/attendanceController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
-import { addEmployee, getAllEmployees, getEmployeeData, updateProfile } from '../controller/employeeController.js';
+import { addEmployeeAddress, getEmployeeAddress } from '../controller/employeeAddressController.js';
+import { addEmployee, getAllEmployees, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
 import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
 import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
 import { login, verifyToken } from '../controller/login.js';
@@ -27,6 +28,7 @@ router.post('/employee/add', addEmployee)
 router.get('/employee/getAllEmployees', getAllEmployees)
 router.get('/employee/getEmployeeData',getEmployeeData)
 router.put('/employee/updateProfile',updateProfile)
+router.put('/employee/personalinfo/update/:id',updatePersonal)
 
 // Asstes Category
 router.post('/assetsCategory/add',addAssetsCategory)
@@ -62,6 +64,10 @@ router.get('/attendance/getAll',getAttendanceList)
 router.delete('/attendance/delete/:id',deleteAttendance)
 router.get('/attendance/getData/:id',getAttendanceData)
 router.put('/attendance/update',updateAttendance)
+
+// Employee Address
+router.get('/employee/address/:id',getEmployeeAddress)
+router.post('/employee/address/add/:id',addEmployeeAddress)
 
 
 export default router;

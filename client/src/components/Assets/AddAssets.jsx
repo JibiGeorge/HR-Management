@@ -21,7 +21,7 @@ const AddAssets = ({ closeModal }) => {
     const onSubmit = async (values) => {
         try {
             const response = await addAssets(values);
-            if(response.success){
+            if (response.success) {
                 const assets = await getAssets()
                 dispatch(setAssets(assets.assets))
                 toast.success(response.message, {
@@ -36,7 +36,7 @@ const AddAssets = ({ closeModal }) => {
                     },
                 });
                 closeModal()
-            }else if(response.exist){
+            } else if (response.exist) {
                 toast.error(response.message, {
                     style: {
                         border: '1px solid #713200',
@@ -48,7 +48,7 @@ const AddAssets = ({ closeModal }) => {
                         secondary: '#FFFAEE',
                     },
                 });
-            }else{
+            } else {
                 toast.error(response.message, {
                     style: {
                         border: '1px solid #713200',

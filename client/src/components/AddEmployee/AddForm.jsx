@@ -9,10 +9,12 @@ import { addEmployee } from '../../helper/Employeehelper';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
+import { useNavigate } from 'react-router-dom';
 
 function AddForm() {
 
     var dispatch = useDispatch();
+    const navigate = useNavigate()
     const { loading } = useSelector(state => state.alerts)
 
     const [designation, setDesignation] = useState([]);
@@ -35,6 +37,7 @@ function AddForm() {
                     },
                 });
                 actions.resetForm();
+                navigate('/employee')
             } else {
                 toast.error(result.data.message, {
                     style: {

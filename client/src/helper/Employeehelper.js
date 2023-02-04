@@ -65,3 +65,42 @@ export const updateProfile = async (data, userID)=>{
         return { error: "Internal Server Error...!" }
     }
 }
+
+export const updateEmpPersonal = async (datas, empID)=>{
+    try {
+        const updatePersonalInfo = await instance({
+            url: '/api/employee/personalinfo/update/'+empID,
+            method: 'PUT',
+            data: datas
+        }) 
+        return updatePersonalInfo.data;
+    } catch (error) {
+        return {message: "Connection Error"};
+    }
+}
+
+export const getEmployeeAddressData = async (id)=>{
+    try {
+        const getData = await instance({
+            url: '/api/employee/address/'+id,
+            method: 'GET'
+        })
+        return getData.data;
+    } catch (error) {
+        return {message: "Connection Error..!"}
+    }
+}
+
+export const employeeAddressAdd = async (datas, id)=>{
+    try {
+        const addAddress = await instance({
+            url: '/api/employee/address/add/'+id,
+            method: 'POST',
+            data: datas
+        })
+        return addAddress.data;
+    } catch (error) {
+        console.log('error',error.message);
+        return {message: "Connection Error..!"}
+    }
+}
