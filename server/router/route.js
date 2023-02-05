@@ -5,6 +5,7 @@ import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } fr
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
 import { addEmployeeAddress, getEmployeeAddress } from '../controller/employeeAddressController.js';
 import { addEmployeeBankAccount, getEmployeeBankAccount } from '../controller/employeeBankAccount.js';
+import { addEmergencyContacts, getEmergencyContacts } from '../controller/employeeContacts.js';
 import { addEmployee, getAllEmployees, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
 import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
 import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
@@ -73,6 +74,10 @@ router.post('/employee/address/add/:id',addEmployeeAddress)
 // Employee Bank Account
 router.put('/employee/bankAccount/add/:id',addEmployeeBankAccount)
 router.get('/employee/bankAccount/get/:id',getEmployeeBankAccount)
+
+// Employee Emergency contacts
+router.put('/employee/contacts/add/:id',addEmergencyContacts);
+router.get('/employee/contatcts/get/:id',getEmergencyContacts)
 
 
 export default router;

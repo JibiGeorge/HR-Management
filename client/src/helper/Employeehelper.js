@@ -126,6 +126,31 @@ export const updateBankAccount = async (datas, empID)=>{
         })
         return update.data;
     } catch (error) {
-        return {message: 'Connection Error'};
+        return {message: 'Connection Error.'};
+    }
+}
+
+export const getEmergencyContacts = async (empID)=>{
+    try {
+        const getContacts = await instance({
+            url: '/api/employee/contatcts/get/'+empID,
+            method: 'GET'
+        })
+        return getContacts.data;
+    } catch (error) {
+        return {message: 'Connection Error..!'}
+    }
+}
+
+export const updateEmployeeContactDetails = async (datas, empID)=>{
+    try {
+        const update = await instance({
+            url: '/api/employee/contacts/add/'+empID,
+            method: 'PUT',
+            data: datas
+        })
+        return update.data
+    } catch (error) {
+        return {message: 'Connection Error.'}
     }
 }

@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBankAccount } from '../../helper/Employeehelper';
+import { getBankAccount, getEmergencyContacts } from '../../helper/Employeehelper';
 import BankAccountModal from './BankAccountModal';
 import { setBankAccount } from '../../redux/features/bankAccountSlice'
+import EmergencyContactModal from './EmergencyContactModal';
+import { setContacts } from '../../redux/features/contactsSlice';
 
 function Row2(props) {
     const empID = props.profile._id;
     const dispatch = useDispatch()
 
     const { empBankAccount } = useSelector(state => state.empBankAccount)
+    const {contacts} = useSelector(state => state.emergencyContacts)
 
     const [showModalBankAccount, setShowModalBankAccount] = useState(false);
     const closeBankAccountModal = () => setShowModalBankAccount(false)
+
+    const [showModalEmergencyContact, setShowModalEmergencyContact] = useState(false);
+    const closeEmergencyContactModal = () => setShowModalEmergencyContact(false)
 
     useEffect(()=>{
         (async()=>{
@@ -22,6 +28,41 @@ function Row2(props) {
                     dispatch(setBankAccount(accountDetails.account))
                 }else{
                     toast.error(accountDetails.message, {
+                        style: {
+                          border: '1px solid #713200',
+                          padding: '16px',
+                          color: '#713200',
+                        },
+                        iconTheme: {
+                          primary: '#713200',
+                          secondary: '#FFFAEE',
+                        },
+                      });
+                }
+            } catch (error) {
+                toast.error('Something Went Problem..!', {
+                    style: {
+                      border: '1px solid #713200',
+                      padding: '16px',
+                      color: '#713200',
+                    },
+                    iconTheme: {
+                      primary: '#713200',
+                      secondary: '#FFFAEE',
+                    },
+                  });
+            }
+        })();
+    },[]);
+    
+    useEffect(()=>{
+        (async()=>{
+            try {
+                const contacts = await getEmergencyContacts(empID);
+                if(contacts.success){
+                    dispatch(setContacts(contacts.contacts))
+                }else{
+                    toast.error(contacts.message, {
                         style: {
                           border: '1px solid #713200',
                           padding: '16px',
@@ -86,10 +127,10 @@ function Row2(props) {
                 </div>
                 <div className="col-lg-6 box2">
                     <div className='row2'>
-                        <div className="edit">
-                            <a href="" className='edit-btn'>
+                    <div className="edit">
+                            <button className='edit-btn' onClick={() => setShowModalEmergencyContact(true)}>
                                 <i className='fa fa-pencil'></i>
-                            </a>
+                            </button>
                         </div>
                         <h3 className='title'>Emergency Contact</h3>
                         <div className="permanent-address">
@@ -97,15 +138,15 @@ function Row2(props) {
                             <tbody className='personal-info-data'>
                                 <tr className="information">
                                     <td className="title">Name:</td>
-                                    <td className="text">Lini Mol</td>
+                                    <td className="text">{contacts ? contacts?.primaryName : 'Nil' }</td>
                                 </tr>
                                 <tr className="information">
                                     <td className="title">Relation:</td>
-                                    <td className="text">MOM</td>
+                                    <td className="text">{contacts ? contacts?.primaryRelation : 'Nil'}</td>
                                 </tr>
                                 <tr className="information">
                                     <td className="title">Contact No:</td>
-                                    <td className="text">8893482860</td>
+                                    <td className="text">{contacts ? contacts?.primaryContactNumber : 'Nil'}</td>
                                 </tr>
                             </tbody>
                         </div>
@@ -114,15 +155,15 @@ function Row2(props) {
                             <tbody className='personal-info-data'>
                                 <tr className="information">
                                     <td className="title">Name:</td>
-                                    <td className="text">Lini Mol</td>
+                                    <td className="text">{contacts ? contacts?.secondaryName : 'Nil'}</td>
                                 </tr>
                                 <tr className="information">
                                     <td className="title">Relation:</td>
-                                    <td className="text">MOM</td>
+                                    <td className="text">{contacts ? contacts?.secondaryRelation : 'Nil'}</td>
                                 </tr>
                                 <tr className="information">
                                     <td className="title">Contact No:</td>
-                                    <td className="text">8893482860</td>
+                                    <td className="text">{contacts ? contacts?.secondaryContactNumber : 'Nil'}</td>
                                 </tr>
                             </tbody>
                         </div>
@@ -130,6 +171,7 @@ function Row2(props) {
                 </div>
             </div>
             {showModalBankAccount && <BankAccountModal closeModal={closeBankAccountModal} id={empID} />}
+            {showModalEmergencyContact && <EmergencyContactModal closeModal={closeEmergencyContactModal} id={empID} /> }
         </>
     )
 }
