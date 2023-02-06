@@ -16,6 +16,7 @@ import { attendanceSlice } from './features/attendanceSlice';
 import { addressSlice } from './features/employeeAddress';
 import { bankAccountSlice } from './features/bankAccountSlice';
 import { ContactsSlice } from './features/contactsSlice';
+import { EducationSlice } from './features/educationSlice';
 
 const persistConfig = {
     key: 'root',
@@ -36,7 +37,8 @@ const reducer = combineReducers({
     attendance: attendanceSlice.reducer,
     employeeAddress: addressSlice.reducer,
     empBankAccount: bankAccountSlice.reducer,
-    emergencyContacts: ContactsSlice.reducer
+    emergencyContacts: ContactsSlice.reducer,
+    education: EducationSlice.reducer
 });
 
 const persistReduhcer = persistReducer(persistConfig, reducer);

@@ -3,6 +3,7 @@ import { addAssets, addAssetsCategory, deleteAssets, deleteAssetsCategory, getAl
 import { addAttendance, deleteAttendance, getAttendanceData, getAttendanceList, updateAttendance } from '../controller/attendanceController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
+import { addEducation, getEducation } from '../controller/educationController.js';
 import { addEmployeeAddress, getEmployeeAddress } from '../controller/employeeAddressController.js';
 import { addEmployeeBankAccount, getEmployeeBankAccount } from '../controller/employeeBankAccount.js';
 import { addEmergencyContacts, getEmergencyContacts } from '../controller/employeeContacts.js';
@@ -78,6 +79,10 @@ router.get('/employee/bankAccount/get/:id',getEmployeeBankAccount)
 // Employee Emergency contacts
 router.put('/employee/contacts/add/:id',addEmergencyContacts);
 router.get('/employee/contatcts/get/:id',getEmergencyContacts)
+
+// Employee Education
+router.put('/employee/eduation/add/:id',addEducation)
+router.get('/employee/education/get/:id',getEducation)
 
 
 export default router;

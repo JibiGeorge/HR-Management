@@ -154,3 +154,28 @@ export const updateEmployeeContactDetails = async (datas, empID)=>{
         return {message: 'Connection Error.'}
     }
 }
+
+export const updateEducations = async (datas, empID)=>{
+    try {
+        const update = await instance({
+            url: '/api/employee/eduation/add/'+empID,
+            method: 'PUT',
+            data: datas
+        })
+        return update.data
+    } catch (error) {
+        return {message: 'Connection Error.'};        
+    }
+}
+
+export const allEducationsDetails = async (empID)=>{
+    try {
+        const getData = await instance({
+            url: '/api/employee/education/get/'+empID,
+            method: 'GET'
+        })
+        return getData.data
+    } catch (error) {
+        return {message: 'Connection Error.'}; 
+    }
+}

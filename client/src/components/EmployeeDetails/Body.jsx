@@ -15,7 +15,7 @@ function Body() {
       <Profile profile={employeeData}/>
       <Row1 profile={employeeData}/>
       <Row2 profile={employeeData}/>
-      <Row3/>
+      <Row3  profile={employeeData}/>
     </div>
   )
 }
