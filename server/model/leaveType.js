@@ -5,10 +5,6 @@ const LeaveTypeSchema = Schema({
         type: String,
         require: true,
         unique: true
-    },
-    days:{
-        type: Number,
-        require: true
     }
 })
 

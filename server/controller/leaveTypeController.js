@@ -1,15 +1,14 @@
 import LeaveType from "../model/leaveType.js"
 
 export const addLeaveType = async (req, res) => {
-    const { leaveType, days } = req.body;
+    const { leaveType } = req.body;
     try {
         const exist = await LeaveType.findOne({ leaveType })
         if (exist) {
             res.json({ message: 'Already Exist' })
         } else {
             const add = new LeaveType({
-                leaveType,
-                days
+                leaveType
             })
             add.save().then(() => {
                 res.status(200).json({ success: true, message: 'Successfully Addedd..!' })
@@ -49,13 +48,12 @@ export const getLeaveTypeData = async (req,res)=>{
 }
 
 export const updateLeaveType = async (req,res)=>{
-    const {_id, leaveType, days} = req.body
+    const {_id, leaveType} = req.body
     try {
         await LeaveType.findByIdAndUpdate(
             {_id},
             {
-                leaveType,
-                days
+                leaveType
             }).then((response)=>{
                 res.status(200).json({success: true, message: 'SuccessFully Updated..!'})
             })

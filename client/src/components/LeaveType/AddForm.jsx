@@ -12,10 +12,8 @@ const AddForm = ({ closeModal }) => {
     const onSubmit = async () => {
         try {
             const addLeaveType = await addLeaveTypes(values)
-            console.log('addLeaveType',addLeaveType);
             if(addLeaveType.success){
                 const allLeaveTypes = await getAllLeaveTypes()
-                console.log('allLeaveTypes',allLeaveTypes);
                 dispatch(setLeaveTypes(allLeaveTypes.allLeaveTypes))
                 toast.success(addLeaveType.message, {
                     style: {
@@ -58,8 +56,7 @@ const AddForm = ({ closeModal }) => {
     }
     const { values, handleChange, handleSubmit } = useFormik({
         initialValues: {
-            leaveType: '',
-            days: ''
+            leaveType: ''
         },
         onSubmit
     })
@@ -80,13 +77,6 @@ const AddForm = ({ closeModal }) => {
                                         <label>Name of the Leave</label>
                                         <input type="text" className='form-control' id='leaveType'
                                             value={values.leaveType} onChange={handleChange} />
-                                    </div>
-                                </div>
-                                <div className="col-sm-12 mb-2">
-                                    <div className="form-group">
-                                        <label>Allowed Days</label>
-                                        <input type="number" className='form-control' id='days'
-                                            value={values.days} onChange={handleChange} />
                                     </div>
                                 </div>
                             </div>

@@ -75,10 +75,6 @@ const List = () => {
             selector: row => row.leaveType
         },
         {
-            name: 'Days',
-            selector: row => row.days
-        },
-        {
             name: "Action",
             cell: (row) => ([<button className='btn editBtn' onClick={() => handleEdit(row._id)}><i class="las la-edit"></i></button>,
             <button className='btn deleteBtn' onClick={() => handleDelete(row._id)}><i class="las la-trash"></i></button>])

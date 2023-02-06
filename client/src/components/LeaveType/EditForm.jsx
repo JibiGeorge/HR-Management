@@ -101,13 +101,6 @@ const EditForm = ({ closeModal, id }) => {
                                             value={updatingData.leaveType} onChange={(e) => setUpdatingData({ ...updatingData, leaveType: e.target.value })} />
                                     </div>
                                 </div>
-                                <div className="col-sm-12 mb-2">
-                                    <div className="form-group">
-                                        <label>Allowed Days</label>
-                                        <input type="number" className='form-control' id='days'
-                                            value={updatingData.days} onChange={(e) => setUpdatingData({ ...updatingData, days: e.target.value })} />
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div className="modal-footer">
