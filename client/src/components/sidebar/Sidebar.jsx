@@ -83,6 +83,7 @@ function Sidebar() {
                             <Link className="link_name" >Leave</Link>
                         </li>
                         <li><Link to='/holiday'>Holiday</Link></li>
+                        <li><Link to='/leave/jobRole'>Job Role Leave</Link></li>
                         <li><Link to='/leave'>Leave Type</Link></li>
                         <li><Link>Leave Application</Link></li>
                         <li><Link>Earned Leaves</Link></li>

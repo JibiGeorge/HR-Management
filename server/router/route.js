@@ -9,6 +9,7 @@ import { addEmployeeBankAccount, getEmployeeBankAccount } from '../controller/em
 import { addEmergencyContacts, getEmergencyContacts } from '../controller/employeeContacts.js';
 import { addEmployee, getAllEmployees, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
 import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
+import { addJobRoleLeaves, getAllJobRoleLeaves } from '../controller/jobRoleLeavesController.js';
 import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
 import { login, verifyToken } from '../controller/login.js';
 const router = express.Router();
@@ -83,6 +84,10 @@ router.get('/employee/contatcts/get/:id',getEmergencyContacts)
 // Employee Education
 router.put('/employee/eduation/add/:id',addEducation)
 router.get('/employee/education/get/:id',getEducation)
+
+//Job Role Leaves
+router.post('/leave/jobRoleLeave/add',addJobRoleLeaves)
+router.get('/leave/jobRoleLeave/getAll',getAllJobRoleLeaves)
 
 
 export default router;

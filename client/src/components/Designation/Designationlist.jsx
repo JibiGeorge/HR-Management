@@ -22,7 +22,7 @@ function Designationlist() {
                 dispatch(showLoading());
                 const data = await getAllDesignation()
                 if (data.success) {
-                    dispatch(setDesignatonData(data));
+                    dispatch(setDesignatonData(data.data));
                     setDesignation(data.data);
                     setFilteredDesignation(data.data);
                     dispatch(hideLoading());
