@@ -7,13 +7,15 @@ import { setAssets } from '../../redux/features/assetsSlice';
 import { setHolidaysDetails } from '../../redux/features/holidaySlice';
 
 const DeleteConfirmation = ({ closeModal, id }) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     const HolidayDelete = async () => {
         try {
-            const response = await deleteHoliday(id)
+            const response = await deleteHoliday(id,token)
             if (response.success) {
-                const holidays = await getAllHolidays()
+                const holidays = await getAllHolidays(token)
                 for (let i = 0; i < holidays.result.length; i++) {
                     holidays.result[i].startDate = new Date(holidays.result[i].startDate).toISOString().slice(0, 10)
                 }

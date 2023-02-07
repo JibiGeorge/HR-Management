@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 import { getAllDepartments } from '../../helper/Departmenthelper';
 import { addDesignation } from '../../helper/Designationhelper';
 
 function PageHeader() {
+  const {userDetails} = useSelector(state => state.user);
+  const token = userDetails.UserToken;
 
   const initialValue = {
     departmentId: "",
@@ -17,7 +20,7 @@ function PageHeader() {
     try {
       (async () => {
         try {
-          const departmentData = await getAllDepartments();
+          const departmentData = await getAllDepartments(token);
           setDepartment(departmentData)
         } catch (error) {
         }
@@ -31,7 +34,7 @@ function PageHeader() {
   const handleDesignationSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await addDesignation({ designationData });
+      const response = await addDesignation({ designationData, token });
       if (response.success) {
         toast.success(response.message, {
           style: {

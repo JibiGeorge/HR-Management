@@ -12,15 +12,17 @@ import { setJobRoleLeaves } from '../../redux/features/jobRoleLeavesSlice';
 
 const AddLeavesModal = ({ closeModal }) => {
     const dispatch = useDispatch();
-    const { designationDetails } = useSelector(state => state.designation)
+    const { designationDetails } = useSelector(state => state.designation);
     const { leaveType } = useSelector(state => state.leaveType);
-    const {loading} = useSelector(state => state.alerts)
+    const {loading} = useSelector(state => state.alerts);
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     useEffect(() => {
         (async () => {
             try {
-                const designation = await getAllDesignation();
-                const leaveTypes = await getAllLeaveTypes();
+                const designation = await getAllDesignation(token);
+                const leaveTypes = await getAllLeaveTypes(token);
                 if (designation.success && leaveTypes.success) {
                     dispatch(setDesignatonData(designation.data));
                     dispatch(setLeaveTypes(leaveTypes.allLeaveTypes));
@@ -56,9 +58,9 @@ const AddLeavesModal = ({ closeModal }) => {
     const onSubmit = async (values) =>{
         dispatch(showLoading());
         try {
-            const addLeaves = await addJobRoleLeaves(values)
+            const addLeaves = await addJobRoleLeaves(values,token)
             if(addLeaves.success){
-                const jobRoleLeaves = await getAllJobRolesLeavesData();
+                const jobRoleLeaves = await getAllJobRolesLeavesData(token);
                 if (jobRoleLeaves.success) {
                     dispatch(setJobRoleLeaves(jobRoleLeaves.data));
                 }

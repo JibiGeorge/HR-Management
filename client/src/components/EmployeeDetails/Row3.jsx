@@ -11,7 +11,9 @@ function Row3(props) {
     const dispatch = useDispatch()
 
     const { education } = useSelector(state => state.education);
-    const educationData = education?.education
+    const educationData = education?.education;
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     const [showEducationModal, setShowEducationModal] = useState(false)
     const closeEducationModal = () => setShowEducationModal(false)
@@ -19,7 +21,7 @@ function Row3(props) {
     useEffect(() => {
         (async () => {
             try {
-                const educations = await allEducationsDetails(empID);
+                const educations = await allEducationsDetails(empID,token);
                 if (educations.success) {
                     dispatch(setEducations(educations.getEducationData))
                 } else {

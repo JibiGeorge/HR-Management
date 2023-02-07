@@ -38,22 +38,22 @@ export const login = (req, res) => {
     }
 };
 
-export const verifyToken = async (req, res) => {
-    let token = req.body.token;
-    try {
-        // eslint-disable-next-line no-undef
-        const decoded = await jwt.verify(token, process.env.JWT_TOKEN);
-        const userId = decoded.userId;
-        const username = decoded.username;
-        userCredential.findOne({ $and: [{ _id: userId }, { username }] })
-            .then((user) => {
-                if (user) {
-                    return res.status(200).json({ user: true });
-                } else {
-                    return res.status(400).json({ user: false });
-                }
-            });
-    } catch (error) {
-        return res.status(401).json({ user: false })
-    }
-};
+// export const verifyToken = async (req, res) => {
+//     let token = req.body.token;
+//     try {
+//         // eslint-disable-next-line no-undef
+//         const decoded = await jwt.verify(token, process.env.JWT_TOKEN);
+//         const userId = decoded.userId;
+//         const username = decoded.username;
+//         userCredential.findOne({ $and: [{ _id: userId }, { username }] })
+//             .then((user) => {
+//                 if (user) {
+//                     return res.status(200).json({ user: true });
+//                 } else {
+//                     return res.status(400).json({ user: false });
+//                 }
+//             });
+//     } catch (error) {
+//         return res.status(401).json({ user: false })
+//     }
+// };

@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import './Style.css'
-import { useFormik } from 'formik'
 import { addDepartment } from '../../helper/Departmenthelper';
-import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 function PageHeader() {
 
   const [department, setDepartment] = useState('');
-
+  const {userDetails} = useSelector(state => state.user);
 
   const handleDepartmentSubmit = async (e) => {
+    const token = userDetails.UserToken;
     e.preventDefault();
     try {
-      const res = await addDepartment({ department })
+      const res = await addDepartment({ department, token });
       if (res.success) {
         toast.success('Successfully Created...!', {
           style: {

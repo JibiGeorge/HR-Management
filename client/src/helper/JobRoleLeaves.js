@@ -1,27 +1,32 @@
 import instance from "../utils/serverConfig"
 
-export const addJobRoleLeaves = async (values)=>{
+export const addJobRoleLeaves = async (values, token) => {
     try {
         const addJobRoleLeaves = await instance({
             url: '/api/leave/jobRoleLeave/add',
             method: 'POST',
-            data: values
+            data: values,
+            headers: {
+                Authorization: token
+            }
         })
         return addJobRoleLeaves.data;
     } catch (error) {
-        return {message: 'Connection Error..!'};        
+        return { message: 'Connection Error..!' };
     }
 }
 
-export const getAllJobRolesLeavesData = async ()=>{
+export const getAllJobRolesLeavesData = async (token) => {
     try {
         const addJobRoleLeaves = await instance({
             url: '/api/leave/jobRoleLeave/getAll',
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return addJobRoleLeaves.data;
     } catch (error) {
-        console.log(error.message);
-        return {message: 'Connection Error..!'};    
+        return { message: 'Connection Error..!' };
     }
 }

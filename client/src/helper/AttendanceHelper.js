@@ -1,11 +1,14 @@
 import instance from "../utils/serverConfig"
 
-export const addAttendance = async (values) => {
+export const addAttendance = async (values,token) => {
     try {
         const add = await instance({
             url: '/api/attendance/add',
             method: 'POST',
-            data: values
+            data: values,
+            headers:{
+                Authorization : token
+            }
         })
         return add.data
     } catch (error) {
@@ -13,11 +16,14 @@ export const addAttendance = async (values) => {
     }
 }
 
-export const attendanceList = async () => {
+export const attendanceList = async (token) => {
     try {
         const getList = await instance({
             url: '/api/attendance/getAll',
-            method: 'GET'
+            method: 'GET',
+            headers:{
+                Authorization : token
+            }
         })
         return getList.data
     } catch (error) {
@@ -25,11 +31,14 @@ export const attendanceList = async () => {
     }
 }
 
-export const deletAttendance = async (id) => {
+export const deletAttendance = async (id,token) => {
     try {
         const deleteStatus = await instance({
             url: '/api/attendance/delete/' + id,
-            method: 'DELETE'
+            method: 'DELETE',
+            headers:{
+                Authorization : token
+            }
         })
         return deleteStatus.data
     } catch (error) {
@@ -37,11 +46,14 @@ export const deletAttendance = async (id) => {
     }
 }
 
-export const getAttendanceData = async (id) => {
+export const getAttendanceData = async (id,token) => {
     try {
         const getData = await instance({
             url: '/api/attendance/getData/' + id,
-            method: 'GET'
+            method: 'GET',
+            headers:{
+                Authorization : token
+            }
         })
         return getData.data;
     } catch (error) {
@@ -49,12 +61,15 @@ export const getAttendanceData = async (id) => {
     }
 }
 
-export const updateAttendance = async (data) => {
+export const updateAttendance = async (data,token) => {
     try {
         const update = await instance({
             url: '/api/attendance/update',
             method: 'PUT',
-            data: data
+            data: data,
+            headers:{
+                Authorization : token
+            }
         })
         return update.data
     } catch (error) {

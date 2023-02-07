@@ -5,19 +5,22 @@ import { toast } from 'react-hot-toast'
 import { attendanceList, getAttendanceData, updateAttendance } from '../../helper/AttendanceHelper'
 import { useFormik } from 'formik'
 import { getAllEmployees } from '../../helper/Employeehelper'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setAllAttendance } from '../../redux/features/attendanceSlice'
 
 const EditForm = ({ closeModal, id }) => {
-    const [attendanceUpdateData, setAttendanceUpdateData] = useState('')
+    const [attendanceUpdateData, setAttendanceUpdateData] = useState('');
+    const { userDetails } = useSelector(state => state.user);
     const [employees, setEmployees] = useState([])
     const dispatch = useDispatch()
+
+    const token = userDetails.UserToken;
 
     useEffect(() => {
         (async () => {
             try {
-                const attendanceData = await getAttendanceData(id)
-                const employee = await getAllEmployees()
+                const attendanceData = await getAttendanceData(id, token)
+                const employee = await getAllEmployees(token)
                 setEmployees(employee.list)
                 if (attendanceData.success) {
                     setAttendanceUpdateData(attendanceData.data);
@@ -40,9 +43,9 @@ const EditForm = ({ closeModal, id }) => {
 
     const handleSubmit = async () => {
         try {
-            const updating = await updateAttendance(attendanceUpdateData)
-            if(updating.success){
-                const attendance = await attendanceList()
+            const updating = await updateAttendance(attendanceUpdateData, token)
+            if (updating.success) {
+                const attendance = await attendanceList(token)
                 dispatch(setAllAttendance(attendance.data))
                 toast.success(updating.message, {
                     style: {
@@ -56,7 +59,7 @@ const EditForm = ({ closeModal, id }) => {
                     },
                 });
                 closeModal()
-            }else{
+            } else {
                 toast.error(updating.message, {
                     style: {
                         border: '1px solid #713200',
@@ -124,7 +127,7 @@ const EditForm = ({ closeModal, id }) => {
                                         <label>Sign In Time</label>
                                         <input type="time" className='form-control' id='signIn'
                                             value={attendanceUpdateData ? attendanceUpdateData.signIn : ''}
-                                            onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, signIn: e.target.value })}  />
+                                            onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, signIn: e.target.value })} />
                                     </div>
                                 </div>
                                 <div className="col-sm-6 mb-2">
@@ -132,7 +135,7 @@ const EditForm = ({ closeModal, id }) => {
                                         <label>Sign Out Time</label>
                                         <input type="time" className='form-control' id='signOut'
                                             value={attendanceUpdateData ? attendanceUpdateData.signOut : ''}
-                                            onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, signOut: e.target.value })}  />
+                                            onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, signOut: e.target.value })} />
                                     </div>
                                 </div>
                             </div>

@@ -7,19 +7,19 @@ import { useEffect } from 'react'
 import { verifyToken } from '../helper/Userhelper'
 
 function Department() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    (async () => {
-      const token = localStorage.getItem('usertoken');
-      const res = await verifyToken(token);
-      if (res.user) {
-        navigate('/department');
-      } else {
-        navigate('/')
-      }
-    })();
-  }, [])
+  // useEffect(() => {
+  //   (async () => {
+  //     const token = localStorage.getItem('usertoken');
+  //     const res = await verifyToken(token);
+  //     if (res.user) {
+  //       navigate('/department');
+  //     } else {
+  //       navigate('/')
+  //     }
+  //   })();
+  // }, [])
   return (
     <>
       <Sidebar />

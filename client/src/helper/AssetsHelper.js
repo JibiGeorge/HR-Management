@@ -1,11 +1,14 @@
 import instance from "../utils/serverConfig";
 
-export const addAssetsCategory = async (values) => {
+export const addAssetsCategory = async (values, token) => {
     try {
         const addCategory = await instance({
             url: '/api/assetsCategory/add',
             method: 'POST',
-            data: values
+            data: values,
+            headers: {
+                Authorization: token
+            }
         })
         return addCategory.data;
     } catch (error) {
@@ -13,11 +16,14 @@ export const addAssetsCategory = async (values) => {
     }
 }
 
-export const getAllAssetsCategory = async () => {
+export const getAllAssetsCategory = async (token) => {
     try {
         const categories = await instance({
             url: '/api/assetsCategory/get',
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return categories.data
     } catch (error) {
@@ -25,11 +31,14 @@ export const getAllAssetsCategory = async () => {
     }
 }
 
-export const deleteAssetsCategory = async (id) => {
+export const deleteAssetsCategory = async (id, token) => {
     try {
         const deleteCategory = await instance({
             url: '/api/assetsCategory/delete?id=' + id,
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
         })
         return deleteCategory.data
     } catch (error) {
@@ -37,11 +46,14 @@ export const deleteAssetsCategory = async (id) => {
     }
 }
 
-export const getAssetCategoryDetails = async (id) => {
+export const getAssetCategoryDetails = async (id, token) => {
     try {
         const getDetails = await instance({
             url: '/api/assetsCategory/getData/' + id,
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return getDetails.data
     } catch (error) {
@@ -49,12 +61,15 @@ export const getAssetCategoryDetails = async (id) => {
     }
 }
 
-export const updateCategoryData = async (newdata) => {
+export const updateCategoryData = async (newdata, token) => {
     try {
         const status = await instance({
             url: '/api/assetsCategory/update',
             method: 'PUT',
-            data: newdata
+            data: newdata,
+            headers: {
+                Authorization: token
+            }
         })
         return status.data
     } catch (error) {
@@ -62,12 +77,15 @@ export const updateCategoryData = async (newdata) => {
     }
 }
 
-export const addAssets = async (values) => {
+export const addAssets = async (values, token) => {
     try {
         const addAssets = await instance({
             url: '/api/assets/add',
             method: 'POST',
-            data: values
+            data: values,
+            headers: {
+                Authorization: token
+            }
         })
         return addAssets.data;
     } catch (error) {
@@ -75,11 +93,14 @@ export const addAssets = async (values) => {
     }
 }
 
-export const getAssets = async () => {
+export const getAssets = async (token) => {
     try {
         const assets = await instance({
             url: '/api/assets/get',
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return assets.data
     } catch (error) {
@@ -87,11 +108,14 @@ export const getAssets = async () => {
     }
 }
 
-export const deleteAssets = async (id) => {
+export const deleteAssets = async (id, token) => {
     try {
         const deleteAssets = await instance({
             url: '/api/assets/delete/' + id,
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
         })
         return deleteAssets.data
     } catch (error) {
@@ -99,11 +123,14 @@ export const deleteAssets = async (id) => {
     }
 }
 
-export const getAssetData = async (id) => {
+export const getAssetData = async (id, token) => {
     try {
         const asset = await instance({
             url: '/api/assets/getData/' + id,
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return asset.data
     } catch (error) {
@@ -111,12 +138,15 @@ export const getAssetData = async (id) => {
     }
 }
 
-export const updateAsset = async (data) => {
+export const updateAsset = async (data, token) => {
     try {
         const asset = await instance({
             url: '/api/assets/update',
             method: 'PUT',
-            data: data
+            data: data,
+            headers: {
+                Authorization: token
+            }
         })
         return asset.data
     } catch (error) {

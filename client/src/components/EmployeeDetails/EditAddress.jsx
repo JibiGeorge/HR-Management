@@ -7,13 +7,16 @@ import { hideLoading, showLoading } from '../../redux/features/alertSlice'
 import { setEmployeeAddress } from '../../redux/features/employeeAddress'
 
 const EditAddress = ({ closeModal, id }) => {
-    const { loading } = useSelector(state => state.alerts)
+    const { loading } = useSelector(state => state.alerts);
+    const {userDetails} = useSelector(state => state.user);
+
     const [updatingData, setUpdatingData] = useState('')
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const token = userDetails.UserToken;
 
     useEffect(() => {
         (async () => {
-            const address = await getEmployeeAddressData(id)
+            const address = await getEmployeeAddressData(id,token)
             if (address.success) {
                 setUpdatingData(address.allAddress)
             }
@@ -23,9 +26,9 @@ const EditAddress = ({ closeModal, id }) => {
     const handleAddressUpdate = async () => {
         dispatch(showLoading())
         try {
-            const addAddress = await employeeAddressAdd(updatingData, id)
+            const addAddress = await employeeAddressAdd(updatingData, id,token)
             if (addAddress.success) {
-                const address = await getEmployeeAddressData(id)
+                const address = await getEmployeeAddressData(id,token)
                 if (address.success) {
                     dispatch(setEmployeeAddress(address.allAddress))
                 }

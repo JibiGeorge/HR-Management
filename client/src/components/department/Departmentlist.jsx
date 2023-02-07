@@ -13,13 +13,16 @@ function Departmentlist() {
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.alerts);
     const { departmentDetails } = useSelector(state => state.department)
+    const {userDetails} = useSelector(state => state.user);
+
+    const token = userDetails.UserToken;
 
     // Geting all Department Details from Database
     useEffect(() => {
         try {
             (async () => {
                 dispatch(showLoading())
-                const depData = await getAllDepartments();
+                const depData = await getAllDepartments(token);
                 dispatch(setDepartmentData(depData))
                 dispatch(hideLoading())
             })();
@@ -30,7 +33,7 @@ function Departmentlist() {
     // Handle Delete Department
     const handleDelete = async (depId) => {
         try {
-            const result = await deleteDepartment(depId);
+            const result = await deleteDepartment(depId,token);
             if (result.deleted) {
                 dispatch(deleteDepartmentData(depId))
                 toast.success('Deleted Successfully...!', {
@@ -81,7 +84,7 @@ function Departmentlist() {
     const handleDeptUpdate = async () => {
         try {
             let deptID = document.getElementById('deptUpdateID').value;
-            const res = await updateDepartment(deptID, updatedeptValue)
+            const res = await updateDepartment(deptID, updatedeptValue,token)
             if (res.updated) {
                 toast.success(res.message, {
                     style: {

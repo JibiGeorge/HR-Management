@@ -1,18 +1,20 @@
 import { useFormik } from 'formik'
 import React from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addAssetsCategory, getAllAssetsCategory } from '../../helper/AssetsHelper'
 import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
 
-const AddCategory = ({closeModal}) => {
-    const dispatch = useDispatch()
+const AddCategory = ({ closeModal }) => {
+    const dispatch = useDispatch();
+    const { userDetails } = useSelector(state => state.user);
 
     const onSubmit = async (values) => {
+        let token = userDetails.UserToken
         try {
-            const addCategory = await addAssetsCategory(values)
+            const addCategory = await addAssetsCategory(values,token)
             if (addCategory.success) {
-                const categories = await getAllAssetsCategory();
+                const categories = await getAllAssetsCategory(token);
                 dispatch(setAssetsCategories(categories))
                 toast.success(addCategory.message, {
                     style: {
@@ -84,7 +86,7 @@ const AddCategory = ({closeModal}) => {
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                            <div className="col-sm-12">
+                                <div className="col-sm-12">
                                     <div className="form-group">
                                         <label>Assets Category Name</label>
                                         <input type="text" className='form-control' id='categoryName' value={values.categoryName} onChange={handleChange} />

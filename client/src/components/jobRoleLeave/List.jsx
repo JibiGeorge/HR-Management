@@ -10,11 +10,14 @@ const List = () => {
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.alerts);
     const { jobRoleLeaves } = useSelector(state => state.jobRoleLeaves);
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
+
     useEffect(() => {
         dispatch(showLoading());
         (async () => {
             try {
-                const jobRoleLeaves = await getAllJobRolesLeavesData();
+                const jobRoleLeaves = await getAllJobRolesLeavesData(token);
                 if (jobRoleLeaves.success) {
                     dispatch(setJobRoleLeaves(jobRoleLeaves.data));
                     dispatch(hideLoading());
@@ -48,7 +51,6 @@ const List = () => {
             }
         })();
     }, []);
-    console.log('des',jobRoleLeaves);
 
     const column = [
         {

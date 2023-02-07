@@ -9,20 +9,22 @@ import { setAssets } from '../../redux/features/assetsSlice'
 
 const AddAssets = ({ closeModal }) => {
     const dispatch = useDispatch();
-    const { category } = useSelector(state => state.assetsCategory)
+    const { category } = useSelector(state => state.assetsCategory);
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     useEffect(() => {
         (async () => {
-            const assetCategory = await getAllAssetsCategory();
+            const assetCategory = await getAllAssetsCategory(token);
             dispatch(setAssetsCategories(assetCategory));
         })();
     }, []);
 
     const onSubmit = async (values) => {
         try {
-            const response = await addAssets(values);
+            const response = await addAssets(values,token);
             if (response.success) {
-                const assets = await getAssets()
+                const assets = await getAssets(token)
                 dispatch(setAssets(assets.assets))
                 toast.success(response.message, {
                     style: {

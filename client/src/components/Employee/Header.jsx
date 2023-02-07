@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast';
+import React from 'react'
+import { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { getAllDepartments } from '../../helper/Departmenthelper';
-import { addDesignation } from '../../helper/Designationhelper';
 
 function PageHeader() {
     return (

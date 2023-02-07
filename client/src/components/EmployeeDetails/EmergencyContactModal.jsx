@@ -9,14 +9,16 @@ import { setContacts } from '../../redux/features/contactsSlice';
 const EmergencyContactModal = ({ closeModal, id }) => {
     const { loading } = useSelector(state => state.alerts);
     const {contacts} = useSelector(state => state.emergencyContacts);
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
     const dispatch = useDispatch()
 
     const onSubmit = async (values) => {
         dispatch(showLoading())
         try {
-            const updateContacts = await updateEmployeeContactDetails(values, id);
+            const updateContacts = await updateEmployeeContactDetails(values, id,token);
             if (updateContacts.success) {
-                const contacts = await getEmergencyContacts(id);
+                const contacts = await getEmergencyContacts(id,token);
                 dispatch(setContacts(contacts.contacts))
                 toast.success(updateContacts.message, {
                     style: {

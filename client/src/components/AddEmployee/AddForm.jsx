@@ -15,15 +15,17 @@ function AddForm() {
 
     var dispatch = useDispatch();
     const navigate = useNavigate()
-    const { loading } = useSelector(state => state.alerts)
+    const { loading } = useSelector(state => state.alerts);
+    const {userDetails} = useSelector(state => state.user);
 
     const [designation, setDesignation] = useState([]);
     const [department, setDepartment] = useState([]);
 
     const onSubmit = async (values, actions) => {
+        let token = userDetails.UserToken
         dispatch(showLoading())
         try {
-            const result = await addEmployee(values);
+            const result = await addEmployee(values,token);
             if (result.data.success) {
                 toast.success(result.data.message, {
                     style: {
@@ -71,8 +73,8 @@ function AddForm() {
     useEffect(() => {
         (async () => {
             try {
-                const departmentlist = await getAllDepartments();
-                const designationlist = await getAllDesignation();
+                const departmentlist = await getAllDepartments(token);
+                const designationlist = await getAllDesignation(token);
                 setDepartment(departmentlist);
                 setDesignation(designationlist.data);
             } catch (error) {

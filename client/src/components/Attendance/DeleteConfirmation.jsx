@@ -1,16 +1,18 @@
 import React from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { attendanceList, deletAttendance } from '../../helper/AttendanceHelper'
 import { setAllAttendance } from '../../redux/features/attendanceSlice'
 
 const DeleteConfirmation = ({ closeModal, id }) => {
+    const { userDetails } = useSelector(state => state.user);
+    const token = userDetails.UserToken;
     const dispatch = useDispatch()
     const attendanceDelete = async () => {
         try {
-            const deleteModal = await deletAttendance(id)
+            const deleteModal = await deletAttendance(id, token)
             if (deleteModal.success) {
-                const attendanceData = await attendanceList()
+                const attendanceData = await attendanceList(token)
                 dispatch(setAllAttendance(attendanceData.data))
                 toast.success(deleteModal.message, {
                     style: {

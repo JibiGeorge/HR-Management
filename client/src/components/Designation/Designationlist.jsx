@@ -11,16 +11,19 @@ function Designationlist() {
     const dispatch = useDispatch();
     const [designation, setDesignation] = useState([]);
     const [filteredDesignation, setFilteredDesignation] = useState([])
-    const [department, setDepartment] = useState([])
+    const [department, setDepartment] = useState([]);
 
+    const {userDetails} = useSelector(state => state.user);
     const { loading } = useSelector(state => state.alerts);
     const { designationDetails } = useSelector(state => state.designation)
+
+    const token = userDetails.UserToken;
 
     useEffect(() => {
         (async () => {
             try {
                 dispatch(showLoading());
-                const data = await getAllDesignation()
+                const data = await getAllDesignation(token)
                 if (data.success) {
                     dispatch(setDesignatonData(data.data));
                     setDesignation(data.data);
@@ -82,7 +85,7 @@ function Designationlist() {
     // Designation Data Delete
     const handleDelete = async (id) => {
         try {
-            const result = await deleteDesignation(id);
+            const result = await deleteDesignation(id, token);
             if (result.data.success) {
                 dispatch(deleteDesigntionData(id))
                 toast.success(result.data.message, {
@@ -134,7 +137,7 @@ function Designationlist() {
         try {
             (async () => {
                 try {
-                    const departmentData = await getAllDepartments();
+                    const departmentData = await getAllDepartments(token);
                     setDepartment(departmentData)
                 } catch (error) {
                     toast.error('Internal Server Error....!', {
@@ -169,7 +172,7 @@ function Designationlist() {
         e.preventDefault();
         // try {
         //     (async()=>{
-        //         // const result = await updateDesignation(updatingData);
+        //         // const result = await updateDesignation(updatingData,token);
         //     })();
         // } catch (error) {
         //     toast.error('Not Updated....!', {

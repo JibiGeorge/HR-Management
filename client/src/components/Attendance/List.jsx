@@ -12,12 +12,15 @@ import EditForm from './EditForm'
 const List = () => {
   const { loading } = useSelector(state => state.alerts)
   const {attendance} = useSelector( state => state.attendance)
-  const dispatch = useDispatch()
+  const {userDetails} = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
+  const token = userDetails.UserToken;
 
   useEffect(() => {
     (async () => {
       try {
-        const attendance = await attendanceList()
+        const attendance = await attendanceList(token)
         if (attendance.success) {
           dispatch(setAllAttendance(attendance.data))          
         } else {

@@ -11,6 +11,8 @@ import EditHoliday from './EditHoliday'
 const HolidayList = () => {
     const { loading } = useSelector(state => state.alerts);
     const { holidays } = useSelector(state => state.holiday);
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     const [id,setId]= useState('')
     const [deleteModal, setDeleteModal] = useState(false)
@@ -22,7 +24,7 @@ const HolidayList = () => {
         try {
             (async () => {
                 dispatch(showLoading());
-                const data = await getAllHolidays();
+                const data = await getAllHolidays(token);
                 if(data.success){
                     for(let i=0;i<data.result.length;i++){
                         data.result[i].startDate = new Date(data.result[i].startDate).toISOString().slice(0,10)

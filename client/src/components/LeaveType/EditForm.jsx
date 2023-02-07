@@ -10,12 +10,14 @@ import { setLeaveTypes } from '../../redux/features/leaveTypeSlice'
 const EditForm = ({ closeModal, id }) => {
     const [updatingData, setUpdatingData] = useState('')
     const dispatch = useDispatch()
-    const { loading } = useSelector(state => state.alerts)
+    const { loading } = useSelector(state => state.alerts);
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     useEffect(() => {
         (async () => {
             try {
-                const data = await getUpdaingData(id)
+                const data = await getUpdaingData(id,token)
                 setUpdatingData(data)
             } catch (error) {
                 toast.error('Something Went Wrong..!', {
@@ -36,9 +38,9 @@ const EditForm = ({ closeModal, id }) => {
     const handleSubmit = async () => {
         dispatch(showLoading())
         try {
-            const updating = await leaveTypeUpdate(updatingData)
+            const updating = await leaveTypeUpdate(updatingData,token)
             if (updating.success) {
-                const leaveTypes = await getAllLeaveTypes();
+                const leaveTypes = await getAllLeaveTypes(token);
                 dispatch(setLeaveTypes(leaveTypes.allLeaveTypes))
                 toast.success(updating.message, {
                     style: {

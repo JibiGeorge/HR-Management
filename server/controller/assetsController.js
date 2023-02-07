@@ -123,7 +123,7 @@ export const updateAsset = async (req, res) => {
             inStock,
             configuration
         })
-        res.status(200).json({updated:true, message: 'Succesfully Updated'})
+        res.status(200).json({ updated: true, message: 'Succesfully Updated' })
     } catch (error) {
         res.json({ message: 'Intenal Server Error...!' });
     }

@@ -3,20 +3,22 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addAttendance, attendanceList } from '../../helper/AttendanceHelper'
 import { getAllEmployees } from '../../helper/Employeehelper'
 import { setAllAttendance } from '../../redux/features/attendanceSlice'
 
-const AddModal = ({closeModal}) => {
+const AddModal = ({ closeModal }) => {
     const [employees, setEmployees] = useState([])
+    const { userDetails } = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     const dispatch = useDispatch()
 
-    useEffect(()=>{
-        (async()=>{
+    useEffect(() => {
+        (async () => {
             try {
-                const employee = await getAllEmployees()
+                const employee = await getAllEmployees(token)
                 setEmployees(employee.list)
             } catch (error) {
                 toast.error('Smomething Wrong...!', {
@@ -32,14 +34,14 @@ const AddModal = ({closeModal}) => {
                 });
             }
         })()
-    },[])
+    }, [])
 
-    const onSubmit = async (values)=>{
+    const onSubmit = async (values) => {
         try {
-            const add = await addAttendance(values)
-            if(add.success){
-                const attendance = await attendanceList()
-                dispatch(setAllAttendance(attendance.data))                
+            const add = await addAttendance(values, token)
+            if (add.success) {
+                const attendance = await attendanceList(token)
+                dispatch(setAllAttendance(attendance.data))
                 toast.success(add.message, {
                     style: {
                         border: '1px solid #713200',
@@ -52,7 +54,7 @@ const AddModal = ({closeModal}) => {
                     },
                 });
                 closeModal()
-            }else{
+            } else {
                 toast.error(add.message, {
                     style: {
                         border: '1px solid #713200',
@@ -80,7 +82,7 @@ const AddModal = ({closeModal}) => {
         }
     }
 
-    const { values, handleSubmit, handleChange} = useFormik({
+    const { values, handleSubmit, handleChange } = useFormik({
         initialValues: {
             employee: '',
             date: '',
@@ -105,11 +107,11 @@ const AddModal = ({closeModal}) => {
                                     <div className="form-group">
                                         <label>Name of the Employee</label>
                                         <select name="employee" id="employee"
-                                        value={values.employee} onChange={handleChange} >
+                                            value={values.employee} onChange={handleChange} >
                                             <option value="">Select A Category</option>
-                                            {employees? employees.map(values =>{
-                                            return(
-                                                <option value={values._id} >{values.username}</option>
+                                            {employees ? employees.map(values => {
+                                                return (
+                                                    <option value={values._id} >{values.username}</option>
                                                 )
                                             }) : ''}
                                         </select>
@@ -119,21 +121,21 @@ const AddModal = ({closeModal}) => {
                                     <div className="form-group">
                                         <label>Date</label>
                                         <input type="date" className='form-control' id='date'
-                                        value={values.date} onChange={handleChange} />
+                                            value={values.date} onChange={handleChange} />
                                     </div>
                                 </div>
                                 <div className="col-sm-6 mb-2">
                                     <div className="form-group">
                                         <label>Sign In Time</label>
                                         <input type="time" className='form-control' id='signIn'
-                                        value={values.signIn} onChange={handleChange} />
+                                            value={values.signIn} onChange={handleChange} />
                                     </div>
                                 </div>
                                 <div className="col-sm-6 mb-2">
                                     <div className="form-group">
                                         <label>Sign Out Time</label>
                                         <input type="time" className='form-control' id='signOut'
-                                        value={values.signOut} onChange={handleChange} />
+                                            value={values.signOut} onChange={handleChange} />
                                     </div>
                                 </div>
                             </div>

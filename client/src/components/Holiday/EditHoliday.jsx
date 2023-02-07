@@ -8,12 +8,14 @@ import { setHolidaysDetails } from '../../redux/features/holidaySlice'
 
 const EditHoliday = ({closeModal, id}) => {
     const [holidayData, setHolidayData] = useState('')
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     useEffect(()=>{
         (async()=>{
             try {
-                const holidayData = await getHolidayData(id)
+                const holidayData = await getHolidayData(id,token)
                 holidayData.startDate = new Date(holidayData.startDate).toISOString().slice(0, 10)
                 holidayData.endDate = new Date(holidayData.endDate).toISOString().slice(0, 10)
                 setHolidayData(holidayData)
@@ -34,9 +36,9 @@ const EditHoliday = ({closeModal, id}) => {
     },[])
     const handleUpdate = async ()=>{
         try {
-            const holidayUpdate = await updateHoliday(holidayData)
+            const holidayUpdate = await updateHoliday(holidayData,token)
             if(holidayUpdate.success){
-                const data = await getAllHolidays();
+                const data = await getAllHolidays(token);
                 for(let i=0;i<data.result.length;i++){
                     data.result[i].startDate = new Date(data.result[i].startDate).toISOString().slice(0,10)
                 }

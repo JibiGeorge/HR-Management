@@ -7,15 +7,18 @@ import { getAllAssetsCategory, getAssetData, getAssets, updateAsset } from '../.
 import { setAssets } from '../../redux/features/assetsSlice'
 
 const EditAssets = ({ closeModal, id }) => {
+    const {userDetails} = useSelector(state => state.user);
+    
+    const token = userDetails.UserToken;
     const [assetData, setAssetData] = useState('')
     const [assetCategory, setAssetCategory] = useState([])
     const dispatch = useDispatch()
     useEffect(() => {
         try {
             (async () => {
-                const assetData = await getAssetData(id);
+                const assetData = await getAssetData(id,token);
                 if (assetData.success) {
-                    const assetCategory = await getAllAssetsCategory()
+                    const assetCategory = await getAllAssetsCategory(token)
                     setAssetCategory(assetCategory.allAssetsCategories)
                     setAssetData(assetData.data)
                 } else {
@@ -49,9 +52,9 @@ const EditAssets = ({ closeModal, id }) => {
 
     const updateAssets = async () => {
         try {
-            const update = await updateAsset(assetData)
+            const update = await updateAsset(assetData,token)
             if (update.updated) {
-                const assets = await getAssets()
+                const assets = await getAssets(token)
                 dispatch(setAssets(assets.assets))
                 toast.success(update.message, {
                     style: {

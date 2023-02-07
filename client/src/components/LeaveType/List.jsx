@@ -10,14 +10,19 @@ import DeleteConfirmation from './DeleteConfirmation'
 import EditForm from './EditForm'
 
 const List = () => {
-    const { leaveType } = useSelector(state => state.leaveType)
-    const { loading } = useSelector(state => state.alerts)
-    const dispatch = useDispatch()
+    const { leaveType } = useSelector(state => state.leaveType);
+    const { loading } = useSelector(state => state.alerts);
+    const {userDetails} = useSelector(state => state.user);
+
+    const token = userDetails.UserToken;
+
+    const dispatch = useDispatch();
+
     useEffect(() => {
         (async () => {
             dispatch(showLoading())
             try {
-                const leaveTypes = await getAllLeaveTypes();
+                const leaveTypes = await getAllLeaveTypes(token);
                 if (leaveTypes.success) {
                     dispatch(setLeaveTypes(leaveTypes.allLeaveTypes))
                     dispatch(hideLoading())

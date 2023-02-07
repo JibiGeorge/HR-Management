@@ -1,17 +1,19 @@
 import React from 'react'
 import { toast } from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteAssets, getAssets } from '../../helper/AssetsHelper';
 import { setAssets } from '../../redux/features/assetsSlice';
 
 const DeleteConfirmation = ({closeModal, id}) => {
     const dispatch = useDispatch()
+    const {userDetails} = useSelector(state => state.user);
 
     const assetsDelete = async () => {
+        let token = userDetails.UserToken;
         try {
-            const response = await deleteAssets(id)
+            const response = await deleteAssets(id,token)
             if(response.success){
-                const assets = await getAssets()
+                const assets = await getAssets(token)
                 dispatch(setAssets(assets.assets))
                 toast.success(response.message, {
                     style: {

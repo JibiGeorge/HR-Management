@@ -9,21 +9,23 @@ import { setContacts } from '../../redux/features/contactsSlice';
 
 function Row2(props) {
     const empID = props.profile._id;
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    const { empBankAccount } = useSelector(state => state.empBankAccount)
-    const {contacts} = useSelector(state => state.emergencyContacts)
+    const { empBankAccount } = useSelector(state => state.empBankAccount);
+    const {contacts} = useSelector(state => state.emergencyContacts);
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     const [showModalBankAccount, setShowModalBankAccount] = useState(false);
     const closeBankAccountModal = () => setShowModalBankAccount(false)
 
     const [showModalEmergencyContact, setShowModalEmergencyContact] = useState(false);
-    const closeEmergencyContactModal = () => setShowModalEmergencyContact(false)
+    const closeEmergencyContactModal = () => setShowModalEmergencyContact(false);
 
     useEffect(()=>{
         (async()=>{
             try {
-                const accountDetails = await getBankAccount(empID);
+                const accountDetails = await getBankAccount(empID,token);
                 if(accountDetails.success){
                     dispatch(setBankAccount(accountDetails.account))
                 }else{
@@ -58,7 +60,7 @@ function Row2(props) {
     useEffect(()=>{
         (async()=>{
             try {
-                const contacts = await getEmergencyContacts(empID);
+                const contacts = await getEmergencyContacts(empID.token);
                 if(contacts.success){
                     dispatch(setContacts(contacts.contacts))
                 }else{

@@ -10,13 +10,16 @@ const EducationModal = ({ closeModal, empID }) => {
     const dispatch = useDispatch();
 
     const { loading } = useSelector(state => state.alerts);
+    const {userDetails} = useSelector(state => state.user);
+
+    const token = userDetails.UserToken;
 
     const onSubmit = async (values) => {
         dispatch(showLoading());
         try {
-            const update = await updateEducations(values, empID);
+            const update = await updateEducations(values, empID,token);
             if (update.success) {
-                const educations = await allEducationsDetails(empID);
+                const educations = await allEducationsDetails(empID,token);
                 if(educations.success){
                     dispatch(setEducations(educations.getEducationData))
                 }

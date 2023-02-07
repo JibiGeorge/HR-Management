@@ -1,19 +1,21 @@
 import { useFormik } from 'formik'
 import React from 'react'
 import { toast } from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addLeaveTypes, getAllLeaveTypes } from '../../helper/LeaveTypeHelper';
 import { setLeaveTypes } from '../../redux/features/leaveTypeSlice';
 
 const AddForm = ({ closeModal }) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     const onSubmit = async () => {
         try {
-            const addLeaveType = await addLeaveTypes(values)
+            const addLeaveType = await addLeaveTypes(values,token)
             if(addLeaveType.success){
-                const allLeaveTypes = await getAllLeaveTypes()
+                const allLeaveTypes = await getAllLeaveTypes(token)
                 dispatch(setLeaveTypes(allLeaveTypes.allLeaveTypes))
                 toast.success(addLeaveType.message, {
                     style: {

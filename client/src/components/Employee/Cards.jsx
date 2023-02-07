@@ -10,12 +10,15 @@ function Cards() {
     const dispatch = useDispatch();
     const { employeesDetails } = useSelector(state => state.employees);
     const {loading} = useSelector(state => state.alerts)
+    const {userDetails} = useSelector(state => state.user);
+
+    const token = userDetails.UserToken;
 
     useEffect(() => {
         (async () => {
             try {
                 dispatch(showLoading())
-                const employeeList = await getAllEmployees();
+                const employeeList = await getAllEmployees(token);
                 if (employeeList.success) {
                     dispatch(setEmployeesData(employeeList.list))
                 } else if (employeeList.message == 'No Data') {

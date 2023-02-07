@@ -11,11 +11,14 @@ import EditAssets from './EditAssets';
 const AssetsList = () => {
     const { loading } = useSelector(state => state.alerts);
     const {assets} = useSelector(state => state.assets);
+    const {userDetails} = useSelector(state => state.user);
     const dispatch = useDispatch();
+
+    const token = userDetails.UserToken;
 
     useEffect(()=>{
         (async()=>{
-            const assets = await getAssets()
+            const assets = await getAssets(token)
             dispatch(setAssets(assets.assets))
         })();
     },[]);

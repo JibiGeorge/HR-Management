@@ -12,6 +12,9 @@ function Profile(props) {
     const { departmentDetails } = useSelector(state => state.department)
     const { designationDetails } = useSelector(state => state.designation)
     const { loading } = useSelector(state => state.alerts);
+    const {userDetails} = useSelector(state => state.user);
+
+    const token = userDetails.UserToken;
 
     const dispatch = useDispatch();
 
@@ -20,9 +23,9 @@ function Profile(props) {
     const onSubmit = async (values, actions) => {
         dispatch(showLoading());
         try {
-            const status = await updateProfile(values, empID)
+            const status = await updateProfile(values, empID,token)
             if (status.sucess) {
-                const employeeData = await getEmployeeData(empID);
+                const employeeData = await getEmployeeData(empID,token);
                 let result = employeeData.data;
                 dispatch(setEmpIndividualData(result.data));
                 toast.success(status.message, {
@@ -88,9 +91,9 @@ function Profile(props) {
 
     const generatePassword = async (id)=>{
         try {
-            const generate = await employeeCrendentialReGenerate(id)
+            const generate = await employeeCrendentialGenerate(id,token)
             if(generate.success){
-                const employeeData = await getEmployeeData(empID);
+                const employeeData = await getEmployeeData(empID,token);
                 let result = employeeData.data;
                 dispatch(setEmpIndividualData(result.data));
                 toast.success(generate.message, {
@@ -134,9 +137,9 @@ function Profile(props) {
 
     const reGeneratePassword =async (id)=>{
         try {
-            const reGenerate = await employeeCrendentialReGenerate(id)
+            const reGenerate = await employeeCrendentialReGenerate(id,token)
             if(reGenerate.success){
-                const employeeData = await getEmployeeData(empID);
+                const employeeData = await getEmployeeData(empID,token);
                 let result = employeeData.data;
                 dispatch(setEmpIndividualData(result.data));
                 toast.success(reGenerate.message, {

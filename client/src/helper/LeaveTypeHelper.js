@@ -1,11 +1,14 @@
 import instance from "../utils/serverConfig"
 
-export const addLeaveTypes = async (values) => {
+export const addLeaveTypes = async (values, token) => {
     try {
         const add = await instance({
             url: '/api/leaveType/add',
             method: 'POST',
-            data: values
+            data: values,
+            headers: {
+                Authorization: token
+            }
         })
         return add.data
     } catch (error) {
@@ -13,11 +16,14 @@ export const addLeaveTypes = async (values) => {
     }
 }
 
-export const getAllLeaveTypes = async () => {
+export const getAllLeaveTypes = async (token) => {
     try {
         const getAllList = await instance({
             url: '/api/leaveType/getAll',
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return getAllList.data
     } catch (error) {
@@ -25,11 +31,14 @@ export const getAllLeaveTypes = async () => {
     }
 }
 
-export const deleteLeaveType = async (id) => {
+export const deleteLeaveType = async (id, token) => {
     try {
         const deleted = await instance({
             url: '/api/leaveType/delete/' + id,
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
         })
         return deleted.data
     } catch (error) {
@@ -37,11 +46,14 @@ export const deleteLeaveType = async (id) => {
     }
 }
 
-export const getUpdaingData = async (id) => {
+export const getUpdaingData = async (id, token) => {
     try {
         const data = await instance({
             url: '/api/leaveType/getLeaveTypeData/' + id,
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return data.data
     } catch (error) {
@@ -49,12 +61,15 @@ export const getUpdaingData = async (id) => {
     }
 }
 
-export const leaveTypeUpdate = async (values) => {
+export const leaveTypeUpdate = async (values, token) => {
     try {
         const update = await instance({
             url: '/api/leaveType/update/',
             method: 'PUT',
-            data: values
+            data: values,
+            headers: {
+                Authorization: token
+            }
         })
         return update.data
     } catch (error) {

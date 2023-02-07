@@ -6,13 +6,15 @@ import { addHoliday, getAllHolidays } from '../../helper/HolidayHelper'
 import { setHolidaysDetails } from '../../redux/features/holidaySlice'
 
 const AddHoliday = ({ closeModal }) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     const onSubmit = async (values)=>{
         try {
-            const add = await addHoliday(values)
+            const add = await addHoliday(values,token)
             if(add.success){
-                const holidays = await getAllHolidays()
+                const holidays = await getAllHolidays(token)
                 for(let i=0;i<holidays.result.length;i++){
                     holidays.result[i].startDate = new Date(holidays.result[i].startDate).toISOString().slice(0,10)
                 }

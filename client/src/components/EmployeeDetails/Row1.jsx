@@ -12,18 +12,20 @@ function Row1(props) {
   const dispatch = useDispatch();
   const profileData = props.profile;
   const empID = profileData._id;
-  const { loading } = useSelector(state => state.alerts)
-  const { employeeAddress } = useSelector(state => state.employeeAddress)
+  const { loading } = useSelector(state => state.alerts);
+  const { employeeAddress } = useSelector(state => state.employeeAddress);
+  const {userDetails} = useSelector(state => state.user);
+  const token = userDetails.UserToken;
 
   const [showModalPersonalInfo, setShowModalPersonalInfo] = useState(false);
   const closePersonalModal = () => setShowModalPersonalInfo(false);
 
   const [showModalAddress, setShowModalAddress] = useState(false);
-  const closeAddressModal = () => setShowModalAddress(false)
+  const closeAddressModal = () => setShowModalAddress(false);
 
   useEffect(() => {
     (async () => {
-      const addressData = await getEmployeeAddressData(empID);
+      const addressData = await getEmployeeAddressData(empID,token);
       if (addressData.success) {
         dispatch(setEmployeeAddress(addressData.allAddress))
       }
@@ -33,9 +35,9 @@ function Row1(props) {
   const onSubmit = async (values) => {
     dispatch(showLoading())
     try {
-      const personalinfoUpdate = await updateEmpPersonal(values, empID)
+      const personalinfoUpdate = await updateEmpPersonal(values, empID,token)
       if (personalinfoUpdate.success) {
-        const employeeData = await getEmployeeData(empID);
+        const employeeData = await getEmployeeData(empID,token);
         let result = employeeData.data
         dispatch(setEmpIndividualData(result.data))
         toast.success(personalinfoUpdate.message, {

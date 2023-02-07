@@ -6,12 +6,14 @@ import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
 
 const DeleteConfirmation = ({ closeModal,id }) => {
     const dispatch = useDispatch();
+    const {userDetails} = useSelector(state => state.user);
     
     const assetsCategoryDelete = async ()=>{
+        let token = userDetails.UserToken;
         try {
-            const response = await deleteAssetsCategory(id);
+            const response = await deleteAssetsCategory(id,token);
             if(response.delete){
-                const categories = await getAllAssetsCategory();
+                const categories = await getAllAssetsCategory(token);
                 dispatch(setAssetsCategories(categories))
                 toast.success(response.message, {
                     style: {

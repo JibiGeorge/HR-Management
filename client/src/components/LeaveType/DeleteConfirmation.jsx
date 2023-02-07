@@ -8,14 +8,16 @@ import { setLeaveTypes } from '../../redux/features/leaveTypeSlice';
 const DeleteConfirmation = ({ closeModal, id }) => {
 
     const dispatch = useDispatch();
-    const { loading } = useSelector(state => state.alerts)
+    const { loading } = useSelector(state => state.alerts);
+    const {userDetails} = useSelector(state => state.user);
+    const token = userDetails.UserToken;
 
     const LeaveTypeDelete = async () => {
         dispatch(showLoading())
         try {
-            const deleteStatus = await deleteLeaveType(id);
+            const deleteStatus = await deleteLeaveType(id,token);
             if (deleteStatus.success) {
-                const leaveTypes = await getAllLeaveTypes();
+                const leaveTypes = await getAllLeaveTypes(token);
                 dispatch(setLeaveTypes(leaveTypes.allLeaveTypes))
                 toast.success(deleteStatus.message, {
                     style: {

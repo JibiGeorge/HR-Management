@@ -1,7 +1,7 @@
 import axios from 'axios';
 import instance from '../utils/serverConfig';
 
-export const addEmployee = async (values) => {
+export const addEmployee = async (values, token) => {
     const data = new FormData();
     data.append('file', values.image)
     data.append('upload_preset', 'opkf0ic5')
@@ -14,21 +14,26 @@ export const addEmployee = async (values) => {
             const response = await instance({
                 url: '/api/employee/add',
                 method: 'POST',
-                data: {values}
+                data: { values },
+                headers: {
+                    Authorization: token
+                }
             })
             return response;
         } else {
         }
     } catch (error) {
-        console.log('====>', error.message);
     }
 }
 
-export const getAllEmployees = async () => {
+export const getAllEmployees = async (token) => {
     try {
         const response = await instance({
             url: '/api/employee/getAllEmployees',
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return response.data;
     } catch (error) {
@@ -36,11 +41,14 @@ export const getAllEmployees = async () => {
     }
 }
 
-export const getEmployeeData = async (empID) => {
+export const getEmployeeData = async (empID, token) => {
     try {
         const response = await instance({
             url: '/api/employee/getEmployeeData/?id=' + empID,
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return (response)
     } catch (error) {
@@ -48,17 +56,20 @@ export const getEmployeeData = async (empID) => {
     }
 }
 
-export const updateProfile = async (data, userID)=>{
+export const updateProfile = async (data, userID, token) => {
     try {
         const updateprofileStatus = await instance({
-            url: '/api/employee/updateProfile/?id='+userID,
+            url: '/api/employee/updateProfile/?id=' + userID,
             method: 'PUT',
-            data: data
+            data: data,
+            headers: {
+                Authorization: token
+            }
         })
         const result = updateprofileStatus.data
-        if(result.sucess){
+        if (result.sucess) {
             return (result)
-        }else{
+        } else {
             return (result)
         }
     } catch (error) {
@@ -66,116 +77,142 @@ export const updateProfile = async (data, userID)=>{
     }
 }
 
-export const updateEmpPersonal = async (datas, empID)=>{
+export const updateEmpPersonal = async (datas, empID, token) => {
     try {
         const updatePersonalInfo = await instance({
-            url: '/api/employee/personalinfo/update/'+empID,
+            url: '/api/employee/personalinfo/update/' + empID,
             method: 'PUT',
-            data: datas
-        }) 
+            data: datas,
+            headers: {
+                Authorization: token
+            }
+        })
         return updatePersonalInfo.data;
     } catch (error) {
-        return {message: "Connection Error"};
+        return { message: "Connection Error" };
     }
 }
 
-export const getEmployeeAddressData = async (id)=>{
+export const getEmployeeAddressData = async (id, token) => {
     try {
         const getData = await instance({
-            url: '/api/employee/address/'+id,
-            method: 'GET'
+            url: '/api/employee/address/' + id,
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return getData.data;
     } catch (error) {
-        return {message: "Connection Error..!"}
+        return { message: "Connection Error..!" }
     }
 }
 
-export const employeeAddressAdd = async (datas, id)=>{
+export const employeeAddressAdd = async (datas, id, token) => {
     try {
         const addAddress = await instance({
-            url: '/api/employee/address/add/'+id,
+            url: '/api/employee/address/add/' + id,
             method: 'POST',
-            data: datas
+            data: datas,
+            headers: {
+                Authorization: token
+            }
         })
         return addAddress.data;
     } catch (error) {
-        console.log('error',error.message);
-        return {message: "Connection Error..!"}
+        return { message: "Connection Error..!" }
     }
 }
 
-export const getBankAccount = async (id)=>{
+export const getBankAccount = async (id, token) => {
     try {
         const getAccountData = await instance({
-            url: '/api/employee/bankAccount/get/'+id,
-            method: 'GET'
+            url: '/api/employee/bankAccount/get/' + id,
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return getAccountData.data
     } catch (error) {
-        return {message: 'Connection Error'};
+        return { message: 'Connection Error' };
     }
 }
 
-export const updateBankAccount = async (datas, empID)=>{
+export const updateBankAccount = async (datas, empID, token) => {
     try {
         const update = await instance({
-            url: '/api/employee/bankAccount/add/'+empID,
+            url: '/api/employee/bankAccount/add/' + empID,
             method: 'PUT',
-            data: datas
+            data: datas,
+            headers: {
+                Authorization: token
+            }
         })
         return update.data;
     } catch (error) {
-        return {message: 'Connection Error.'};
+        return { message: 'Connection Error.' };
     }
 }
 
-export const getEmergencyContacts = async (empID)=>{
+export const getEmergencyContacts = async (empID, token) => {
     try {
         const getContacts = await instance({
-            url: '/api/employee/contatcts/get/'+empID,
-            method: 'GET'
+            url: '/api/employee/contatcts/get/' + empID,
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return getContacts.data;
     } catch (error) {
-        return {message: 'Connection Error..!'}
+        return { message: 'Connection Error..!' }
     }
 }
 
-export const updateEmployeeContactDetails = async (datas, empID)=>{
+export const updateEmployeeContactDetails = async (datas, empID, token) => {
     try {
         const update = await instance({
-            url: '/api/employee/contacts/add/'+empID,
+            url: '/api/employee/contacts/add/' + empID,
             method: 'PUT',
-            data: datas
+            data: datas,
+            headers: {
+                Authorization: token
+            }
         })
         return update.data
     } catch (error) {
-        return {message: 'Connection Error.'}
+        return { message: 'Connection Error.' }
     }
 }
 
-export const updateEducations = async (datas, empID)=>{
+export const updateEducations = async (datas, empID, token) => {
     try {
         const update = await instance({
-            url: '/api/employee/eduation/add/'+empID,
+            url: '/api/employee/eduation/add/' + empID,
             method: 'PUT',
-            data: datas
+            data: datas,
+            headers: {
+                Authorization: token
+            }
         })
         return update.data
     } catch (error) {
-        return {message: 'Connection Error.'};        
+        return { message: 'Connection Error.' };
     }
 }
 
-export const allEducationsDetails = async (empID)=>{
+export const allEducationsDetails = async (empID, token) => {
     try {
         const getData = await instance({
-            url: '/api/employee/education/get/'+empID,
-            method: 'GET'
+            url: '/api/employee/education/get/' + empID,
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
         })
         return getData.data
     } catch (error) {
-        return {message: 'Connection Error.'}; 
+        return { message: 'Connection Error.' };
     }
 }

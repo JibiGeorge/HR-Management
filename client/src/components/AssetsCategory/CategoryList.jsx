@@ -13,10 +13,13 @@ const CategoryList = () => {
     const dispatch = useDispatch()
     const { loading } = useSelector(state => state.alerts);
     let { category } = useSelector(state => state.assetsCategory);
+    const {userDetails} = useSelector(state => state.user);
+    
     useEffect(() => {
         (async () => {
             try {
-                const categories = await getAllAssetsCategory();
+                let token = userDetails.UserToken;
+                const categories = await getAllAssetsCategory(token);
                 if (categories.success) {
                     dispatch(setAssetsCategories(categories))
                 } else {

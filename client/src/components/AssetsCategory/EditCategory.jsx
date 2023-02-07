@@ -2,19 +2,21 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAllAssetsCategory, getAssetCategoryDetails, updateCategoryData } from '../../helper/AssetsHelper'
 import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
 
 const EditCategory = ({closeModal,id}) => {
+    const {userDetails} = useSelector(state => state.user);
 
     const [categoryData, setCategoryData] = useState('')
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const token = userDetails.UserToken;
 
     useEffect(()=>{
         (async()=>{
             try {
-                const data = await getAssetCategoryDetails(id)
+                const data = await getAssetCategoryDetails(id,token)
                 if(data.success){
                     setCategoryData(data.response)
                 }else{
@@ -48,9 +50,9 @@ const EditCategory = ({closeModal,id}) => {
 
     const updateData = async ()=>{
         try {
-            const response = await updateCategoryData(categoryData)
+            const response = await updateCategoryData(categoryData,token)
             if(response.updated){
-                const categories = await getAllAssetsCategory()
+                const categories = await getAllAssetsCategory(token)
                 if(categories.success){
                     dispatch(setAssetsCategories(categories))
                     toast.success(response.message, {
