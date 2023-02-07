@@ -39,31 +39,31 @@ const AssetsList = () => {
     const column = [
         {
             name: 'Category',
-            selector: row => row.assetCategory.categoryName
+            selector: row => row?.assetCategory?.categoryName
         },
         {
             name: 'Assets Name',
-            selector: row => row.assetName,
+            selector: row => row?.assetName,
         },
         {
             name: 'Brand',
-            selector: row => row.brand
+            selector: row => row?.brand
         },
         {
             name: 'Model',
-            selector: row => row.modelNo
+            selector: row => row?.modelNo
         },
         {
             name: 'Code',
-            selector: row => row.code
+            selector: row => row?.code
         },
         {
             name: 'Configuration',
-            selector: row => row.configuration
+            selector: row => row?.configuration
         },
         {
             name: 'In Stock',
-            selector: row => row.inStock
+            selector: row => row?.inStock
         },
         {
             name: "Action",

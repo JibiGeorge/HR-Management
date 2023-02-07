@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setAdminDetails } from '../../redux/features/adminLogin';
+import { setUserDetails } from '../../redux/features/userLogin';
 import './Header.css'
 
 function Header() {
@@ -20,7 +20,7 @@ function Header() {
   // Logout
   const handleLogout = () => {
     localStorage.removeItem('usertoken');
-    dispatch(setAdminDetails({}))
+    dispatch(setUserDetails({}))
     naviagate('/')
   }
 

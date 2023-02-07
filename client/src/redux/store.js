@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { adminSlice } from './features/adminLogin';
+import { userSlice } from './features/userLogin';
 import { alertSlice } from './features/alertSlice';
 
 import storage from 'redux-persist/lib/storage';
@@ -27,7 +27,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
     alerts: alertSlice.reducer,
-    admin: adminSlice.reducer,
+    user: userSlice.reducer,
     department: departmentSlice.reducer,
     designation: designationSlice.reducer,
     employees: employeeSlice.reducer,

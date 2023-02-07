@@ -4,7 +4,7 @@ import './Login.css'
 import { useFormik } from 'formik'
 import { loginUser } from '../../helper/Userhelper.js'
 import { useDispatch } from 'react-redux';
-import { setAdminDetails } from '../../redux/features/adminLogin'
+import { setUserDetails } from '../../redux/features/userLogin'
 import toast, { Toaster } from 'react-hot-toast';
 
 function Login() {
@@ -19,7 +19,7 @@ function Login() {
     },
     onSubmit: async values => {
       const res = await loginUser(values)
-      dispatch(setAdminDetails(res))
+      dispatch(setUserDetails(res))
       if (res.loggedIn) {
         navigate('/dashboard');
       } else {
