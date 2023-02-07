@@ -40,7 +40,8 @@ export const addEmployee = async (req, res) => {
                 dateofLeave,
                 username,
                 email,
-                image
+                image,
+                loginPermisionEnabled: false
             })
             emp.save().then((response) => {
                 res.status(200).json({ response, success: true, message: 'Successfully Added...!' });
@@ -85,7 +86,7 @@ export const updateProfile = async (req, res) => {
             contactNumber: data.contactNumber,
             email: data.email,
             dateofBirth: data.dateofBirth,
-            place: data.place,
+            place: data.address,
             gender: data.gender,
             role: data.role
         })

@@ -1,6 +1,10 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 const userSchema = Schema({
+    userID:{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Employee'
+    },
     username: {
         type: String,
         required: [true, 'Please provide unique Username'],
@@ -10,6 +14,10 @@ const userSchema = Schema({
         type: String,
         required: [true, 'Please provide a Password'],
         unique: false
+    },
+    role: {
+        type: String,
+        require: true
     }
 });
 

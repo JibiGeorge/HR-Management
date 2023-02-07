@@ -2,6 +2,7 @@ import { useFormik } from 'formik';
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
+import { employeeCrendentialGenerate, employeeCrendentialReGenerate } from '../../helper/CredentialHelper';
 import { getEmployeeData, updateProfile } from '../../helper/Employeehelper';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
 import { setEmpIndividualData } from '../../redux/features/employee';
@@ -85,6 +86,98 @@ function Profile(props) {
     const [showProfileUpddateModal, setShowProfileUpddateModal] = useState(false);
     const closeProfileUpdateModal = () => setShowProfileUpddateModal(false);
 
+    const generatePassword = async (id)=>{
+        try {
+            const generate = await employeeCrendentialReGenerate(id)
+            if(generate.success){
+                const employeeData = await getEmployeeData(empID);
+                let result = employeeData.data;
+                dispatch(setEmpIndividualData(result.data));
+                toast.success(generate.message, {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#25ab11',
+                    },
+                    iconTheme: {
+                        primary: '#25ab11',
+                        secondary: '#FFFAEE',
+                    },
+                });
+            }else{
+                toast.error(generate.message, {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#713200',
+                    },
+                    iconTheme: {
+                        primary: '#713200',
+                        secondary: '#FFFAEE',
+                    },
+                });
+            }
+        } catch (error) {
+            toast.error('Something Wrong...!', {
+                style: {
+                    border: '1px solid #713200',
+                    padding: '16px',
+                    color: '#713200',
+                },
+                iconTheme: {
+                    primary: '#713200',
+                    secondary: '#FFFAEE',
+                },
+            });
+        }
+    }
+
+    const reGeneratePassword =async (id)=>{
+        try {
+            const reGenerate = await employeeCrendentialReGenerate(id)
+            if(reGenerate.success){
+                const employeeData = await getEmployeeData(empID);
+                let result = employeeData.data;
+                dispatch(setEmpIndividualData(result.data));
+                toast.success(reGenerate.message, {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#25ab11',
+                    },
+                    iconTheme: {
+                        primary: '#25ab11',
+                        secondary: '#FFFAEE',
+                    },
+                });
+            }else{
+                toast.error(reGenerate.message, {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#713200',
+                    },
+                    iconTheme: {
+                        primary: '#713200',
+                        secondary: '#FFFAEE',
+                    },
+                });
+            }
+        } catch (error) {
+            toast.error('Something Wrong...!', {
+                style: {
+                    border: '1px solid #713200',
+                    padding: '16px',
+                    color: '#713200',
+                },
+                iconTheme: {
+                    primary: '#713200',
+                    secondary: '#FFFAEE',
+                },
+            });
+        }
+    }
+
     return (
         <>
             <Toaster
@@ -147,6 +240,14 @@ function Profile(props) {
                                 <div className="text">{profileData?.role}</div>
                             </li>
                         </ul>
+                        {profileData?.loginPermisionEnabled && 
+                         <div className="password-generat">
+                         <button className='btn btn-danger' onClick={()=> reGeneratePassword(profileData._id)} >Re-Generate Password</button>
+                     </div>}
+                     {!profileData?.loginPermisionEnabled &&
+                        <div className="password-generat">
+                            <button className='btn btn-danger' onClick={()=> generatePassword(profileData._id)} >Generate Password</button>
+                        </div>}
                     </div>
                 </div>
 

@@ -73,7 +73,11 @@ const employeeSchema = Schema({
     },
     religion: String,
     maritialStatus: String,
-    passportNumber: String
+    passportNumber: String,
+    loginPermisionEnabled: {
+        type: Boolean,
+        require: true
+    }
 
 });
 

@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 
 function Body() {
   const {employeeData} =  useSelector(state => state.employees);
+  console.log('adhvdhja',employeeData);
   return (
     <div className="section-body employee">
       <Header/>

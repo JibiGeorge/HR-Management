@@ -1,6 +1,7 @@
 import express from 'express';
 import { addAssets, addAssetsCategory, deleteAssets, deleteAssetsCategory, getAllAssetsCategories, getAssetCategoryData, getAssetData, getAssets, updateAsset, updateCategory } from '../controller/assetsController.js';
 import { addAttendance, deleteAttendance, getAttendanceData, getAttendanceList, updateAttendance } from '../controller/attendanceController.js';
+import { generateCredentials, reGenerateCredentials } from '../controller/credentialsController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
 import { addEducation, getEducation } from '../controller/educationController.js';
@@ -88,6 +89,10 @@ router.get('/employee/education/get/:id',getEducation)
 //Job Role Leaves
 router.post('/leave/jobRoleLeave/add',addJobRoleLeaves)
 router.get('/leave/jobRoleLeave/getAll',getAllJobRoleLeaves)
+
+// credentialGenrate for Employees
+router.post('/employee/credentialGenrate/:id',generateCredentials)
+router.put('/employee/credential/reGenerate/:id',reGenerateCredentials)
 
 
 export default router;
