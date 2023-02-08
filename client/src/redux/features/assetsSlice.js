@@ -7,6 +7,7 @@ export const assetsSlice = createSlice({
     },
     reducers: {
         setAssets: (state,data) => {
+            console.log('dadad',data);
             state.assets = data.payload
         }
     }

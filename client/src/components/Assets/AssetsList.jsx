@@ -19,7 +19,7 @@ const AssetsList = () => {
     useEffect(()=>{
         (async()=>{
             const assets = await getAssets(token)
-            dispatch(setAssets(assets.assets))
+            dispatch(setAssets(assets?.assets))
         })();
     },[]);
 

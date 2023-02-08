@@ -1,19 +1,25 @@
 import { useFormik } from 'formik';
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast';
-import { useSelector } from 'react-redux'
-import { applyLeave } from '../../helper/LeaveApplication';
+import { useDispatch, useSelector } from 'react-redux'
+import { applyLeave, getUserLeaveApplications } from '../../helper/LeaveApplication';
+import { setUserLeaveApplications } from '../../redux/features/leaveApplicationsSlice';
 
 const ApplyLeaveModal = ({ closeModal, leaveTypes }) => {
   const { loading } = useSelector(state => state.alerts);
   const [totalLeaveDays, setTotalLeaveDays] = useState(0);
   const { userDetails } = useSelector(state => state.user);
   const token = userDetails.UserToken;
+  const dispatch = useDispatch();
 
   const onSubmit = async (values) => {
     try {
       const apply = await applyLeave(values, totalLeaveDays, token);
       if (apply.success) {
+        const userLeaveApplications = await getUserLeaveApplications(token);
+        if(userLeaveApplications.success){
+          dispatch(setUserLeaveApplications(userLeaveApplications))
+        }
         toast.success(apply.message, {
           style: {
             border: '1px solid #713200',
@@ -68,7 +74,7 @@ const ApplyLeaveModal = ({ closeModal, leaveTypes }) => {
   const { values, handleSubmit, handleChange } = useFormik({
     initialValues: {
       leaveType: '',
-      applyDate: '',
+      applyDate: new Date().toISOString().slice(0, 10),
       fromDate: '',
       toDate: '',
       modeOfLeave: ''
@@ -103,8 +109,8 @@ const ApplyLeaveModal = ({ closeModal, leaveTypes }) => {
                 <div className="col-lg-6 col-sm-12 col-xl-6 mb-3">
                   <div className="form-group">
                     <label>Apply Date</label>
-                    <input type="date" className="form-control" id='applyDate'
-                      value={values.applyDate} onChange={handleChange} />
+                    <input type="date" className="form-control" id='applyDate' disabled
+                      value={new Date().toISOString().slice(0, 10)} onChange={handleChange} />
                   </div>
                 </div>
                 <div className="col-lg-6 col-sm-12 col-xl-6 mb-3">

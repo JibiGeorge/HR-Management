@@ -22,3 +22,18 @@ export const applyLeave = async (datas,days, token) => {
         return { message: 'Connection Error..!' }
     }
 }
+
+export const getUserLeaveApplications = async (token)=>{
+    try {
+        const getLeaveApplications = await instance({
+            url: '/api/leave/userLeaveApplications',
+            method: 'GET',
+            headers:{
+                Authorization: token
+            }
+        })
+        return getLeaveApplications.data;
+    } catch (error) {
+        return {message: 'Connection Error..!'}
+    }
+}

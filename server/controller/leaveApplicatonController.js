@@ -38,12 +38,26 @@ export const applyLeave = async (req, res) => {
             const newData = new LeaveApplication({
                 userID,
                 leaveApplications: obj
-            })
+            });
             newData.save().then((resposne) => {
                 res.status(200).json({ success: true, message: 'Leave Applied..!' });
-            })
+            });
         }
     } catch (error) {
-        res.status(500).send({ message: 'Internal Server Error..!' })
+        res.status(500).send({ message: 'Internal Server Error..!' });
+    }
+}
+
+export const getUserLeaveApplications = async (req, res) => {
+    const userID = res.locals.userID;
+    try {
+        const applications = await LeaveApplication.findOne({userID}).populate('leaveApplications.leaveType');
+        if(applications?.leaveApplications.length >0){
+            res.status(200).json({success:true, applications});
+        }else{
+            res.json({message: 'No Data Founded..'});
+        }
+    } catch (error) {
+        res.status(500).send({ message: 'Internal Server Error..!' });
     }
 }
