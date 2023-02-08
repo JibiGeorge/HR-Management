@@ -12,9 +12,10 @@ function Profile(props) {
     const { departmentDetails } = useSelector(state => state.department)
     const { designationDetails } = useSelector(state => state.designation)
     const { loading } = useSelector(state => state.alerts);
-    const {userDetails} = useSelector(state => state.user);
+    const { userDetails } = useSelector(state => state.user);
 
     const token = userDetails.UserToken;
+    const role = userDetails.role;
 
     const dispatch = useDispatch();
 
@@ -23,9 +24,9 @@ function Profile(props) {
     const onSubmit = async (values, actions) => {
         dispatch(showLoading());
         try {
-            const status = await updateProfile(values, empID,token)
+            const status = await updateProfile(values, empID, token)
             if (status.sucess) {
-                const employeeData = await getEmployeeData(empID,token);
+                const employeeData = await getEmployeeData(empID, token);
                 let result = employeeData.data;
                 dispatch(setEmpIndividualData(result.data));
                 toast.success(status.message, {
@@ -89,11 +90,11 @@ function Profile(props) {
     const [showProfileUpddateModal, setShowProfileUpddateModal] = useState(false);
     const closeProfileUpdateModal = () => setShowProfileUpddateModal(false);
 
-    const generatePassword = async (id)=>{
+    const generatePassword = async (id) => {
         try {
-            const generate = await employeeCrendentialGenerate(id,token)
-            if(generate.success){
-                const employeeData = await getEmployeeData(empID,token);
+            const generate = await employeeCrendentialGenerate(id, token)
+            if (generate.success) {
+                const employeeData = await getEmployeeData(empID, token);
                 let result = employeeData.data;
                 dispatch(setEmpIndividualData(result.data));
                 toast.success(generate.message, {
@@ -107,7 +108,7 @@ function Profile(props) {
                         secondary: '#FFFAEE',
                     },
                 });
-            }else{
+            } else {
                 toast.error(generate.message, {
                     style: {
                         border: '1px solid #713200',
@@ -135,11 +136,11 @@ function Profile(props) {
         }
     }
 
-    const reGeneratePassword =async (id)=>{
+    const reGeneratePassword = async (id) => {
         try {
-            const reGenerate = await employeeCrendentialReGenerate(id,token)
-            if(reGenerate.success){
-                const employeeData = await getEmployeeData(empID,token);
+            const reGenerate = await employeeCrendentialReGenerate(id, token)
+            if (reGenerate.success) {
+                const employeeData = await getEmployeeData(empID, token);
                 let result = employeeData.data;
                 dispatch(setEmpIndividualData(result.data));
                 toast.success(reGenerate.message, {
@@ -153,7 +154,7 @@ function Profile(props) {
                         secondary: '#FFFAEE',
                     },
                 });
-            }else{
+            } else {
                 toast.error(reGenerate.message, {
                     style: {
                         border: '1px solid #713200',
@@ -243,14 +244,18 @@ function Profile(props) {
                                 <div className="text">{profileData?.role}</div>
                             </li>
                         </ul>
-                        {profileData?.loginPermisionEnabled && 
-                         <div className="password-generat">
-                         <button className='btn btn-danger' onClick={()=> reGeneratePassword(profileData._id)} >Re-Generate Password</button>
-                     </div>}
-                     {!profileData?.loginPermisionEnabled &&
-                        <div className="password-generat">
-                            <button className='btn btn-danger' onClick={()=> generatePassword(profileData._id)} >Generate Password</button>
-                        </div>}
+                        {role === 'Admin' &&
+                            <>
+                                {profileData?.loginPermisionEnabled &&
+                                    <div className="password-generat">
+                                        <button className='btn btn-danger' onClick={() => reGeneratePassword(profileData._id)} >Re-Generate Password</button>
+                                    </div>}
+                                {!profileData?.loginPermisionEnabled &&
+                                    <div className="password-generat">
+                                        <button className='btn btn-danger' onClick={() => generatePassword(profileData._id)} >Generate Password</button>
+                                    </div>}
+                            </>
+                        }
                     </div>
                 </div>
 

@@ -12,6 +12,7 @@ export const auth = async (req, res, next) => {
                 [{ _id: userID }, { username }]
         }).then((user) => {
             if (user) {
+                res.locals = user;
                 next()
             }else{
                 res.send('Invalid Token')

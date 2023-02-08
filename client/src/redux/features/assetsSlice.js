@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const assetsSlice = createSlice({
     name: "assets",
     initialState: {
-        assets: false,
+        assets: null,
     },
     reducers: {
         setAssets: (state,data) => {

@@ -6,7 +6,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { getEmployeeData } from '../helper/Employeehelper'
 import toast,{ Toaster } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setEmpIndividualData } from '../redux/features/employee'
 import { getAllDepartments } from '../helper/Departmenthelper'
 import { getAllDesignation } from '../helper/Designationhelper'
@@ -17,12 +17,15 @@ function EmployeeDetails() {
     const dispatch = useDispatch();
     const location = useLocation();
     let empID = location.state?.id;
+    const {userDetails} = useSelector(state => state.user);
+
+    const token = userDetails.UserToken;
     useEffect(() => {
         (async () => {
             try {
-                const employeeData = await getEmployeeData(empID);
-                const departmentList = await getAllDepartments();
-                const designationList = await getAllDesignation();
+                const employeeData = await getEmployeeData(empID,token);
+                const departmentList = await getAllDepartments(token);
+                const designationList = await getAllDesignation(token);
                 let result = employeeData.data
                 if(result.success){
                     dispatch(setEmpIndividualData(result.data));

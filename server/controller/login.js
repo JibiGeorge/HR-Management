@@ -21,7 +21,8 @@ export const login = (req, res) => {
                         return res.status(200).json({
                             msg: 'Login Successfull...!',
                             username: user.username,
-                            UserToken
+                            UserToken,
+                            role: user.role
                         });
                     })
                     // eslint-disable-next-line no-unused-vars

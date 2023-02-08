@@ -1,4 +1,5 @@
 import Employee from "../model/employee.js"
+import userCredential from "../model/userModel.js";
 
 export const addEmployee = async (req, res) => {
     let {
@@ -88,6 +89,9 @@ export const updateProfile = async (req, res) => {
             dateofBirth: data.dateofBirth,
             place: data.address,
             gender: data.gender,
+            role: data.role
+        })
+        await userCredential.findOneAndUpdate({userID},{
             role: data.role
         })
         return res.status(200).json({ sucess: true, employee, message: "SuccessFully Updated" })

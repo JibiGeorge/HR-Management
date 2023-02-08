@@ -11,6 +11,7 @@ import Employeeadd from '../pages/Employeeadd'
 import EmployeeDetails from '../pages/EmployeeDetails'
 import Holiday from '../pages/Holiday'
 import JobRoleLeave from '../pages/JobRoleLeave'
+import LeaveApplication from '../pages/LeaveApplication'
 import LeaveType from '../pages/LeaveType'
 import Login from '../pages/Loginpage'
 import Protect from '../protectorRoute/Protect'
@@ -33,6 +34,7 @@ function Routelinks() {
                     <Route exact path='/leave' element={<LeaveType />} />
                     <Route exact path='/attendance' element={<Attendance />} />
                     <Route exact path='/leave/jobRole' element={<JobRoleLeave/>} />
+                    <Route exact path='leaveapplication' element={<LeaveApplication/>} />
                 </Route>
             </Routes>
         </BrowserRouter>

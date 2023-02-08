@@ -11,6 +11,7 @@ import { addEmergencyContacts, getEmergencyContacts } from '../controller/employ
 import { addEmployee, getAllEmployees, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
 import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
 import { addJobRoleLeaves, getAllJobRoleLeaves } from '../controller/jobRoleLeavesController.js';
+import { applyLeave } from '../controller/leaveApplicatonController.js';
 import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
 import { login } from '../controller/login.js';
 import { auth } from '../middleware/auth.js';
@@ -94,6 +95,9 @@ router.get('/leave/jobRoleLeave/getAll', auth, getAllJobRoleLeaves)
 // credentialGenrate for Employees
 router.post('/employee/credentialGenrate/:id', auth, generateCredentials)
 router.put('/employee/credential/reGenerate/:id', auth, reGenerateCredentials)
+
+// Leave Application
+router.post('/leave/applyLeave', auth, applyLeave )
 
 
 export default router;

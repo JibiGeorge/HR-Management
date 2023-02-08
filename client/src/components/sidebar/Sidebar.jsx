@@ -1,8 +1,11 @@
 import React from 'react'
 import './Sidebar.css'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function Sidebar() {
+    const { userDetails } = useSelector(state => state.user)
+    const role = userDetails.role;
     return (
         <div className="sidebar">
             <div className="logo-details">
@@ -78,18 +81,26 @@ function Sidebar() {
                         </Link>
                         <i className="bx bxs-chevron-down arrow"></i>
                     </div>
-                    <ul className="sub-menu">
-                        <li>
-                            <Link className="link_name" >Leave</Link>
-                        </li>
-                        <li><Link to='/holiday'>Holiday</Link></li>
-                        <li><Link to='/leave/jobRole'>Job Role Leave</Link></li>
-                        <li><Link to='/leave'>Leave Type</Link></li>
-                        <li><Link>Leave Application</Link></li>
-                        <li><Link>Earned Leaves</Link></li>
-                    </ul>
+                    {role === 'Admin' &&
+                        <ul className="sub-menu">
+                            <li>
+                                <Link className="link_name" >Leave</Link>
+                            </li>
+                            <li><Link to='/holiday'>Holiday</Link></li>
+                            <li><Link to='/leave/jobRole'>Job Role Leave</Link></li>
+                            <li><Link to='/leave'>Leave Type</Link></li>
+                            <li><Link>Leave Application</Link></li>
+                            <li><Link>Earned Leaves</Link></li>
+                        </ul>}
+                    {role === 'Employee' &&
+                        <ul className="sub-menu">
+                            <li>
+                                <Link to='/leaveapplication' >Leave Application</Link>
+                            </li>
+                        </ul>
+                    }
                 </li>
-                
+
                 <li>
                     <div className="icon-link">
                         <Link>

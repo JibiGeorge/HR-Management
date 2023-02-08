@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAllHolidays, getHolidayData, updateHoliday } from '../../helper/HolidayHelper'
 import { setHolidaysDetails } from '../../redux/features/holidaySlice'
 
