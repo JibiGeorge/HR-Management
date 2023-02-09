@@ -19,8 +19,8 @@ function Login() {
     },
     onSubmit: async values => {
       const res = await loginUser(values)
-      dispatch(setUserDetails(res))
       if (res.loggedIn) {
+        dispatch(setUserDetails(res))
         navigate('/dashboard');
       } else {
         toast.error(res.error, {
@@ -51,7 +51,7 @@ function Login() {
               <h3>LOGIN</h3>
             </div>
             <div>
-              <form onClick={formik.handleSubmit} >
+              <form>
                 <div className="row">
                   <i className="fa-sold fa-user"></i>
                   <input type="text" placeholder='User Name' {...formik.getFieldProps('username')} />
@@ -61,7 +61,7 @@ function Login() {
                   <input type="password" placeholder='Password' {...formik.getFieldProps('password')} />
                 </div>
                 <div className="row">
-                  <button className='button' type="submit">LOGIN</button>
+                  <button className='button' type="submit" onClick={formik.handleSubmit}>LOGIN</button>
                 </div>
               </form>
             </div>

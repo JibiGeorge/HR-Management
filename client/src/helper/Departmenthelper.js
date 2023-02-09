@@ -12,7 +12,6 @@ export async function addDepartment({ department,token }) {
         })
         return data
     } catch (error) {
-        console.log(error.message);
         return { error: "Not Added" };
     }
 }

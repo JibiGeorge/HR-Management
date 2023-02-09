@@ -12,7 +12,6 @@ export async function loginUser({ username, password }) {
         localStorage.setItem('usertoken', data.UserToken)
         return data;
     } catch (error) {
-        console.log(error.message);
         return { error: "Not a valid user" }
     }
 }
