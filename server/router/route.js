@@ -11,7 +11,7 @@ import { addEmergencyContacts, getEmergencyContacts } from '../controller/employ
 import { addEmployee, getAllEmployees, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
 import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
 import { addJobRoleLeaves, getAllJobRoleLeaves } from '../controller/jobRoleLeavesController.js';
-import { applyLeave, getUserLeaveApplications } from '../controller/leaveApplicatonController.js';
+import { applyLeave, getAllApplications, getUserLeaveApplications, updateLeaveStatus } from '../controller/leaveApplicatonController.js';
 import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
 import { login } from '../controller/login.js';
 import { auth } from '../middleware/auth.js';
@@ -82,23 +82,25 @@ router.get('/employee/bankAccount/get/:id', auth, getEmployeeBankAccount)
 
 // Employee Emergency contacts
 router.put('/employee/contacts/add/:id', auth, addEmergencyContacts);
-router.get('/employee/contatcts/get/:id', auth, getEmergencyContacts)
+router.get('/employee/contatcts/get/:id', auth, getEmergencyContacts);
 
 // Employee Education
-router.put('/employee/eduation/add/:id', auth, addEducation)
-router.get('/employee/education/get/:id', auth, getEducation)
+router.put('/employee/eduation/add/:id', auth, addEducation);
+router.get('/employee/education/get/:id', auth, getEducation);
 
 //Job Role Leaves
-router.post('/leave/jobRoleLeave/add', auth, addJobRoleLeaves)
-router.get('/leave/jobRoleLeave/getAll', auth, getAllJobRoleLeaves)
+router.post('/leave/jobRoleLeave/add', auth, addJobRoleLeaves);
+router.get('/leave/jobRoleLeave/getAll', auth, getAllJobRoleLeaves);
 
 // credentialGenrate for Employees
-router.post('/employee/credentialGenrate/:id', auth, generateCredentials)
-router.put('/employee/credential/reGenerate/:id', auth, reGenerateCredentials)
+router.post('/employee/credentialGenrate/:id', auth, generateCredentials);
+router.put('/employee/credential/reGenerate/:id', auth, reGenerateCredentials);
 
 // Leave Application
 router.post('/leave/applyLeave', auth, applyLeave);
 router.get('/leave/userLeaveApplications', auth, getUserLeaveApplications);
+router.get('/leave/allApplications/get',auth, getAllApplications);
+router.put('/leave/allApplications/updateStatus',auth, updateLeaveStatus);
 
 
 export default router;

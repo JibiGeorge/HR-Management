@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import AllLeaveApplications from '../pages/AllLeaveApplications'
 import AssetCategory from '../pages/AssetCategory'
 import Assets from '../pages/Assets'
 import Attendance from '../pages/Attendance'
@@ -35,6 +36,7 @@ function Routelinks() {
                     <Route exact path='/attendance' element={<Attendance />} />
                     <Route exact path='/leave/jobRole' element={<JobRoleLeave/>} />
                     <Route exact path='leaveapplication' element={<LeaveApplication/>} />
+                    <Route exact path='/allleaveApplications' element={<AllLeaveApplications/>} />
                 </Route>
             </Routes>
         </BrowserRouter>

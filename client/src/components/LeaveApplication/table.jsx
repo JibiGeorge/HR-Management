@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import DataTable from 'react-data-table-component'
+import { useSelector } from 'react-redux'
 
 const column = [
     {
@@ -37,25 +38,32 @@ const column = [
     }
 ]
 const table = ({ applications }) => {
+    const { loading } = useSelector(state => state.alerts);
     return (
         <>
-            <DataTable
-                columns={column}
-                data={applications?.leaveApplications}
-                pagination
-                fixedHeader
-                fixedHeaderScrollHeight='300px'
-                selectableRowsHighlight
-                highlightOnHover
-                subHeader
-                subHeaderComponent={
-                    [<input type='text'
-                        placeHolder='Search By Category'
-                        className='w-25 form-control' />,
-                    <button className='btn btn-sm btn-info ms-3'>Export</button>]
-                }
-                subHeaderAlign='left'
-            />
+            {loading && <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>}
+            {!loading &&
+                <DataTable
+                    columns={column}
+                    data={applications?.leaveApplications}
+                    pagination
+                    fixedHeader
+                    fixedHeaderScrollHeight='300px'
+                    selectableRowsHighlight
+                    highlightOnHover
+                    subHeader
+                    subHeaderComponent={
+                        [<input type='text'
+                            placeHolder='Search By Category'
+                            className='w-25 form-control' />,
+                        <button className='btn btn-sm btn-info ms-3'>Export</button>]
+                    }
+                    subHeaderAlign='left'
+                />}
         </>
     )
 }

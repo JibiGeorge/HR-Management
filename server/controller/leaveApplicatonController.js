@@ -51,13 +51,62 @@ export const applyLeave = async (req, res) => {
 export const getUserLeaveApplications = async (req, res) => {
     const userID = res.locals.userID;
     try {
-        const applications = await LeaveApplication.findOne({userID}).populate('leaveApplications.leaveType');
-        if(applications?.leaveApplications.length >0){
-            res.status(200).json({success:true, applications});
-        }else{
-            res.json({message: 'No Data Founded..'});
+        const applications = await LeaveApplication.findOne({ userID }).populate('leaveApplications.leaveType');
+        if (applications?.leaveApplications.length > 0) {
+            res.status(200).json({ success: true, applications });
+        } else {
+            res.json({ message: 'No Data Founded..' });
         }
     } catch (error) {
         res.status(500).send({ message: 'Internal Server Error..!' });
+    }
+}
+
+export const getAllApplications = async (req, res) => {
+    try {
+        const applications = await LeaveApplication.aggregate([
+            {
+                $unwind: '$leaveApplications'
+            },
+            {
+                $lookup: {
+                    from: 'leavetypes',
+                    localField: 'leaveApplications.leaveType',
+                    foreignField: '_id',
+                    as: 'leaveTypeDetails'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'employees',
+                    localField: 'userID',
+                    foreignField: '_id',
+                    as: 'employeeDetails'
+                }
+            }
+        ]);
+        if (applications.length > 0) {
+            res.status(200).json({ success: true, applications });
+        } else {
+            res.json({ message: 'No Data' });
+        }
+    } catch (error) {
+        res.status(500).send({ message: 'Internal Server Error..!' });
+    }
+}
+
+export const updateLeaveStatus = async (req, res) => {
+    const { status, docID, applicationID } = req.body;
+    try {
+        await LeaveApplication.findOneAndUpdate({_id:docID, 'leaveApplications._id':applicationID},{
+            $set:{
+                'leaveApplications.$.status': status
+            }
+        }).then((resposne)=>{
+            res.status(200).json({success:true, message: 'Successfully Changed the Status..'})
+        })
+    } catch (error) {
+        console.log(error.message);
+        res.send({ message: 'Internal Server Error..!' })
     }
 }
