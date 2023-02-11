@@ -16,16 +16,16 @@ function AddForm() {
     var dispatch = useDispatch();
     const navigate = useNavigate()
     const { loading } = useSelector(state => state.alerts);
-    const {userDetails} = useSelector(state => state.user);
+    const { userDetails } = useSelector(state => state.user);
 
     const [designation, setDesignation] = useState([]);
     const [department, setDepartment] = useState([]);
 
+    let token = userDetails.UserToken
     const onSubmit = async (values, actions) => {
-        let token = userDetails.UserToken
         dispatch(showLoading())
         try {
-            const result = await addEmployee(values,token);
+            const result = await addEmployee(values, token);
             if (result.data.success) {
                 toast.success(result.data.message, {
                     style: {
@@ -118,7 +118,7 @@ function AddForm() {
         onSubmit
     });
 
-    
+
 
     return (
         <>
@@ -135,13 +135,14 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>First Name
-                                            <span className="text-danger">*</span>
+                                            <span className="text-danger me-2">*</span>
+                                            {errors.firstName && touched.firstName && <span className='error'>{errors.firstName}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <input type="text" placeholder='Enter First Name'
                                             value={values.firstName}
-                                            onChange={handleChange} id="firstName" />
+                                            onChange={handleChange} id="firstName" className={errors.firstName && touched.firstName ? "input-error" : ""} />
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +150,6 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Last Name
-                                            <span className="text-danger">*</span>
                                         </label>
                                     </div>
                                     <div className='select '>
@@ -163,13 +163,14 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Employee Code
-                                            <span className="text-danger">*</span>
+                                            <span className="text-danger me-2">*</span>
+                                            {errors.empCode && touched.empCode && <span className='error'>{errors.empCode}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <input type="text" placeholder='Enter Employee Code'
                                             value={values.empCode}
-                                            onChange={handleChange} id="empCode" />
+                                            onChange={handleChange} id="empCode" className={errors.empCode && touched.empCode ? "input-error" : ""} />
                                     </div>
                                 </div>
                             </div>
@@ -177,13 +178,14 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Department
-                                            <span className="text-danger">*</span>
+                                            <span className="text-danger me-2">*</span>
+                                            {errors.department && touched.department && <span className='error'>{errors.department}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <select name="" id="department"
                                             value={values.department}
-                                            onChange={handleChange}>
+                                            onChange={handleChange} className={errors.department && touched.department ? "input-error" : ""} >
                                             <option value="">Select Department</option>
                                             {department.map(values => {
                                                 return (
@@ -198,13 +200,14 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Designation
-                                            <span className="text-danger">*</span>
+                                            <span className="text-danger me-2">*</span>
+                                            {errors.designation && touched.designation && <span className='error'>{errors.designation}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <select name="" id="designation"
                                             value={values.designation}
-                                            onChange={handleChange}>
+                                            onChange={handleChange} className={errors.designation && touched.designation ? "input-error" : ""}>
                                             <option value="">Select Designation</option>
                                             {designation.map(values => {
                                                 return (
@@ -219,13 +222,14 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Role
-                                            <span className="text-danger">*</span>
+                                            <span className="text-danger me-2">*</span>
+                                            {errors.role && touched.role && <span className='error'>{errors.role}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <select name="" id="role"
                                             value={values.role}
-                                            onChange={handleChange}>
+                                            onChange={handleChange} className={errors.role && touched.role ? "input-error" : ""}>
                                             <option value="">Select Role</option>
                                             <option value="Employee">Employee</option>
                                             <option value="HR">HR</option>
@@ -238,13 +242,14 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Gender
-                                            <span className="text-danger">*</span>
+                                            <span className="text-danger me-2">*</span>
+                                            {errors.gender && touched.gender && <span className='error'>{errors.gender}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <select name="" id="gender"
                                             value={values.gender}
-                                            onChange={handleChange}>
+                                            onChange={handleChange} className={errors.gender && touched.gender ? "input-error" : ""}>
                                             <option value="">Select Gender</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -257,7 +262,6 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Blood Group
-                                            <span className="text-danger">*</span>
                                         </label>
                                     </div>
                                     <div className='select '>
@@ -279,7 +283,6 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>PAN Number
-                                            <span className="text-danger">*</span>
                                         </label>
                                     </div>
                                     <div className='select '>
@@ -294,13 +297,13 @@ function AddForm() {
                                     <div className='title'>
                                         <label className='col-form-label d-flex'>Contact Number
                                             <span className="text-danger me-2">*</span>
-                                            {errors.email && touched.email && <span className='error'>{errors.contactNumber}</span>}
+                                            {errors.contactNumber && touched.contactNumber && <span className='error'>{errors.contactNumber}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <input type="text" id='contactNumber' placeholder='Enter Contact Number'
                                             value={values.contactNumber}
-                                            onChange={handleChange} className={errors.contactNumber && touched.email ? "input-error" : ""} />
+                                            onChange={handleChange} className={errors.contactNumber && touched.contactNumber ? "input-error" : ""} />
                                     </div>
                                 </div>
                             </div>
@@ -308,7 +311,6 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Date of Birth
-                                            <span className="text-danger">*</span>
                                         </label>
                                     </div>
                                     <div className='select '>
@@ -322,13 +324,14 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Date of Joinig
-                                            <span className="text-danger">*</span>
+                                            <span className="text-danger me-2">*</span>
+                                            {errors.dateofJoin && touched.dateofJoin && <span className='error'>{errors.dateofJoin}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <input type="date" id='dateofJoin'
                                             value={values.dateofJoin}
-                                            onChange={handleChange} />
+                                            onChange={handleChange} className={errors.dateofJoin && touched.dateofJoin ? "input-error" : ""} />
                                     </div>
                                 </div>
                             </div>
@@ -336,7 +339,6 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Date of Leave
-                                            <span className="text-danger">*</span>
                                         </label>
                                     </div>
                                     <div className='select '>
@@ -350,13 +352,14 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Username
-                                            <span className="text-danger">*</span>
+                                            <span className="text-danger me-2">*</span>
+                                            {errors.username && touched.username && <span className='error'>{errors.username}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <input type="text" placeholder='Enter Username' id='username'
                                             value={values.username}
-                                            onChange={handleChange} />
+                                            onChange={handleChange} className={errors.username && touched.username ? "input-error" : ""} />
                                     </div>
                                 </div>
                             </div>
@@ -364,13 +367,14 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Email
-                                            <span className="text-danger">*</span>
+                                            <span className="text-danger me-2">*</span>
+                                            {errors.email && touched.email && <span className='error'>{errors.email}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <input type="email" placeholder='Enter Email' id='email'
                                             values={values.email}
-                                            onChange={handleChange} />
+                                            onChange={handleChange} className={errors.email && touched.email ? "input-error" : ""} />
                                     </div>
                                 </div>
                             </div>
@@ -378,13 +382,14 @@ function AddForm() {
                                 <div className="form-group">
                                     <div className='title'>
                                         <label className='col-form-label'>Photo
-                                            <span className="text-danger">*</span>
+                                            <span className="text-danger me-2">*</span>
+                                            {errors.image && touched.image && <span className='error'>{errors.image}</span>}
                                         </label>
                                     </div>
                                     <div className='select '>
                                         <input type="file" name='image' id='image'
                                             // value={values.image}
-                                            onChange={(e) => setFieldValue('image', e.target.files[0])} />
+                                            onChange={(e) => setFieldValue('image', e.target.files[0])} className={errors.image && touched.image ? "input-error" : ""} />
                                     </div>
                                 </div>
                             </div>
@@ -393,10 +398,10 @@ function AddForm() {
                                     <span class="sr-only">Loading...</span>
                                 </div>
                             </div>}
-                            {!loading && 
-                            <div className='form-button'>
-                                <button type='submit' className='btn btn-primary add-btn'>Submit</button>
-                            </div>}
+                            {!loading &&
+                                <div className='form-button'>
+                                    <button type='submit' className='btn btn-primary add-btn'>Submit</button>
+                                </div>}
                         </div>
                     </form>
                 </div>

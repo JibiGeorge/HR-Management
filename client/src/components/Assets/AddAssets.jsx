@@ -12,10 +12,11 @@ const AddAssets = ({ closeModal }) => {
     const { category } = useSelector(state => state.assetsCategory);
     const {userDetails} = useSelector(state => state.user);
     const token = userDetails.UserToken;
-
+    
     useEffect(() => {
         (async () => {
             const assetCategory = await getAllAssetsCategory(token);
+            console.log(assetCategory);
             dispatch(setAssetsCategories(assetCategory));
         })();
     }, []);
@@ -109,7 +110,7 @@ const AddAssets = ({ closeModal }) => {
                                             value={values.categoryName}
                                             onChange={handleChange} >
                                             <option value="">Select A Category</option>
-                                            {category.map((values) => {
+                                            {category?.map((values) => {
                                                 return (
                                                     <option value={values._id}>{values.categoryName}</option>
                                                 )

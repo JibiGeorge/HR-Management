@@ -4,6 +4,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { addAssetsCategory, getAllAssetsCategory } from '../../helper/AssetsHelper'
 import { setAssetsCategories } from '../../redux/features/assetsCategorySlice'
+import { assetCategorySchema } from '../../schemas/assetCategorySchema'
 
 const AddCategory = ({ closeModal }) => {
     const dispatch = useDispatch();
@@ -68,10 +69,11 @@ const AddCategory = ({ closeModal }) => {
         }
     }
 
-    const { values, handleChange, handleSubmit, isSubmitting } = useFormik({
+    const { values, handleChange, handleSubmit, errors, isSubmitting, touched } = useFormik({
         initialValues: {
             categoryName: ''
         },
+        validationSchema: assetCategorySchema,
         onSubmit
     })
     return (
@@ -88,8 +90,12 @@ const AddCategory = ({ closeModal }) => {
                             <div className="row">
                                 <div className="col-sm-12">
                                     <div className="form-group">
-                                        <label>Assets Category Name</label>
-                                        <input type="text" className='form-control' id='categoryName' value={values.categoryName} onChange={handleChange} />
+                                        <label>Assets Category Name
+                                        <span className="text-danger me-2">*</span>
+                                            {errors.categoryName && touched.categoryName && <span className='error'>{errors.categoryName}</span>}
+                                        </label>
+                                        <input type="text"  id='categoryName'
+                                        value={values.categoryName} onChange={handleChange} className= {`form-control ${errors.categoryName && touched.categoryName ? "input-error" : ""}`}  />
                                     </div>
                                 </div>
                             </div>

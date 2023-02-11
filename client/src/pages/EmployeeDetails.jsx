@@ -1,11 +1,9 @@
 import React from 'react'
-import Header from '../components/header/Header'
-import Sidebar from '../Components/Sidebar/Sidebar'
 import Employee from '../Components/EmployeeDetails/Body'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { getEmployeeData } from '../helper/Employeehelper'
-import toast,{ Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { setEmpIndividualData } from '../redux/features/employee'
 import { getAllDepartments } from '../helper/Departmenthelper'
@@ -17,21 +15,21 @@ function EmployeeDetails() {
     const dispatch = useDispatch();
     const location = useLocation();
     let empID = location.state?.id;
-    const {userDetails} = useSelector(state => state.user);
+    const { userDetails } = useSelector(state => state.user);
 
     const token = userDetails.UserToken;
     useEffect(() => {
         (async () => {
             try {
-                const employeeData = await getEmployeeData(empID,token);
+                const employeeData = await getEmployeeData(empID, token);
                 const departmentList = await getAllDepartments(token);
                 const designationList = await getAllDesignation(token);
                 let result = employeeData.data
-                if(result.success){
+                if (result.success) {
                     dispatch(setEmpIndividualData(result.data));
                     dispatch(setDepartmentData(departmentList));
                     dispatch(setDesignatonData(designationList.data));
-                }else{
+                } else {
                     toast.error('result.data.message', {
                         style: {
                             border: '1px solid #713200',
@@ -65,8 +63,6 @@ function EmployeeDetails() {
                 position="top-right"
                 reverseOrder={false}
             />
-            <Sidebar />
-            <Header />
             <Employee />
         </>
     )

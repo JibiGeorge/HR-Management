@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './Login.css'
 import { useFormik } from 'formik'
@@ -11,6 +11,7 @@ function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [btnLoading, setBtnLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -18,10 +19,12 @@ function Login() {
       password: ''
     },
     onSubmit: async values => {
+      setBtnLoading(true);
       const res = await loginUser(values)
       if (res.loggedIn) {
         dispatch(setUserDetails(res))
         navigate('/dashboard');
+        setBtnLoading(false);
       } else {
         toast.error(res.error, {
           style: {
@@ -34,6 +37,7 @@ function Login() {
             secondary: '#FFFAEE',
           },
         });
+        setBtnLoading(false);
       }
     }
   })
@@ -61,7 +65,10 @@ function Login() {
                   <input type="password" placeholder='Password' {...formik.getFieldProps('password')} />
                 </div>
                 <div className="row">
-                  <button className='button' type="submit" onClick={formik.handleSubmit}>LOGIN</button>
+                  <button className='button' type="submit" onClick={formik.handleSubmit}>
+                    {btnLoading && 'Checking...'}
+                    {!btnLoading && 'LOGIN'}
+                    </button>
                 </div>
               </form>
             </div>

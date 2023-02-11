@@ -12,7 +12,7 @@ function Row3(props) {
 
     const { education } = useSelector(state => state.education);
     const educationData = education?.education;
-    const {userDetails} = useSelector(state => state.user);
+    const { userDetails } = useSelector(state => state.user);
     const token = userDetails.UserToken;
 
     const [showEducationModal, setShowEducationModal] = useState(false)
@@ -21,7 +21,7 @@ function Row3(props) {
     useEffect(() => {
         (async () => {
             try {
-                const educations = await allEducationsDetails(empID,token);
+                const educations = await allEducationsDetails(empID, token);
                 if (educations.success) {
                     dispatch(setEducations(educations.getEducationData))
                 } else {
@@ -38,7 +38,6 @@ function Row3(props) {
                     });
                 }
             } catch (error) {
-                console.log('jhvjhadv', error);
                 toast.error('Something Went Problem..!', {
                     style: {
                         border: '1px solid #713200',

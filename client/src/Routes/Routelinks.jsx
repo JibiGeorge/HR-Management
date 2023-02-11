@@ -16,30 +16,15 @@ import LeaveApplication from '../pages/LeaveApplication'
 import LeaveType from '../pages/LeaveType'
 import Login from '../pages/Loginpage'
 import Protect from '../protectorRoute/Protect'
+import Container from './Container'
 
 function Routelinks() {
     return (
-        <BrowserRouter>
             <Routes>
                 <Route exact path="/" element={<Login />} />
-                <Route element={<Protect />}>
-                    <Route exact path="/dashboard" element={<Dashboard />} />
-                    <Route exact path='/department' element={<Department />} />
-                    <Route exact path='/designation' element={<Designation />} />
-                    <Route exact path='/employee' element={<Employee />} />
-                    <Route exact path='/addEmployee' element={<Employeeadd />} />
-                    <Route exact path='/employeeDetails' element={<EmployeeDetails />} />
-                    <Route exact path='/assetsCategory' element={<AssetCategory />} />
-                    <Route exact path='/assets' element={<Assets />} />
-                    <Route exact path='/holiday' element={<Holiday />} />
-                    <Route exact path='/leave' element={<LeaveType />} />
-                    <Route exact path='/attendance' element={<Attendance />} />
-                    <Route exact path='/leave/jobRole' element={<JobRoleLeave/>} />
-                    <Route exact path='leaveapplication' element={<LeaveApplication/>} />
-                    <Route exact path='/allleaveApplications' element={<AllLeaveApplications/>} />
-                </Route>
+                <Route exact path='/*' element={<Container/>} />
+                
             </Routes>
-        </BrowserRouter>
     )
 }
 

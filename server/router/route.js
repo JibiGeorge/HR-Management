@@ -13,12 +13,12 @@ import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolida
 import { addJobRoleLeaves, getAllJobRoleLeaves } from '../controller/jobRoleLeavesController.js';
 import { applyLeave, getAllApplications, getUserLeaveApplications, updateLeaveStatus } from '../controller/leaveApplicatonController.js';
 import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
-import { login } from '../controller/login.js';
+import { login, verifyToken } from '../controller/login.js';
 import { auth } from '../middleware/auth.js';
 const router = express.Router();
 
 router.post('/login', login);
-// router.post('/verifyToken', verifyToken);
+router.post('/verifyToken', verifyToken);
 
 router.post('/addDepartment', auth, addDepartment);
 router.get('/getAllDepartments', auth, getDepartments)

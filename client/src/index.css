@@ -105,3 +105,11 @@ p{
 .input-tile{
     color: #212529;
 }
+label .error{
+    color: #dc3545;
+    font-size: 11px;
+}
+.modal-content .modal-body input.input-error,
+.modal-content .modal-body select.input-error{    
+    border-color: #fc8181;
+}
