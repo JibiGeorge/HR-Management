@@ -30,7 +30,7 @@ function EmployeeDetails() {
                     dispatch(setDepartmentData(departmentList));
                     dispatch(setDesignatonData(designationList.data));
                 } else {
-                    toast.error('result.data.message', {
+                    toast.error(result.data.message, {
                         style: {
                             border: '1px solid #713200',
                             padding: '16px',

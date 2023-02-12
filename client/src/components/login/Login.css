@@ -82,6 +82,14 @@
     background: #16a085;
     border: 1px solid #16a085;
     cursor: pointer;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    font-size: 16px;
+    transition: all 0.3s ease;
 }
 
 form .button input:hover {

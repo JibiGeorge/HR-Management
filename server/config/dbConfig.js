@@ -4,19 +4,19 @@ const url = 'mongodb+srv://hrmanagement:hrmanagement@hrmanagement.pkak7gi.mongod
 
 const db = async () => {
     try {
-        // const connection = await connect(process.env.MONGO_URL, {
-        //     useNewUrlParser: true,
-        //     // useFindAndModify: false,
-        //     useUnifiedTopology: true
-        // });
-        // console.log(`MongoDb Connected Successfully : ${connection.connection.host} `);
-        const connection = await connect(url,{
+        const connection = await connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
             // useFindAndModify: false,
             useUnifiedTopology: true
-        }).then(()=>{
-            console.log('MongoDb Connected Successfully');
-        }).catch((e)=> console.log('Connection Issue:-',e))
+        });
+        console.log(`MongoDb Connected Successfully : ${connection.connection.host} `);
+        // const connection = await connect(url,{
+        //     useNewUrlParser: true,
+        //     // useFindAndModify: false,
+        //     useUnifiedTopology: true
+        // }).then(()=>{
+        //     console.log('MongoDb Connected Successfully');
+        // }).catch((e)=> console.log('Connection Issue:-',e))
 
     } catch (error) {
         console.log('==========>', error);

@@ -53,8 +53,13 @@ function Sidebar() {
                             <Link className="link_name" >Employees</Link>
                         </li>
                         <li><Link to='/employee'>Employees</Link></li>
-                        <li><Link to=''>Disciplinary</Link></li>
-                        <li><Link>Inactive User</Link></li>
+                        {role === 'Admin' &&
+                            <>
+                                <li><Link to=''>Disciplinary</Link></li>
+                                <li><Link>Inactive User</Link></li>
+                            </>
+                        }
+                        <li><Link to='/profile' >Profile</Link></li>
                     </ul>
                 </li>
                 <li>

@@ -60,7 +60,7 @@ function Row2(props) {
     useEffect(()=>{
         (async()=>{
             try {
-                const contacts = await getEmergencyContacts(empID.token);
+                const contacts = await getEmergencyContacts(empID,token);
                 if(contacts.success){
                     dispatch(setContacts(contacts.contacts))
                 }else{

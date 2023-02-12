@@ -9,8 +9,9 @@ import { setEmployeesData } from '../../redux/features/employee';
 function Cards() {
     const dispatch = useDispatch();
     const { employeesDetails } = useSelector(state => state.employees);
-    const {loading} = useSelector(state => state.alerts)
-    const {userDetails} = useSelector(state => state.user);
+    const { loading } = useSelector(state => state.alerts);
+    const { userDetails } = useSelector(state => state.user);
+    const role = userDetails.role;
 
     const token = userDetails.UserToken;
 
@@ -77,26 +78,32 @@ function Cards() {
                 </div>
             </div>}
             {!loading &&
-            <div className="row">
-                {employeesDetails ? employeesDetails.map(values => {
-                    return (
-                        <div className="col-md-4 col-sm-6 col-lg-4 col-xl-3">
-                            <div className="profile-widget">
-                                <div className="profile-img">
-                                    <a href="" className='avatar'>
-                                        <img src={values.image} alt="" />
-                                    </a>
+                <div className="row">
+                    {employeesDetails ? employeesDetails.map(values => {
+                        return (
+                            <div className="col-md-4 col-sm-6 col-lg-4 col-xl-3">
+                                <div className="profile-widget">
+                                    <div className="profile-img">
+                                        <a href="" className='avatar'>
+                                            <img src={values.image} alt="" />
+                                        </a>
+                                    </div>
+                                    <h4 className="user-name mt-10 mb-0 text-ellipsis">
+                                        {role === 'Admin' &&
+                                            <Link to='/employeeDetails' state={{ id: values._id }}>{values.firstName} {values.lastName}</Link>
+                                        }
+                                        {role === 'Employee' && 
+                                            <p >{values.firstName} {values.lastName}</p>
+
+                                        }
+                                    </h4>
+                                    <div className="small text-muted">{values.contactNumber}</div>
                                 </div>
-                                <h4 className="user-name mt-10 mb-0 text-ellipsis">
-                                    <Link to='/employeeDetails' state={{id:values._id}}>{values.firstName} {values.lastName}</Link>
-                                </h4>
-                                <div className="small text-muted">{values.contactNumber}</div>
                             </div>
-                        </div>
-                    )
-                }) : (''
-                )}
-            </div>}
+                        )
+                    }) : (''
+                    )}
+                </div>}
         </>
     )
 }

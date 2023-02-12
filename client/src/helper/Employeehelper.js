@@ -156,7 +156,6 @@ export const updateBankAccount = async (datas, empID, token) => {
 }
 
 export const getEmergencyContacts = async (empID, token) => {
-    console.log('bank',token);
     try {
         const getContacts = await instance({
             url: '/api/employee/contatcts/get/' + empID,

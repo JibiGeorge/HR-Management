@@ -48,33 +48,33 @@ function Login() {
         position="top-right"
         reverseOrder={false}
       />
-      <div className="login">
-        <div className="conatiner-fluid">
-          <div className="wrapper">
-            <div className="title">
-              <h3>LOGIN</h3>
-            </div>
-            <div>
-              <form>
-                <div className="row">
-                  <i className="fa-sold fa-user"></i>
-                  <input type="text" placeholder='User Name' {...formik.getFieldProps('username')} />
-                </div>
-                <div className="row">
-                  <i className="fa-solid fa-lock"></i>
-                  <input type="password" placeholder='Password' {...formik.getFieldProps('password')} />
-                </div>
-                <div className="row">
-                  <button className='button' type="submit" onClick={formik.handleSubmit}>
-                    {btnLoading && 'Checking...'}
-                    {!btnLoading && 'LOGIN'}
-                    </button>
-                </div>
-              </form>
+        <div className="login">
+          <div className="conatiner-fluid">
+            <div className="wrapper">
+              <div className="title">
+                <h3>LOGIN</h3>
+              </div>
+              <div>
+                <form>
+                  <div className="row">
+                    <i className="fa-sold fa-user"></i>
+                    <input type="text" placeholder='User Name' {...formik.getFieldProps('username')} />
+                  </div>
+                  <div className="row">
+                    <i className="fa-solid fa-lock"></i>
+                    <input type="password" placeholder='Password' {...formik.getFieldProps('password')} />
+                  </div>
+                  <div className="row">
+                    <button className='button' type="submit" onClick={formik.handleSubmit}>
+                      {btnLoading && 'Checking...'}
+                      {!btnLoading && 'LOGIN'}
+                      </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </>
   )
 }
