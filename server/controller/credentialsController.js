@@ -63,7 +63,7 @@ export const generateCredentials = async (req, res) => {
                             }
                         })
                     } catch (error) {
-                        console.log('whats the error',error.message);                        
+                        console.log('whats the error', error.message);
                     }
                     res.status(200).json({ success: true, message: 'Genereated & Password Send to the Email.' })
                 }).catch((error) => {
@@ -78,7 +78,7 @@ export const generateCredentials = async (req, res) => {
     }
 }
 
-export const reGenerateCredentials = async (req,res)=>{
+export const reGenerateCredentials = async (req, res) => {
     const empID = req.params.id;
     const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const passwordLength = 8;
@@ -93,40 +93,52 @@ export const reGenerateCredentials = async (req,res)=>{
             const email = await sendPassWord(employee?.username, employee?.email, password);
             if (email.passwordSend) {
                 const bcryptPassword = await bcrypt.hash(password, 10);
-                await userCredential.findOneAndUpdate({userID:empID},{
+                await userCredential.findOneAndUpdate({ userID: empID }, {
                     password: bcryptPassword
-                }).then((response)=>{
-                        res.status(200).json({ success: true, message: 'Genereated & Password Send to the Email.' })
-                }).catch((error)=>{
-                        res.json({ message: 'Email Send Failed..!' })                    
+                }).then((response) => {
+                    res.status(200).json({ success: true, message: 'Genereated & Password Send to the Email.' })
+                }).catch((error) => {
+                    res.json({ message: 'Email Send Failed..!' })
                 })
-
-
-                // const credentails = new userCredential({
-                //     userID: employee?._id,
-                //     username: employee?.username,
-                //     password: bcryptPassword,
-                //     role: employee?.role
-                // })
-                // credentails.save().then(async (response) => {
-                //     try {
-                //         await Employee.findByIdAndUpdate({ _id: empID }, {
-                //             $set: {
-                //                 loginPermisionEnabled: true
-                //             }
-                //         })
-                //     } catch (error) {
-                //         console.log('whats the error',error.message);                        
-                //     }
-                //     res.status(200).json({ success: true, message: 'Genereated & Password Send to the Email.' })
-                // }).catch((error) => {
-                //     res.json({ message: 'Email Send Failed..!' })
-                // })
             } else {
                 res.json({ message: 'Email Send Failed..!' })
             }
         }
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+
+export const changePassword = async (req, res) => {
+    const userID = req.params.id;
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+    try {
+        const exist = await userCredential.findOne({ userID });
+        if (exist) {
+            const passwordcheck = await bcrypt.compare(oldPassword, exist.password);
+            if (passwordcheck) {
+                const newPasswordCheck = await bcrypt.compare(newPassword, exist.password);
+                if(!newPasswordCheck){
+                    const bcryptPassword = await bcrypt.hash(newPassword, 10);
+                    await userCredential.findOneAndUpdate({ userID: userID }, {
+                        password: bcryptPassword
+                    }).then((respponse) => {
+                        res.status(200).json({ success: true, message: 'Password Changed..!' });
+                    }).catch((error) => {
+                        res.json({ message: 'Password Changing Failed' });
+                    })
+                }else{
+                    res.json({message: 'New Password Same as Old Password..!'})
+                }
+
+            } else {
+                res.json({ message: 'Old Password Incorrect..!' });
+            }
+        } else {
+            res.json({ message: 'User Not exist' });
+        }
+    } catch (error) {
+        return res.json({ success: false, message: "Internal Server Error..!" });
     }
 }

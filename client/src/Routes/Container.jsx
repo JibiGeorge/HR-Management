@@ -16,6 +16,7 @@ import Holiday from '../pages/Holiday'
 import JobRoleLeave from '../pages/JobRoleLeave'
 import LeaveApplication from '../pages/LeaveApplication'
 import LeaveType from '../pages/LeaveType'
+import Profile from '../pages/Profile'
 import Protect from '../protectorRoute/Protect'
 
 const Container = () => {
@@ -39,6 +40,7 @@ const Container = () => {
                     <Route exact path='/leave/jobRole' element={<JobRoleLeave />} />
                     <Route exact path='leaveapplication' element={<LeaveApplication />} />
                     <Route exact path='/allleaveApplications' element={<AllLeaveApplications />} />
+                    <Route exact path='/profile' element={<Profile />} />
                 </Route>
 
             </Routes>

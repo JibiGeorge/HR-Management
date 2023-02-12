@@ -1,7 +1,7 @@
 import express from 'express';
 import { addAssets, addAssetsCategory, deleteAssets, deleteAssetsCategory, getAllAssetsCategories, getAssetCategoryData, getAssetData, getAssets, updateAsset, updateCategory } from '../controller/assetsController.js';
 import { addAttendance, deleteAttendance, getAttendanceData, getAttendanceList, updateAttendance } from '../controller/attendanceController.js';
-import { generateCredentials, reGenerateCredentials } from '../controller/credentialsController.js';
+import { changePassword, generateCredentials, reGenerateCredentials } from '../controller/credentialsController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
 import { addEducation, getEducation } from '../controller/educationController.js';
@@ -36,6 +36,7 @@ router.get('/employee/getAllEmployees', auth, getAllEmployees)
 router.get('/employee/getEmployeeData', auth, getEmployeeData)
 router.put('/employee/updateProfile', auth, updateProfile)
 router.put('/employee/personalinfo/update/:id', auth, updatePersonal)
+router.put('/employee/changePassword/:id',auth, changePassword)
 
 // Asstes Category
 router.post('/assetsCategory/add', auth, addAssetsCategory)

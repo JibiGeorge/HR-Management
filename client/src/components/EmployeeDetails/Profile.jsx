@@ -2,10 +2,11 @@ import { useFormik } from 'formik';
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { employeeCrendentialGenerate, employeeCrendentialReGenerate } from '../../helper/CredentialHelper';
+import { employeeCrendentialGenerate, employeeCrendentialReGenerate, updateCredentialPassword } from '../../helper/CredentialHelper';
 import { getEmployeeData, updateProfile } from '../../helper/Employeehelper';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
 import { setEmpIndividualData } from '../../redux/features/employee';
+import ChangePassword from './ChangePassword';
 
 function Profile(props) {
     const profileData = props.profile;
@@ -182,6 +183,9 @@ function Profile(props) {
         }
     }
 
+    const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+    const closeChangePasswordModal = () => setShowChangePasswordModal(false);
+
     return (
         <>
             <Toaster
@@ -256,6 +260,10 @@ function Profile(props) {
                                     </div>}
                             </>
                         }
+                        {role === 'Employee' && 
+                         <div className="password-generat">
+                         <button className='btn btn-success' onClick={() => setShowChangePasswordModal(true)} >Change Password</button>
+                     </div> }
                     </div>
                 </div>
 
@@ -394,6 +402,8 @@ function Profile(props) {
                         </div>
                     </div>}
             </div>
+
+            {showChangePasswordModal && <ChangePassword closeModal={closeChangePasswordModal} id={empID} token={token} /> }
         </>
     )
 }

@@ -91,7 +91,7 @@ export const updateProfile = async (req, res) => {
             gender: data.gender,
             role: data.role
         })
-        await userCredential.findOneAndUpdate({userID},{
+        await userCredential.findOneAndUpdate({ userID }, {
             role: data.role
         })
         return res.status(200).json({ sucess: true, employee, message: "SuccessFully Updated" })
@@ -114,8 +114,8 @@ export const updatePersonal = async (req, res) => {
             nationality: data.nationality,
             religion: data.religion,
             maritialStatus: data.maritialStatus
-        }).then((response)=>{
-            res.status(200).json({success: true, message: "Updated Successfully❤❤"})
+        }).then((response) => {
+            res.status(200).json({ success: true, message: "Updated Successfully❤❤" })
         })
     } catch (error) {
         return res.json({ success: false, message: "Internal Server Error..!" })

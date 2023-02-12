@@ -105,7 +105,7 @@ p{
 .input-tile{
     color: #212529;
 }
-label .error{
+.error{
     color: #dc3545;
     font-size: 11px;
 }

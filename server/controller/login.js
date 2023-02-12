@@ -22,7 +22,8 @@ export const login = (req, res) => {
                             msg: 'Login Successfull...!',
                             username: user.username,
                             UserToken,
-                            role: user.role
+                            role: user.role,
+                            _id: user.userID
                         });
                     })
                     // eslint-disable-next-line no-unused-vars
