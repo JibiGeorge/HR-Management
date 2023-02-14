@@ -20,7 +20,7 @@ const List = () => {
   useEffect(() => {
     (async () => {
       try {
-        const attendance = await attendanceList(token)
+        const attendance = await attendanceList(token);
         if (attendance.success) {
           dispatch(setAllAttendance(attendance.data))          
         } else {
@@ -71,7 +71,7 @@ const List = () => {
   const column = [
     {
       name: 'Employee Name',
-      selector: row => row.employee?.username
+      selector: row => row.userDetails[0]?.username
     },
     {
       name: 'Date',
@@ -79,20 +79,20 @@ const List = () => {
     },
     {
       name: 'Sign In',
-      selector: row => row?.signIn
+      selector: row => row?.attendance?.signIn
     },
     {
       name: 'Sign Out',
-      selector: row => row?.signOut
+      selector: row => row?.attendance?.signOut
     },
     {
       name: 'Total Time',
-      selector: row => row?.totalTime
+      selector: row => row?.attendance?.totalTime
     },
     {
       name: "Action",
-      cell: (row) => ([<button className='btn editBtn' onClick={()=> handleUpdate(row._id)}><i class="las la-edit"></i></button>,
-      <button className='btn deleteBtn' onClick={()=> handleDelete(row._id)} ><i class="las la-trash"></i></button>])
+      cell: (row) => ([<button className='btn editBtn' onClick={()=> handleUpdate(row?.attendance?._id)}><i class="las la-edit"></i></button>,
+      <button className='btn deleteBtn' onClick={()=> handleDelete(row?.attendance?._id)} ><i class="las la-trash"></i></button>])
     }
   ]
   return (

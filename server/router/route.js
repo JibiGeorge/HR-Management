@@ -1,6 +1,6 @@
 import express from 'express';
 import { addAssets, addAssetsCategory, deleteAssets, deleteAssetsCategory, getAllAssetsCategories, getAssetCategoryData, getAssetData, getAssets, updateAsset, updateCategory } from '../controller/assetsController.js';
-import { addAttendance, deleteAttendance, getAttendanceData, getAttendanceList, updateAttendance } from '../controller/attendanceController.js';
+import { addAttendance, deleteAttendance, getAttendanceData, getAttendanceList, getPunchedData, punchIn, punchOut, updateAttendance } from '../controller/attendanceController.js';
 import { changePassword, generateCredentials, reGenerateCredentials } from '../controller/credentialsController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
@@ -72,6 +72,10 @@ router.get('/attendance/getAll', auth, getAttendanceList)
 router.delete('/attendance/delete/:id', auth, deleteAttendance)
 router.get('/attendance/getData/:id', auth, getAttendanceData)
 router.put('/attendance/update', auth, updateAttendance)
+
+router.post('/attendance/punchin',auth, punchIn);
+router.get('/attendance/getPunchedData',auth, getPunchedData);
+router.post('/attendance/punchout',auth, punchOut)
 
 // Employee Address
 router.get('/employee/address/:id', auth, getEmployeeAddress)

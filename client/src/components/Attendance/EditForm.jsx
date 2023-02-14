@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import { attendanceList, getAttendanceData, updateAttendance } from '../../helper/AttendanceHelper'
-import { useFormik } from 'formik'
 import { getAllEmployees } from '../../helper/Employeehelper'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAllAttendance } from '../../redux/features/attendanceSlice'
@@ -23,7 +22,17 @@ const EditForm = ({ closeModal, id }) => {
                 const employee = await getAllEmployees(token)
                 setEmployees(employee.list)
                 if (attendanceData.success) {
-                    setAttendanceUpdateData(attendanceData.data);
+                    let data = attendanceData.data[0]
+                    //AM & PM Removing in SignIn Time 
+                    let signInSplit = data.attendance.signIn;
+                    signInSplit = signInSplit?.split(' ')
+                    data.attendance.signIn = signInSplit[0]
+                    
+                    //AM & PM Removing in SignIn Time 
+                    let signOutSplit = data.attendance.signOut;
+                    signOutSplit = signOutSplit?.split(' ')
+                    data.attendance.signOut = signOutSplit[0]
+                    setAttendanceUpdateData(data.attendance);
                 }
             } catch (error) {
                 toast.error('Something Wrong', {
@@ -86,7 +95,6 @@ const EditForm = ({ closeModal, id }) => {
             });
         }
     }
-
     return (
         <>
             <div className="modal-wrapper">
@@ -103,7 +111,7 @@ const EditForm = ({ closeModal, id }) => {
                                     <div className="form-group">
                                         <label>Name of the Employee</label>
                                         <select name="employee" id="employee"
-                                            value={attendanceUpdateData ? attendanceUpdateData.employee : ''}
+                                            value={attendanceUpdateData ? attendanceUpdateData?.employee : ''}
                                             onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, employee: e.target.value })} >
                                             <option value="">Select A Category</option>
                                             {employees ? employees.map(values => {
@@ -118,7 +126,7 @@ const EditForm = ({ closeModal, id }) => {
                                     <div className="form-group">
                                         <label>Date</label>
                                         <input type="date" className='form-control' id='date'
-                                            defaultValue={attendanceUpdateData ? new Date(attendanceUpdateData.date).toISOString().slice(0, 10) : ''}
+                                            defaultValue={attendanceUpdateData ? new Date(attendanceUpdateData?.date).toISOString().slice(0,10) : ''}
                                             onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, date: e.target.value })} />
                                     </div>
                                 </div>
@@ -126,7 +134,7 @@ const EditForm = ({ closeModal, id }) => {
                                     <div className="form-group">
                                         <label>Sign In Time</label>
                                         <input type="time" className='form-control' id='signIn'
-                                            value={attendanceUpdateData ? attendanceUpdateData.signIn : ''}
+                                            value={attendanceUpdateData ? attendanceUpdateData?.signIn : ''}
                                             onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, signIn: e.target.value })} />
                                     </div>
                                 </div>
@@ -134,7 +142,7 @@ const EditForm = ({ closeModal, id }) => {
                                     <div className="form-group">
                                         <label>Sign Out Time</label>
                                         <input type="time" className='form-control' id='signOut'
-                                            value={attendanceUpdateData ? attendanceUpdateData.signOut : ''}
+                                            value={attendanceUpdateData ? attendanceUpdateData?.signOut : ''}
                                             onChange={(e) => setAttendanceUpdateData({ ...attendanceUpdateData, signOut: e.target.value })} />
                                     </div>
                                 </div>

@@ -1,0 +1,70 @@
+.punching{
+    color: #bbc4cc;
+    font-size: .9375rem;
+}
+.punching .card{
+    background: #16191c;
+    border: 1px solid #2e3840;
+    box-shadow: 0 1px 1px 0 rgb(0 0 0 / 20%);
+    margin-bottom: 30px;
+}
+.punching .card-title{
+    color: #bbc4cc;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.punching .card-title .text-muted{
+    color: #8e8e8e !important;
+    font-size: 70%;
+    font-weight: 400;
+}
+.punching .punch-det{
+    background-color: #16191c;
+    border: 1px solid #2e3840;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+}
+.punching .punch-det h6{
+    line-height: 20px;
+    margin-bottom: 0;
+    font-size: .75rem;
+    font-weight: 600;
+}
+.punching .punch-det p{    
+    color: #727272;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+.punching .punch-info{
+    margin-bottom: 20px;
+}
+.punching .punch-info .punch-hours{
+    align-items: center;
+    background-color: #16191c;
+    border: 5px solid #2e3840;
+    border-radius: 50%;
+    display: flex;
+    font-size: 18px;
+    height: 120px;
+    justify-content: center;
+    margin: 0 auto;
+    width: 120px;
+}
+.punching .punch-btn-section{
+    margin-bottom: 20px;
+    text-align: center;
+}
+.punching .punch-btn-section button{
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    max-width: 100%;
+    padding: 8px 40px;
+    background-color: #ff9b44;
+    border: 1px solid #ff9b44;
+}
+.punching .punch-btn-section button:hover{
+    background-color: #e8832b;
+}

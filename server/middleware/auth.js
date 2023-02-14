@@ -19,7 +19,6 @@ export const auth = async (req, res, next) => {
             }
         })
     } catch (error) {
-        console.log('hi=======>',error.message);
         res.json({message: 'Invalid Token'})
     }
 }

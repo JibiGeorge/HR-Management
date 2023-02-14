@@ -76,3 +76,48 @@ export const updateAttendance = async (data,token) => {
         return { message: 'Connection Problem..!' }
     }
 }
+
+export const punchIn = async (token)=>{
+    try {
+        const punchin = await instance({
+            url: '/api/attendance/punchin',
+            method: 'POST',
+            headers:{
+                Authorization: token
+            }
+        })
+        return punchin.data;
+    } catch (error) {
+        return { message: 'Connection Problem..!' }
+    }
+}
+
+export const punchOut = async (token)=>{
+    try {
+        const punchout = await instance({
+            url: '/api/attendance/punchout',
+            method: 'POST',
+            headers:{
+                Authorization: token
+            }
+        })
+        return punchout.data;
+    } catch (error) {
+        return { message: 'Connection Problem..!' }
+    }
+}
+
+export const getPunchingData = async (token)=>{
+    try {
+        const punchedData = await instance({
+            url: '/api/attendance/getPunchedData',
+            method: 'GET',
+            headers:{
+                Authorization: token
+            }
+        })
+        return punchedData.data;
+    } catch (error) {
+        return { message: 'Connection Problem..!' }
+    }
+}

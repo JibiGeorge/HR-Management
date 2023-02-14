@@ -19,6 +19,7 @@ import { ContactsSlice } from './features/contactsSlice';
 import { EducationSlice } from './features/educationSlice';
 import { jobRoleLeavesSlice } from './features/jobRoleLeavesSlice';
 import { leaveApplicationSlice } from './features/leaveApplicationsSlice';
+import { punchingSlice } from './features/punching';
 
 const persistConfig = {
     key: 'root',
@@ -42,7 +43,8 @@ const reducer = combineReducers({
     emergencyContacts: ContactsSlice.reducer,
     education: EducationSlice.reducer,
     jobRoleLeaves: jobRoleLeavesSlice.reducer,
-    leaveApplications: leaveApplicationSlice.reducer
+    leaveApplications: leaveApplicationSlice.reducer,
+    punching: punchingSlice.reducer
 });
 
 const persistReduhcer = persistReducer(persistConfig, reducer);
