@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { allEducationsDetails } from '../../helper/Employeehelper';
 import { setEducations } from '../../redux/features/educationSlice';
 import EducationModal from './EducationModal'
 
-function Row3(props) {
-    const profileData = props.profile;
-    const empID = profileData._id;
+function Row3() {
+    const location = useLocation();
+    let empID = location.state?.id;
     const dispatch = useDispatch()
 
     const { education } = useSelector(state => state.education);

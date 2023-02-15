@@ -1,27 +1,73 @@
 import { useFormik } from 'formik';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { employeeCrendentialGenerate, employeeCrendentialReGenerate, updateCredentialPassword } from '../../helper/CredentialHelper';
+import { getAllDepartments } from '../../helper/Departmenthelper';
+import { getAllDesignation } from '../../helper/Designationhelper';
 import { getEmployeeData, updateProfile } from '../../helper/Employeehelper';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
+import { setDepartmentData } from '../../redux/features/departmentSlice';
+import { setDesignatonData } from '../../redux/features/designationSlice';
 import { setEmpIndividualData } from '../../redux/features/employee';
 import ChangePassword from './ChangePassword';
 
-function Profile(props) {
-    const profileData = props.profile;
+function Profile() {
+    const location = useLocation();
+    let empID = location.state?.id;
     const { departmentDetails } = useSelector(state => state.department)
     const { designationDetails } = useSelector(state => state.designation)
     const { loading } = useSelector(state => state.alerts);
     const { userDetails } = useSelector(state => state.user);
+    const { employeeData } = useSelector(state => state.employees);
 
     const token = userDetails.UserToken;
     const role = userDetails.role;
 
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        (async () => {
+            try {
+                const employeeData = await getEmployeeData(empID, token);
+                const departmentList = await getAllDepartments(token);
+                const designationList = await getAllDesignation(token);
+                let result = employeeData.data
+                if (result.success) {
+                    dispatch(setEmpIndividualData(result.data));
+                    dispatch(setDepartmentData(departmentList));
+                    dispatch(setDesignatonData(designationList.data));
+                } else {
+                    toast.error(result.data.message, {
+                        style: {
+                            border: '1px solid #713200',
+                            padding: '16px',
+                            color: '#713200',
+                        },
+                        iconTheme: {
+                            primary: '#713200',
+                            secondary: '#FFFAEE',
+                        },
+                    });
+                }
+            } catch (error) {
+                toast.error('Some Server Issue....!', {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#713200',
+                    },
+                    iconTheme: {
+                        primary: '#713200',
+                        secondary: '#FFFAEE',
+                    },
+                });
+            }
+        })();
+    }, [])
+
     // Profile Updation
-    let empID = profileData._id
     const onSubmit = async (values, actions) => {
         dispatch(showLoading());
         try {
@@ -75,15 +121,15 @@ function Profile(props) {
 
     const { values, handleChange, handleSubmit } = useFormik({
         initialValues: {
-            department: profileData.department?._id,
-            designation: profileData.designation?._id,
-            dateofJoin: profileData?.dateofJoin,
-            contactNumber: profileData?.contactNumber,
-            email: profileData?.email,
-            dateofBirth: profileData?.dateofBirth,
-            place: profileData?.place,
-            gender: profileData?.gender,
-            role: profileData?.role
+            department: employeeData.department?._id,
+            designation: employeeData.designation?._id,
+            dateofJoin: employeeData?.dateofJoin,
+            contactNumber: employeeData?.contactNumber,
+            email: employeeData?.email,
+            dateofBirth: employeeData?.dateofBirth,
+            place: employeeData?.place,
+            gender: employeeData?.gender,
+            role: employeeData?.role
         },
         onSubmit
     })
@@ -202,15 +248,15 @@ function Profile(props) {
                     <div className='col-lg-5 profile-wrap'>
                         <div className="row">
                             <div className='col-lg-4'>
-                                <img className="profile-img" src={profileData?.image} alt="" />
+                                <img className="profile-img" src={employeeData?.image} alt="" />
                             </div>
                             <div className='col-lg-8 profile-info'>
-                                <h3 className='username'>{profileData?.firstName} {profileData?.lastName}</h3>
-                                <h6 className='designation'>{profileData.designation?.designation}</h6>
-                                <div className='department'>{profileData.department?.department}</div>
-                                <div className='empID'>Employee ID : {profileData?.empCode}</div>
-                                <div className='doj'>Date of join :{profileData?.dateofJoin ?
-                                    new Date(profileData.dateofJoin).toLocaleDateString('en-GB', {
+                                <h3 className='username'>{employeeData?.firstName} {employeeData?.lastName}</h3>
+                                <h6 className='designation'>{employeeData.designation?.designation}</h6>
+                                <div className='department'>{employeeData.department?.department}</div>
+                                <div className='empID'>Employee ID : {employeeData?.empCode}</div>
+                                <div className='doj'>Date of join :{employeeData?.dateofJoin ?
+                                    new Date(employeeData.dateofJoin).toLocaleDateString('en-GB', {
                                         day: 'numeric', month: 'short', year: 'numeric'
                                     }) : ''}
                                 </div>
@@ -222,48 +268,48 @@ function Profile(props) {
                         <ul className="personal-info">
                             <li>
                                 <div className="title">Phone No:</div>
-                                <div className="text">{profileData?.contactNumber}</div>
+                                <div className="text">{employeeData?.contactNumber}</div>
                             </li>
                             <li>
                                 <div className="title">Email:</div>
-                                <div className="text">{profileData?.email}</div>
+                                <div className="text">{employeeData?.email}</div>
                             </li>
                             <li>
                                 <div className="title">Birthday:</div>
-                                <div className="text">{profileData?.dateofBirth ?
-                                    new Date(profileData?.dateofBirth).toLocaleDateString('en-GB', {
+                                <div className="text">{employeeData?.dateofBirth ?
+                                    new Date(employeeData?.dateofBirth).toLocaleDateString('en-GB', {
                                         day: 'numeric', month: 'short', year: 'numeric'
                                     }) : ''}</div>
                             </li>
                             <li>
                                 <div className="title">Place:</div>
-                                <div className="text">{profileData.place ? profileData.place : 'Nil'}</div>
+                                <div className="text">{employeeData.place ? employeeData.place : 'Nil'}</div>
                             </li>
                             <li>
                                 <div className="title">Gender:</div>
-                                <div className="text">{profileData?.gender}</div>
+                                <div className="text">{employeeData?.gender}</div>
                             </li>
                             <li>
                                 <div className="title">User Type:</div>
-                                <div className="text">{profileData?.role}</div>
+                                <div className="text">{employeeData?.role}</div>
                             </li>
                         </ul>
                         {role === 'Admin' &&
                             <>
-                                {profileData?.loginPermisionEnabled &&
+                                {employeeData?.loginPermisionEnabled &&
                                     <div className="password-generat">
-                                        <button className='btn btn-danger' onClick={() => reGeneratePassword(profileData._id)} >Re-Generate Password</button>
+                                        <button className='btn btn-danger' onClick={() => reGeneratePassword(employeeData._id)} >Re-Generate Password</button>
                                     </div>}
-                                {!profileData?.loginPermisionEnabled &&
+                                {!employeeData?.loginPermisionEnabled &&
                                     <div className="password-generat">
-                                        <button className='btn btn-danger' onClick={() => generatePassword(profileData._id)} >Generate Password</button>
+                                        <button className='btn btn-danger' onClick={() => generatePassword(employeeData._id)} >Generate Password</button>
                                     </div>}
                             </>
                         }
-                        {role === 'Employee' && 
-                         <div className="password-generat">
-                         <button className='btn btn-success' onClick={() => setShowChangePasswordModal(true)} >Change Password</button>
-                     </div> }
+                        {role === 'Employee' &&
+                            <div className="password-generat">
+                                <button className='btn btn-success' onClick={() => setShowChangePasswordModal(true)} >Change Password</button>
+                            </div>}
                     </div>
                 </div>
 
@@ -403,7 +449,7 @@ function Profile(props) {
                     </div>}
             </div>
 
-            {showChangePasswordModal && <ChangePassword closeModal={closeChangePasswordModal} id={empID} token={token} /> }
+            {showChangePasswordModal && <ChangePassword closeModal={closeChangePasswordModal} id={empID} token={token} />}
         </>
     )
 }

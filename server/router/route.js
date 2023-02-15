@@ -9,6 +9,7 @@ import { addEmployeeAddress, getEmployeeAddress } from '../controller/employeeAd
 import { addEmployeeBankAccount, getEmployeeBankAccount } from '../controller/employeeBankAccount.js';
 import { addEmergencyContacts, getEmergencyContacts } from '../controller/employeeContacts.js';
 import { addEmployee, getAllEmployees, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
+import { addEmployeeSalaryDetails, deleteEmployeeSalaryDetails, getEmployeeSalaryDetails } from '../controller/EmployeeSalaryControl.js';
 import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
 import { addJobRoleLeaves, getAllJobRoleLeaves } from '../controller/jobRoleLeavesController.js';
 import { applyLeave, getAllApplications, getUserLeaveApplications, updateLeaveStatus } from '../controller/leaveApplicatonController.js';
@@ -36,7 +37,7 @@ router.get('/employee/getAllEmployees', auth, getAllEmployees)
 router.get('/employee/getEmployeeData', auth, getEmployeeData)
 router.put('/employee/updateProfile', auth, updateProfile)
 router.put('/employee/personalinfo/update/:id', auth, updatePersonal)
-router.put('/employee/changePassword/:id',auth, changePassword)
+router.put('/employee/changePassword/:id', auth, changePassword)
 
 // Asstes Category
 router.post('/assetsCategory/add', auth, addAssetsCategory)
@@ -73,9 +74,9 @@ router.delete('/attendance/delete/:id', auth, deleteAttendance)
 router.get('/attendance/getData/:id', auth, getAttendanceData)
 router.put('/attendance/update', auth, updateAttendance)
 
-router.post('/attendance/punchin',auth, punchIn);
-router.get('/attendance/getPunchedData',auth, getPunchedData);
-router.post('/attendance/punchout',auth, punchOut)
+router.post('/attendance/punchin', auth, punchIn);
+router.get('/attendance/getPunchedData', auth, getPunchedData);
+router.post('/attendance/punchout', auth, punchOut)
 
 // Employee Address
 router.get('/employee/address/:id', auth, getEmployeeAddress)
@@ -104,8 +105,13 @@ router.put('/employee/credential/reGenerate/:id', auth, reGenerateCredentials);
 // Leave Application
 router.post('/leave/applyLeave', auth, applyLeave);
 router.get('/leave/userLeaveApplications', auth, getUserLeaveApplications);
-router.get('/leave/allApplications/get',auth, getAllApplications);
-router.put('/leave/allApplications/updateStatus',auth, updateLeaveStatus);
+router.get('/leave/allApplications/get', auth, getAllApplications);
+router.put('/leave/allApplications/updateStatus', auth, updateLeaveStatus);
+
+// Employee Salary Details
+router.post('/employee/salary/add/:id', auth, addEmployeeSalaryDetails);
+router.get('/employee/salary/get/:id', auth, getEmployeeSalaryDetails);
+router.delete('/employee/salaryDetails/delete/:id', auth, deleteEmployeeSalaryDetails);
 
 
 export default router;

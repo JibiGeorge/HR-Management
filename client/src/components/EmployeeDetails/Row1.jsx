@@ -2,19 +2,25 @@ import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { getAllDepartments } from '../../helper/Departmenthelper';
+import { getAllDesignation } from '../../helper/Designationhelper';
 import { getEmployeeAddressData, getEmployeeData, updateEmpPersonal } from '../../helper/Employeehelper';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
+import { setDepartmentData } from '../../redux/features/departmentSlice';
+import { setDesignatonData } from '../../redux/features/designationSlice';
 import { setEmpIndividualData } from '../../redux/features/employee';
 import { setEmployeeAddress } from '../../redux/features/employeeAddress';
 import EditAddress from './EditAddress';
 
-function Row1(props) {
+function Row1() {
   const dispatch = useDispatch();
-  const profileData = props.profile;
-  const empID = profileData._id;
+  const location = useLocation();
+  let empID = location.state?.id;
   const { loading } = useSelector(state => state.alerts);
   const { employeeAddress } = useSelector(state => state.employeeAddress);
-  const {userDetails} = useSelector(state => state.user);
+  const { userDetails } = useSelector(state => state.user);
+  const { employeeData } = useSelector(state => state.employees);
   const token = userDetails.UserToken;
 
   const [showModalPersonalInfo, setShowModalPersonalInfo] = useState(false);
@@ -25,8 +31,29 @@ function Row1(props) {
 
   useEffect(() => {
     (async () => {
-      const addressData = await getEmployeeAddressData(empID,token);
+      const employeeData = await getEmployeeData(empID, token);
+      const departmentList = await getAllDepartments(token);
+      const designationList = await getAllDesignation(token);
+      const addressData = await getEmployeeAddressData(empID, token);
+      let result = employeeData.data
       if (addressData.success) {
+        if (result.success) {
+          dispatch(setEmpIndividualData(result.data));
+          dispatch(setDepartmentData(departmentList));
+          dispatch(setDesignatonData(designationList.data));
+        } else {
+          toast.error(result.data.message, {
+            style: {
+              border: '1px solid #713200',
+              padding: '16px',
+              color: '#713200',
+            },
+            iconTheme: {
+              primary: '#713200',
+              secondary: '#FFFAEE',
+            },
+          });
+        }
         dispatch(setEmployeeAddress(addressData.allAddress))
       }
     })()
@@ -35,9 +62,9 @@ function Row1(props) {
   const onSubmit = async (values) => {
     dispatch(showLoading())
     try {
-      const personalinfoUpdate = await updateEmpPersonal(values, empID,token)
+      const personalinfoUpdate = await updateEmpPersonal(values, empID, token)
       if (personalinfoUpdate.success) {
-        const employeeData = await getEmployeeData(empID,token);
+        const employeeData = await getEmployeeData(empID, token);
         let result = employeeData.data
         dispatch(setEmpIndividualData(result.data))
         toast.success(personalinfoUpdate.message, {
@@ -85,15 +112,15 @@ function Row1(props) {
 
   const { values, handleSubmit, setFieldValue } = useFormik({
     initialValues: {
-      firstName: profileData?.firstName,
-      lastName: profileData?.lastName,
-      username: profileData?.username,
-      bloodGroup: profileData?.bloodGroup,
-      panNumber: profileData?.panNumber,
-      passportNumber: profileData?.passportNumber,
-      nationality: profileData?.nationality,
-      religion: profileData?.religion,
-      maritialStatus: profileData?.maritialStatus
+      firstName: employeeData?.firstName,
+      lastName: employeeData?.lastName,
+      username: employeeData?.username,
+      bloodGroup: employeeData?.bloodGroup,
+      panNumber: employeeData?.panNumber,
+      passportNumber: employeeData?.passportNumber,
+      nationality: employeeData?.nationality,
+      religion: employeeData?.religion,
+      maritialStatus: employeeData?.maritialStatus
     },
     enableReinitialize: true,
     onSubmit
@@ -113,39 +140,39 @@ function Row1(props) {
             <tbody className='personal-info-data'>
               <tr className="information">
                 <td className="title">First Name:</td>
-                <td className="text">{profileData.firstName}</td>
+                <td className="text">{employeeData.firstName}</td>
               </tr>
               <tr className="information">
                 <td className="title">Last Name:</td>
-                <td className="text">{profileData.lastName}</td>
+                <td className="text">{employeeData.lastName}</td>
               </tr>
               <tr className="information">
                 <td className="title">User Name:</td>
-                <td className="text">{profileData.username}</td>
+                <td className="text">{employeeData.username}</td>
               </tr>
               <tr className="information">
                 <td className="title">Blood Group:</td>
-                <td className="text">{profileData.bloodGroup}</td>
+                <td className="text">{employeeData.bloodGroup}</td>
               </tr>
               <tr className="information">
                 <td className="title">PAN Number:</td>
-                <td className="text">{profileData.panNumber}</td>
+                <td className="text">{employeeData.panNumber}</td>
               </tr>
               <tr className="information">
                 <td className="title">Passport No:</td>
-                <td className="text">{profileData.passportNumber ? profileData.passportNumber : 'Nil'}</td>
+                <td className="text">{employeeData.passportNumber ? employeeData.passportNumber : 'Nil'}</td>
               </tr>
               <tr className="information">
                 <td className="title">Nationality:</td>
-                <td className="text">{profileData.nationality ? profileData.nationality : 'Nil'}</td>
+                <td className="text">{employeeData.nationality ? employeeData.nationality : 'Nil'}</td>
               </tr>
               <tr className="information">
                 <td className="title">Religion:</td>
-                <td className="text">{profileData.religion ? profileData.religion : 'Nil'}</td>
+                <td className="text">{employeeData.religion ? employeeData.religion : 'Nil'}</td>
               </tr>
               <tr className="information">
                 <td className="title">Maritial Status:</td>
-                <td className="text">{profileData.maritialStatus ? profileData.maritialStatus : 'Nil'}</td>
+                <td className="text">{employeeData.maritialStatus ? employeeData.maritialStatus : 'Nil'}</td>
               </tr>
             </tbody>
           </div>

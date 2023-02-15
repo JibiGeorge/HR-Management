@@ -2,7 +2,7 @@ import React from 'react'
 
 function Filter() {
     return (
-        <div className="row">
+        <div className="row filter">
             <div className="col-sm-6 col-md-3 col-lg-2">
                 <div className="form-group form-focus focused">
                     <input type="text" className='form-control floating' />

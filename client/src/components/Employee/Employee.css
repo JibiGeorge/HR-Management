@@ -7,8 +7,8 @@
     margin-bottom: 1rem;
 }
 
-.employee input.form-control,
-.employee select.form-control {
+.employee .filter input.form-control,
+.employee .filter select.form-control {
     height: 50px;
     padding: 21px 12px 6px;
     background: #2e3439;
@@ -18,7 +18,7 @@
     font-size: 15px;
 }
 
-.employee .focus-label {
+.employee .filter .focus-label {
     font-size: 16px;
     font-weight: 400;
     opacity: .4;
@@ -34,8 +34,8 @@
     margin-bottom: 0;
 }
 
-.employee input.form-control:focus,
-.employee select.form-control:focus {
+.employee .filter input.form-control:focus,
+.employee .filter select.form-control:focus {
     background-color: transparent;
     border-color: #ff9b44;
     box-shadow: none;
@@ -43,7 +43,7 @@
     outline: 0;
 }
 
-.employee .form-focus.focused .focus-label{
+.employee .filter .form-focus.focused .focus-label{
     opacity: 1;
     font-weight: 300;
     top: -14px;

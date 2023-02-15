@@ -10,15 +10,15 @@ const BankAccountModal = ({ closeModal, id }) => {
     const dispatch = useDispatch()
 
     const { loading } = useSelector(state => state.alerts);
-    const {userDetails} = useSelector(state => state.user);
-    
+    const { userDetails } = useSelector(state => state.user);
+
     const token = userDetails.UserToken;
 
     const [empBankAccount, setEmpBankAccount] = useState('')
 
     useEffect(() => {
         (async () => {
-            const accountDetails = await getBankAccount(id,token)
+            const accountDetails = await getBankAccount(id, token)
             if (accountDetails.success) {
                 setEmpBankAccount(accountDetails.account)
             }
@@ -28,9 +28,9 @@ const BankAccountModal = ({ closeModal, id }) => {
     const handleUpdateBankAccount = async () => {
         dispatch(showLoading())
         try {
-            const update = await updateBankAccount(empBankAccount, id,token);
+            const update = await updateBankAccount(empBankAccount, id, token);
             if (update.success) {
-                const accountDetails = await getBankAccount(id,token)
+                const accountDetails = await getBankAccount(id, token)
                 if (accountDetails.success) {
                     dispatch(setBankAccount(accountDetails.account))
                 }

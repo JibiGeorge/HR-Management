@@ -113,3 +113,17 @@ p{
 .modal-content .modal-body select.input-error{    
     border-color: #fc8181;
 }
+.add-btn{
+    background-color: #ff9b44;
+    border: 1px solid #ff9b44;
+    border-radius: 50px;
+    color: #fff;
+    float: right;
+    font-weight: 600;
+    min-width: 140px;
+    font-size: 16px;
+}
+.add-btn:hover{
+    background-color: #ce7221;
+    border: 1px solid #ce7221;
+}
