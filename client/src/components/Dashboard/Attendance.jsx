@@ -204,22 +204,22 @@ const Attendance = ({ token }) => {
                             </div>
                             <div className="punch-info">
                                 <div className="punch-hours">
-                                    {!punchingData?.attendance.signOut &&
+                                    {!punchingData?.attendance?.signOut &&
                                         <>
-                                            {punchingData?.attendance.signIn ?
+                                            {punchingData?.attendance?.signIn ?
                                                 setInterval(updateHour, 1000) ?
                                                     <span>{totalWorkingHour} <br /> Hrs</span> : <span>0 <br /> Hrs</span>
                                                 : <span>0 Hrs</span>}
                                         </>
                                     }
 
-                                    {punchingData?.attendance.signOut &&
+                                    {punchingData?.attendance?.signOut &&
                                         <span>{punchingData?.attendance.totalTime}<br /> Hrs</span>
                                     }
                                 </div>
                             </div>
                             <div className="punch-btn-section">
-                            {!punchingData?.attendance.signOut &&
+                            {!punchingData?.attendance?.signOut &&
                             <>
                                 {punchingData?.attendance?.signIn &&
                                     <button className="btn btn-primary" onClick={handlePunchOut}>

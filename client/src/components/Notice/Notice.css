@@ -1,0 +1,36 @@
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: rgb(187, 4, 4);
+    display: inline-block;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: rgb(164, 14, 14)
+}
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+.inputfile:focus + label {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 1px;
+}
+
+/* Mail Send Popu */
+.mail{
+	border: 1px solid #888787;
+	padding: 10px;
+	font-size: 12px;
+}

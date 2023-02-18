@@ -8,10 +8,10 @@ export const employeeSlice = createSlice({
     },
     reducers: {
         setEmployeesData: (state, data) => {
-            state.employeesDetails = data.payload
+            state.employeesDetails = data.payload;
         },
         setEmpIndividualData: (state, data)=>{
-            state.employeeData = data.payload
+            state.employeeData = data.payload;
         }
     }
 })

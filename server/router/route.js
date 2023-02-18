@@ -15,6 +15,7 @@ import { addJobRoleLeaves, getAllJobRoleLeaves } from '../controller/jobRoleLeav
 import { applyLeave, getAllApplications, getUserLeaveApplications, updateLeaveStatus } from '../controller/leaveApplicatonController.js';
 import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
 import { login, verifyToken } from '../controller/login.js';
+import { addNotice, getAllNotices, sendEmail } from '../controller/noticeController.js';
 import { auth } from '../middleware/auth.js';
 const router = express.Router();
 
@@ -113,5 +114,9 @@ router.post('/employee/salary/add/:id', auth, addEmployeeSalaryDetails);
 router.get('/employee/salary/get/:id', auth, getEmployeeSalaryDetails);
 router.delete('/employee/salaryDetails/delete/:id', auth, deleteEmployeeSalaryDetails);
 
+// Notice
+router.post('/notice/add', auth, addNotice);
+router.get('/notice/allNotices', auth, getAllNotices);
+router.post('/notice/sendNotices/', auth, sendEmail);
 
 export default router;

@@ -23,7 +23,6 @@ const Body = () => {
       dispatch(showLoading());
       const leaveTypes = await getAllLeaveTypes(token);
       const userLeaveApplications = await getUserLeaveApplications(token);
-      console.log('cacaca',userLeaveApplications);
       if (leaveTypes.success) {
         dispatch(setLeaveTypes(leaveTypes.allLeaveTypes));
       }

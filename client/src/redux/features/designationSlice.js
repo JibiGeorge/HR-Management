@@ -7,6 +7,7 @@ export const designationSlice = createSlice({
     },
     reducers: {
         setDesignatonData: (state, data) => {
+            console.log(data.payload);
             state.designationDetails = data.payload
         },
         deleteDesigntionData: (state, id) => {

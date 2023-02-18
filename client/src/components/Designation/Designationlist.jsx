@@ -240,7 +240,7 @@ function Designationlist() {
                                             <label>Department Name*</label>
                                             <select className='form-select' aria-label='Default select example'>
                                                 <option value="" selected>Select A Department</option>
-                                                {department.map(data => {
+                                                {department?.map(data => {
                                                     return (
                                                         <option value={data._id}>{data.department}</option>
                                                     )

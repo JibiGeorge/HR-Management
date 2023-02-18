@@ -121,6 +121,17 @@ function Sidebar() {
                         <li><Link>Attendance Report</Link></li>
                     </ul>
                 </li>
+                <li>
+                    <Link>
+                        <i className="bx bx-grid-alt"></i>
+                        <span className="link_name"><Link to='/notice' className="link_name">Notice</Link></span>
+                    </Link>
+                    <ul className="sub-menu">
+                        <li>
+                            <Link to='/notice' className='link_name'>Notice</Link>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     )

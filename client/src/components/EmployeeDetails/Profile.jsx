@@ -326,21 +326,6 @@ function Profile() {
                                     <div className="row">
                                         <div className="col-sm-6">
                                             <div className="form-group">
-                                                <label>Designation</label>
-                                                <select name="" id="designation"
-                                                    value={values?.designation}
-                                                    onChange={handleChange}>
-                                                    <option value="">Select Designation</option>
-                                                    {designationDetails.map(values => {
-                                                        return (
-                                                            <option value={values?._id}>{values?.designation}</option>
-                                                        )
-                                                    })}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6">
-                                            <div className="form-group">
                                                 <label>Department</label>
                                                 <select name="" id="department"
                                                     value={values?.department}
@@ -349,6 +334,21 @@ function Profile() {
                                                     {departmentDetails.map(values => {
                                                         return (
                                                             <option value={values?._id}>{values?.department}</option>
+                                                        )
+                                                    })}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-6">
+                                            <div className="form-group">
+                                                <label>Designation</label>
+                                                <select name="" id="designation"
+                                                    value={values?.designation}
+                                                    onChange={handleChange}>
+                                                    <option value="">Select Designation</option>
+                                                    {designationDetails.map(values => {
+                                                        return (
+                                                            <option value={values?._id}>{values?.designation}</option>
                                                         )
                                                     })}
                                                 </select>

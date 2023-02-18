@@ -13,7 +13,6 @@ function Departmentlist() {
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.alerts);
     const { departmentDetails } = useSelector(state => state.department)
-    console.log('=============>',departmentDetails);
     const {userDetails} = useSelector(state => state.user);
 
     const token = userDetails.UserToken;
@@ -24,12 +23,10 @@ function Departmentlist() {
             (async () => {
                 dispatch(showLoading())
                 const depData = await getAllDepartments(token);
-                console.log('dvv',depData);
                 dispatch(setDepartmentData(depData))
                 dispatch(hideLoading())
             })();
         } catch (error) {
-            console.log('hdvbhdasvbh');
         }
     }, []);
 
