@@ -120,3 +120,18 @@ export const sendEmail = async (req, res) => {
         res.json({ message: 'Internal Server Connection Failed' });
     }
 }
+
+export const deleteNotice = async (req,res)=>{
+    const noticeId = req.params?.id;
+    try {
+        await NoticeModel.findOneAndDelete({_id:noticeId})
+        .then(()=>{
+            res.status(200).json({success:true,message: 'Deleted Successfully'})
+        })
+        .catch((error)=>{
+            res.json({message: 'Failed to Delete Notice'})
+        })
+    } catch (error) {
+        res.json({ message: 'Internal Server Connection Failed' });
+    }
+}

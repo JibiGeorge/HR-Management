@@ -43,7 +43,6 @@ const AddForm = ({ closeModal }) => {
                         secondary: '#FFFAEE',
                     },
                 });
-                closeModal();
                 setAdding(false);
             }
         } catch (error) {

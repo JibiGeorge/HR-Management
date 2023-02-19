@@ -8,6 +8,7 @@ import { hideLoading, showLoading } from '../../redux/features/alertSlice';
 import { setAllNotices } from '../../redux/features/noticeSlice';
 import fileDownload from 'js-file-download'
 import MailSendPopUP from './MailSendPopUP';
+import DeleteConfirmation from './DeleteConfirmation';
 
 const Table = () => {
     const { loading } = useSelector(state => state.alerts);
@@ -101,11 +102,20 @@ const Table = () => {
         },
         {
             name: "Action",
-            cell: (row) => ([<button className='btn editBtn' onClick={() => handleEdit(row._id)}><i class="las la-edit"></i></button>,
-            <button className='btn deleteBtn' onClick={() => handleDelete(row._id)} ><i class="las la-trash"></i></button>,
+            cell: (row) => ([<button className='btn deleteBtn' onClick={() => handleDelete(row._id)} ><i class="las la-trash"></i></button>,
             <button className='btn btn-primary' style={{ fontSize: '10px' }} onClick={() => sendMailPopUp(row)} >Send Mail</button>])
         }
     ]
+
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const closeDeleteConfirmation = () => setShowDeleteConfirmation(false);
+    const [deleteNoticeId, setDeleteNoticeId] = useState('');
+
+    const handleDelete = (noticeId)=>{
+        console.log(noticeId);
+        setDeleteNoticeId(noticeId);
+        setShowDeleteConfirmation(true);
+    }
     return (
         <>
             {loading && <div class="d-flex justify-content-center">
@@ -125,6 +135,7 @@ const Table = () => {
                 />}
 
             {mailSendPopUP && <MailSendPopUP closeMailModal={closeMailModal} noticeDetails={noticeDetails} />}
+            {showDeleteConfirmation && <DeleteConfirmation closeModal={closeDeleteConfirmation} noticeId={deleteNoticeId} />}
         </>
     )
 }

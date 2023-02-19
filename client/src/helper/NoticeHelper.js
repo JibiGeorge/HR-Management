@@ -23,7 +23,11 @@ export const addNotice = async (values, token) => {
             return { message: 'File Uploading failed' }
         }
     } catch (error) {
-        return { message: 'Intrernal Server Connection Error..!' }
+        if(error.message === 'Network Error'){
+            return { message: 'Network Error..! Please Check you Internet Connection..'}
+        }else{
+            return { message: 'Intrernal Server Connection Error..!' }
+        }
     }
 }
 
@@ -54,6 +58,21 @@ export const mailSend = async (token, noticeDetails, noticeTo) => {
         })
         return sendNotice.data;
     } catch (error) {
-        return { message: 'Intrernal Server Connection Error..!' }
+        return { message: 'Intrernal Server Connection Error..!' };
+    }
+}
+
+export const deleteNotice = async (token, id)=>{
+    try {
+        const noticeDelete = await instance({
+            url: '/api/notice/delete/'+id,
+            method: 'DELETE',
+            headers:{
+                Authorization: token
+            }
+        })
+        return noticeDelete.data;
+    } catch (error) {
+        return { message: 'Intrernal Server Connection Error..!' };
     }
 }
