@@ -6,6 +6,8 @@ import { loginUser } from '../../helper/Userhelper.js'
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from '../../redux/features/userLogin'
 import toast, { Toaster } from 'react-hot-toast';
+import { getCompanyProfile } from '../../helper/CompanySettingsHelper';
+import { setCompanyProfileData } from '../../redux/features/companyProfileSlice';
 
 function Login() {
 
@@ -22,7 +24,11 @@ function Login() {
       setBtnLoading(true);
       const res = await loginUser(values)
       if (res.loggedIn) {
-        dispatch(setUserDetails(res))
+        const data = await getCompanyProfile(res.UserToken);
+        if(data.success){
+          dispatch(setCompanyProfileData(data.details));
+        }
+        dispatch(setUserDetails(res));
         navigate('/dashboard');
         setBtnLoading(false);
       } else {

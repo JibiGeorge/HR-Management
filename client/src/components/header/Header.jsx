@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUserDetails } from '../../redux/features/userLogin';
 import './Header.css'
@@ -9,8 +9,8 @@ function Header() {
 
   const dispatch = useDispatch();
   const naviagate = useNavigate();
-  let time = new Date().toLocaleTimeString();
-  const [timer, setTimer] = useState(time)
+  const { companyProfileData } = useSelector(state => state.companyProfile);
+  const [timer, setTimer] = useState('')
 
   const navbarbtn = () => {
     let sidebar = document.querySelector('.sidebar');
@@ -24,11 +24,13 @@ function Header() {
     naviagate('/')
   }
 
-  const updateTime = () => {
-    let time = new Date().toLocaleTimeString();
-    setTimer(time)
+  const updateTime = (timeZone) => {
+    console.log(timeZone);
+    const date = new Date();
+    const options = { timeZone: timeZone, hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    setTimer(date.toLocaleString('en-US', options));
   }
-  setInterval(updateTime, 1000)
+  setInterval(()=>updateTime(companyProfileData.timeZone), 1000)
 
   return (
     <div className="home-section d-flex justify-content-between">
