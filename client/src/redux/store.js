@@ -22,6 +22,7 @@ import { leaveApplicationSlice } from './features/leaveApplicationsSlice';
 import { punchingSlice } from './features/punching';
 import { SalarySlice } from './features/salarySlice';
 import { noticeSlice } from './features/noticeSlice';
+import { companyProfileSlice } from './features/companyProfileSlice';
 
 const persistConfig = {
     key: 'root',
@@ -48,7 +49,8 @@ const reducer = combineReducers({
     leaveApplications: leaveApplicationSlice.reducer,
     punching: punchingSlice.reducer,
     employeeSalary: SalarySlice.reducer,
-    notices : noticeSlice.reducer
+    notices : noticeSlice.reducer,
+    companyProfile: companyProfileSlice.reducer
 });
 
 const persistReduhcer = persistReducer(persistConfig, reducer);

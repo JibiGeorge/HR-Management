@@ -18,6 +18,7 @@ import LeaveApplication from '../pages/LeaveApplication'
 import LeaveType from '../pages/LeaveType'
 import NoticePage from '../pages/NoticePage'
 import Profile from '../pages/Profile'
+import SettingsPage from '../pages/SettingsPage'
 import Protect from '../protectorRoute/Protect'
 
 const Container = () => {
@@ -43,6 +44,7 @@ const Container = () => {
                     <Route exact path='/allleaveApplications' element={<AllLeaveApplications />} />
                     <Route exact path='/profile' element={<Profile />} />
                     <Route exact path='/notice' element={<NoticePage />} />
+                    <Route exact path='/settings' element={<SettingsPage />} />
                 </Route>
 
             </Routes>

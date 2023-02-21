@@ -10,10 +10,10 @@
     top: 0;
     left: 0;
     height: 100%;
-    width: 260px;
+    width: 220px;
     background: #16191c;
     z-index: 100;
-    transition: all -.5s ease;
+    transition: all .5s ease;
 }
 
 .sidebar.close {
@@ -31,13 +31,13 @@
     font-size: 30px;
     color: #fff;
     height: 50px;
-    min-width: 78px;
+    min-width: 50px;
     text-align: center;
     line-height: 50px;
 }
 
 .sidebar .logo-details .logo_name {
-    font-size: 22px;
+    font-size: 20px;
     color: #fff;
     font-weight: 600;
     transition: 0.3s ease;
@@ -73,7 +73,7 @@
 
 .sidebar .nav-links li i {
     height: 50px;
-    min-width: 78px;
+    min-width: 50px;
     text-align: center;
     line-height: 50px;
     color: #fff;
@@ -103,7 +103,7 @@
 }
 
 .sidebar .nav-links li a .link_name {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 400;
     color: #fff;
 }
@@ -114,7 +114,7 @@
 }
 
 .sidebar .nav-links li .sub-menu {
-    padding: 6px 6px 14px 80px;
+    padding: 6px 6px 14px 70px;
     margin-top: -10px;
     background: #16191c;
     /* display: none; */

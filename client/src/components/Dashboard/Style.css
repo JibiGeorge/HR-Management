@@ -1,8 +1,8 @@
 .section-body{
     background: #23272b;
     position: relative;
-    left: 260px;
-    width: calc(100% - 260px);
+    left: 220px;
+    width: calc(100% - 220px);
     transition: all 0.5s ease;
     padding: 30px;
     min-height: calc(100vh - 60px);

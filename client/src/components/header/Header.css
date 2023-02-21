@@ -1,8 +1,8 @@
 .home-section {
     position: relative;
     background: #16191c;
-    left: 260px;
-    width: calc(100% - 260px);
+    left: 220px;
+    width: calc(100% - 220px);
     transition: all 0.5s ease;
 }
 

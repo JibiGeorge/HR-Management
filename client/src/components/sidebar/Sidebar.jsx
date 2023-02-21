@@ -132,6 +132,17 @@ function Sidebar() {
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <Link>
+                        <i className="bx bx-grid-alt"></i>
+                        <span className="link_name"><Link to='/settings' className="link_name">Settings</Link></span>
+                    </Link>
+                    <ul className="sub-menu">
+                        <li>
+                            <Link to='/settings' className='link_name'>Settings</Link>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     )

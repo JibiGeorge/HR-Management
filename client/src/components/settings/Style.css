@@ -1,0 +1,45 @@
+.company-profile{
+    background: #16191c;
+    border: 1px solid #2e3840;
+    color: #bbc4cc;
+    padding: 20px 40px;
+}
+.company-profile .title{
+    font-size: 20px;
+}
+.company-profile .logo-image{
+    height: 175px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+}
+.company-profile input,
+.company-profile textarea{
+    background: #2e3439;
+    color: #bbc4cc;
+    border-color: #2e3439;
+    box-shadow: none;
+    font-size: 15px;
+}
+.company-profile input:focus,
+.company-profile textarea:focus{
+    background-color: transparent;
+    border-color: #ff9b44;
+    box-shadow: none;
+    color: #bbc4cc;
+    outline: 0;
+}
+.sub-btn button{
+    min-height: 50px;
+    background: #ff9b44;
+    padding: 12px;
+    text-transform: uppercase;
+    border: 1px solid #ff9b44;
+    border-radius: 5px;
+    width: 100%;
+    color: #fff;
+    font-weight: 600;
+}
+.sub-btn button:hover{
+    background: #d26a0f;
+}
