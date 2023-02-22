@@ -28,15 +28,15 @@ export const login = (req, res) => {
                     })
                     // eslint-disable-next-line no-unused-vars
                     .catch((error) => {
-                        return res.status(400).json({ error: 'Password does not match' });
+                        return res.json({ error: 'Password does not match' });
                     });
             })
             // eslint-disable-next-line no-unused-vars
             .catch(error => {
-                return res.status(404).send({ error: 'Username not found' });
+                return res.send({ error: 'Username not found' });
             });
     } catch (error) {
-        res.status(401).json({ message: "Internal Server Error...!" });
+        res.json({ message: "Internal Server Error...!" });
     }
 };
 

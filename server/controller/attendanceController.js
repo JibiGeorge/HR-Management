@@ -1,5 +1,25 @@
 import mongoose from "mongoose";
 import AttendanceModel from "../model/attendance.js"
+import CompanyProfileModel from "../model/companyProfile.js";
+import moment from "moment-timezone";
+
+const timeMeridian = (signIn) => {
+    let timeSplit = signIn.split(':'), hours, minutes, seconds, meridian;
+    hours = timeSplit[0];
+    minutes = timeSplit[1];
+    if (hours > 12) {
+        meridian = 'PM';
+        hours -= 12;
+    } else if (hours < 12) {
+        meridian = 'AM';
+        if (hours == 0) {
+            hours = 12;
+        }
+    } else {
+        meridian = 'PM';
+    }
+    return signIn + ' ' + meridian;
+}
 
 export const addAttendance = async (req, res) => {
     const { employee, date, signIn, signOut } = req.body;
@@ -96,10 +116,11 @@ export const getAttendanceList = async (req, res) => {
     try {
         const data = await AttendanceModel.aggregate([
             { $unwind: '$attendance' },
+            {$unwind: '$attendance.attendanceDetails'},
             {
                 $lookup: {
                     from: 'employees',
-                    localField: 'attendance.employee',
+                    localField: 'attendance.employeeID',
                     foreignField: '_id',
                     as: 'userDetails'
                 }
@@ -112,15 +133,13 @@ export const getAttendanceList = async (req, res) => {
 }
 
 export const deleteAttendance = async (req, res) => {
+    const {empID} = req.body
     try {
-        await AttendanceModel.updateMany({}, {
-            $pull: {
-                attendance: {
-                    _id: req.params.id
-                }
-            }
+        await AttendanceModel.updateMany({'attendance.employeeID':empID}, {
+            $pull: {'attendance.$.attendanceDetails': {_id:req.params.id}}
+        }).then(()=>{
+            res.status(200).json({ success: true, message: 'Deleted Successfully..!' })
         })
-        res.status(200).json({ success: true, message: 'Deleted Successfully..!' })
     } catch (error) {
         res.json({ message: 'Internal Server Connection Error..!' })
     }
@@ -195,13 +214,13 @@ export const updateAttendance = async (req, res) => {
             } else {
                 const dateChecking = await AttendanceModel.findOne({
                     $and:
-                            [{ date: date }, {
-                                attendance: {
-                                    $elemMatch: {
-                                        _id: _id
-                                    }
+                        [{ date: date }, {
+                            attendance: {
+                                $elemMatch: {
+                                    _id: _id
                                 }
-                            }]
+                            }
+                        }]
                 })
                 if (dateChecking) {
                     await AttendanceModel.findOneAndUpdate({
@@ -243,11 +262,11 @@ export const updateAttendance = async (req, res) => {
                                         attendance: obj
                                     }
                                 }
-                            ).then(async(response) => {
+                            ).then(async (response) => {
                                 await AttendanceModel.updateMany({}, {
                                     $pull: {
                                         attendance: {
-                                            _id:_id
+                                            _id: _id
                                         }
                                     }
                                 })
@@ -255,7 +274,7 @@ export const updateAttendance = async (req, res) => {
                             }).catch((error) => {
                                 res.json({ message: 'Failed..!' });
                             })
-                        }else{
+                        } else {
                             res.json({ message: 'Already Exist..!' });
                         }
                     } else {
@@ -278,44 +297,93 @@ export const updateAttendance = async (req, res) => {
 }
 
 export const punchIn = async (req, res) => {
+    const userDetails = res.locals;
+
+    const profileData = await CompanyProfileModel.findOne();
+    const timeZone = profileData.timeZone;
+    const now = new Date();
+    // const date = moment(now).tz(timeZone).format("YYY-MM-DD HH:mm:ss");
+    const currentDate = now.toISOString().slice(0, 10);
+    const currentMonth = moment(now).tz(timeZone).format("MM");
+    const currentYear = moment(now).tz(timeZone).format("YYYY");
+    const currentTime = moment(now).tz(timeZone).format("HH:mm:ss");
+    const monthYear = currentMonth + '-' + currentYear;
+    const time = timeMeridian(currentTime);
+
+
+
+
     try {
-        const userDetails = res.locals;
-        const currentDate = new Date().toISOString().slice(0,10)
-        const currentTime = new Date().toLocaleTimeString();
+        // const date = new Date()
+        // const currentDate = date.toISOString().slice(0, 10);
+        // const currentMonth = date.getMonth() + 1;
+        // const currentYear = date.getFullYear();
+        // const monthYear = currentMonth + '/' + currentYear;
         const obj = {
-            employee: userDetails.userID,
-            date: currentDate,
-            signIn: currentTime,
-            signOut: null,
-            totalTime: 0
-        }
-        const dateExist = await AttendanceModel.findOne({ date: currentDate });
-        if (!dateExist) {
-            const newSignIn = new AttendanceModel({
+            employeeID: userDetails.userID,
+            attendanceDetails: [{
                 date: currentDate,
+                signIn: time,
+                signOut: null,
+                totalTime: 0,
+                staus: null
+            }]
+        }
+        const monthExist = await AttendanceModel.findOne({ month: monthYear });
+        if (!monthExist) {
+            const newPunchIn = new AttendanceModel({
+                month: monthYear,
                 attendance: obj
+
             })
-            newSignIn.save().then(() => {
-                res.status(200).json({ success: true, message: 'Punched In Successfully' })
-            }).catch((error) => {
-                res.json({ message: error.message })
-            })
-        } else {
-            const data = await AttendanceModel.findOne({
-                $and: [
-                    { date: currentDate }, { attendance: { $elemMatch: { employee: userDetails.userID } } }
-                ]
-            })
-            if (!data) {
-                await AttendanceModel.findOneAndUpdate({ date: currentDate }, {
-                    $push: {
-                        attendance: obj
-                    }
-                }).then(() => {
+            newPunchIn.save()
+                .then(() => {
                     res.status(200).json({ success: true, message: 'Punched In Successfully' })
                 }).catch((error) => {
                     res.json({ message: error.message })
                 })
+        } else {
+            const data = await AttendanceModel.findOne({
+                $and: [
+                    { month: monthYear },
+                    { attendance: { $elemMatch: { employeeID: userDetails.userID } } },
+                    { attendance: { $elemMatch: { attendanceDetails: { $elemMatch: { date: currentDate } } } } }
+                ]
+            })
+            if (!data) {
+                const employeeExist = await AttendanceModel.findOne({
+                    $and: [
+                        { month: monthYear },
+                        { attendance: { $elemMatch: { employeeID: userDetails.userID } } }
+                    ]
+                })
+                if (!employeeExist) {
+                    await AttendanceModel.findOneAndUpdate({ month: monthYear }, {
+                        $push: {
+                            attendance: obj
+                        }
+                    }).then(() => {
+                        res.status(200).json({ success: true, message: 'Punched In Successfully' })
+                    }).catch((error) => {
+                        res.json({ message: error.mesage })
+                    })
+                } else {
+                    await AttendanceModel.findOneAndUpdate({
+                        $and: [
+                            { month: monthYear },
+                            { attendance: { $elemMatch: { employeeID: userDetails.userID } } }
+                        ]
+                    },
+                        {
+                            $push: {
+                                'attendance.$.attendanceDetails': obj.attendanceDetails
+                            }
+                        }).then((resss) => {
+                            res.status(200).json({ success: true, message: 'Punched In Successfully' })
+                        }).catch((error) => {
+                            res.json({ message: error.message })
+                        })
+                }
             } else {
                 res.json({ message: 'Already Punched In' })
             }
@@ -327,29 +395,40 @@ export const punchIn = async (req, res) => {
 
 export const punchOut = async (req, res) => {
     const userDetails = res?.locals;
-    const currentDate = new Date().toISOString().slice(0,10)
-    const currentTime = new Date().toLocaleTimeString();
+    const profileData = await CompanyProfileModel.findOne();
+    const timeZone = profileData.timeZone;
+    const now = new Date();
+    const currentDate = now.toISOString().slice(0, 10);
+    const currentMonth = moment(now).tz(timeZone).format("MM");
+    const currentYear = moment(now).tz(timeZone).format("YYYY");
+    const currentTime = moment(now).tz(timeZone).format("HH:mm:ss");
+    const monthYear = currentMonth + '-' + currentYear;
+    const time = timeMeridian(currentTime);
     try {
         const data = await AttendanceModel.aggregate([
             {
                 $match: {
-                    date: currentDate
+                    month: monthYear
                 }
             },
             {
                 $unwind: '$attendance'
             },
             {
+                $unwind: '$attendance.attendanceDetails'
+            },
+            {
                 $match: {
                     $and: [
-                        { date: currentDate }, { 'attendance.employee': userDetails.userID }
+                        { 'attendance.employeeID': userDetails?.userID },
+                        { 'attendance.attendanceDetails.date': currentDate }
                     ]
                 }
             }
         ])
-
         if (data) {
-            let signIntime = data[0].attendance.signIn;
+            let signIntime = data[0].attendance.attendanceDetails?.signIn;
+            signIntime = signIntime.split(' ')[0]
             signIntime = '2/14/2023, ' + signIntime;
             signIntime = new Date(signIntime)
             signIntime = Math.abs((new Date(signIntime).getTime() / 1000).toFixed(0))
@@ -361,25 +440,12 @@ export const punchOut = async (req, res) => {
             var hours = Math.floor(diff / 3600) % 24
             var minutes = Math.floor(diff / 60) % 60
             var seconds = diff % 60;
-            const totalTime = + hours + ':' + minutes + ':' + seconds
-
-            await AttendanceModel.findOneAndUpdate({
-                $and: [
-                    { date: currentDate },
-                    {
-                        attendance: {
-                            $elemMatch: {
-                                employee: userDetails?.userID
-                            }
-                        }
-                    }
-                ]
-            }, {
-                $set: {
-                    'attendance.$.signOut': currentTime,
-                    'attendance.$.totalTime': totalTime
-                }
-            }).then((response) => {
+            const totalTime = + hours + ':' + minutes + ':' + seconds;
+            AttendanceModel.updateOne(
+                { month: monthYear, "attendance.employeeID": userDetails?.userID, "attendance.attendanceDetails.date": currentDate },
+                { $set: { "attendance.$.attendanceDetails.$[element].signOut": time, "attendance.$.attendanceDetails.$[element].totalTime": totalTime } },
+                { arrayFilters: [{ "element.date": currentDate }] }
+            ).then(() => {
                 res.status(200).json({ success: true, message: 'Punched Out Successfully' })
             }).catch((error) => {
                 res.json({ message: error.message })
@@ -387,7 +453,6 @@ export const punchOut = async (req, res) => {
         } else {
             res.json({ message: 'Failed..!' })
         }
-
     } catch (error) {
         res.json({ message: 'Internal Server Connection Error..!' });
     }
@@ -395,12 +460,19 @@ export const punchOut = async (req, res) => {
 
 export const getPunchedData = async (req, res) => {
     const userDetails = res.locals;
-    const currentDate = new Date().toISOString().slice(0,10)
+
+    const profileData = await CompanyProfileModel.findOne();
+    const timeZone = profileData.timeZone;
+    const now = new Date();
+    const currentDate = now.toISOString().slice(0, 10);
+    const currentMonth = moment(now).tz(timeZone).format("MM");
+    const currentYear = moment(now).tz(timeZone).format("YYYY");
+    const monthYear = currentMonth + '-' + currentYear;
     try {
         const data = await AttendanceModel.aggregate([
             {
                 $match: {
-                    date: currentDate
+                    month: monthYear
                 }
             },
             {
@@ -409,7 +481,18 @@ export const getPunchedData = async (req, res) => {
             {
                 $match: {
                     $and: [
-                        { date: currentDate }, { 'attendance.employee': userDetails.userID }
+                        { 'attendance.employeeID': userDetails.userID }
+                    ]
+                }
+            },
+            {
+                $unwind: '$attendance.attendanceDetails'
+            },
+            {
+
+                $match: {
+                    $and: [
+                        { 'attendance.employeeID': userDetails.userID }, { 'attendance.attendanceDetails.date': currentDate }
                     ]
                 }
             }

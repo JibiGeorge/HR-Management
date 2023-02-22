@@ -55,11 +55,13 @@ const List = () => {
   const [attendanceDeleteModal, setAttendanceDeleteModal] = useState(false);
   const [attendanceUpdateModal, setAttendanceUpdateModal] = useState(false)
   const [id, setId] = useState('')
+  const [empID, setEmpID] = useState('')
   const closeDeleteModal = () => setAttendanceDeleteModal(false)
   const closeUpdateModal = () => setAttendanceUpdateModal(false)
 
-  const handleDelete = (id)=>{
-    setId(id)
+  const handleDelete = (id,empID)=>{
+    setId(id);
+    setEmpID(empID)
     setAttendanceDeleteModal(true)
   }
 
@@ -75,26 +77,27 @@ const List = () => {
     },
     {
       name: 'Date',
-      selector: row => row?.date
+      selector: row => row.attendance.attendanceDetails?.date
     },
     {
       name: 'Sign In',
-      selector: row => row?.attendance?.signIn
+      selector: row => row.attendance.attendanceDetails?.signIn
     },
     {
       name: 'Sign Out',
-      selector: row => row?.attendance?.signOut
+      selector: row => row.attendance.attendanceDetails?.signOut
     },
     {
       name: 'Total Time',
-      selector: row => row?.attendance?.totalTime
+      selector: row => row.attendance.attendanceDetails?.totalTime
     },
     {
       name: "Action",
-      cell: (row) => ([<button className='btn editBtn' onClick={()=> handleUpdate(row?.attendance?._id)}><i class="las la-edit"></i></button>,
-      <button className='btn deleteBtn' onClick={()=> handleDelete(row?.attendance?._id)} ><i class="las la-trash"></i></button>])
+      cell: (row) => ([<button className='btn editBtn' onClick={()=> handleUpdate(row.attendance.attendanceDetails?._id)}><i class="las la-edit"></i></button>,
+      <button className='btn deleteBtn' onClick={()=> handleDelete(row.attendance.attendanceDetails?._id,row.userDetails[0]?._id)} ><i class="las la-trash"></i></button>])
     }
   ]
+  console.log(attendance);
   return (
     <>
       <Toaster
@@ -126,7 +129,7 @@ const List = () => {
           subHeaderAlign='left'
         />}
 
-        {attendanceDeleteModal && <DeleteConfirmation closeModal={closeDeleteModal} id={id} /> }
+        {attendanceDeleteModal && <DeleteConfirmation closeModal={closeDeleteModal} id={id} empID={empID} /> }
         {attendanceUpdateModal && <EditForm closeModal={closeUpdateModal} id={id} /> }
     </>
   )

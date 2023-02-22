@@ -59,7 +59,7 @@ function Sidebar() {
                                 <li><Link>Inactive User</Link></li>
                             </>
                         }
-                        <li><Link to='/profile' >Profile</Link></li>
+                        <li><Link to='/profile'state={{ id: userDetails._id }} >Profile</Link></li>
                     </ul>
                 </li>
                 <li>

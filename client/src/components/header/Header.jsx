@@ -25,7 +25,6 @@ function Header() {
   }
 
   const updateTime = (timeZone) => {
-    console.log(timeZone);
     const date = new Date();
     const options = { timeZone: timeZone, hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
     setTimer(date.toLocaleString('en-US', options));

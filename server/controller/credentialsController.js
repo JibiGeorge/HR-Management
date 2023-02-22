@@ -2,6 +2,7 @@ import Employee from "../model/employee.js";
 import nodemailer from 'nodemailer'
 import userCredential from "../model/userModel.js";
 import bcrypt from 'bcrypt'
+import mongoose from "mongoose";
 
 // Password Sending to Email
 const sendPassWord = async (username, email, password) => {
@@ -114,7 +115,7 @@ export const changePassword = async (req, res) => {
     const oldPassword = req.body.oldPassword;
     const newPassword = req.body.newPassword;
     try {
-        const exist = await userCredential.findOne({ userID });
+        const exist = await userCredential.findOne({ userID:mongoose.Types.ObjectId(userID) });
         if (exist) {
             const passwordcheck = await bcrypt.compare(oldPassword, exist.password);
             if (passwordcheck) {

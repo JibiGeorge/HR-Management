@@ -131,8 +131,9 @@ const Attendance = ({ token }) => {
 
         let currentDate = new Date();
         currentDate = Math.abs((new Date(currentDate).getTime() / 1000).toFixed(0))
-
-        let signIntime = punchingData?.attendance?.signIn
+        let signIntime = punchingData?.attendance?.attendanceDetails?.signIn
+        signIntime = signIntime.split(' ')[0]
+        console.log('signIntimbjhbve',signIntime);
         signIntime = '2/14/2023, ' + signIntime;
         signIntime = new Date(signIntime)
         signIntime = Math.abs((new Date(signIntime).getTime() / 1000).toFixed(0))
@@ -142,6 +143,7 @@ const Attendance = ({ token }) => {
         var minutes = Math.floor(diff / 60) % 60
         var seconds = diff % 60;
         const totalTime = + hours + ':' + minutes + ':' + seconds
+        console.log('totaltime',totalTime);
         setTotalWorkingHour(totalTime)
     }
 
@@ -192,40 +194,40 @@ const Attendance = ({ token }) => {
                             <div className="punch-det">
                                 <h6>Punch In at</h6>
                                 <p>
-                                    {punchingData?.attendance ? punchingData?.attendance.date : '--/--/----'},&nbsp;&nbsp;
-                                    {punchingData?.attendance ? punchingData?.attendance.signIn : '--:--:-- --'}
+                                    {punchingData?.attendance.attendanceDetails.date ? punchingData?.attendance.attendanceDetails.date : '--/--/----'},&nbsp;&nbsp;
+                                    {punchingData?.attendance.attendanceDetails.signIn ? punchingData?.attendance.attendanceDetails.signIn : '--:--:-- --'}
                                 </p>
 
                                 <h6>Punch Out at</h6>
                                 <p>
-                                    {punchingData?.attendance ? punchingData?.attendance.date : '--/--/----'},&nbsp;&nbsp;
-                                    {punchingData?.attendance ? punchingData?.attendance.signOut : '--:--:-- --'}
+                                    {punchingData?.attendance.attendanceDetails.date ? punchingData?.attendance.attendanceDetails.date : '--/--/----'},&nbsp;&nbsp;
+                                    {punchingData?.attendance.attendanceDetails.signOut ? punchingData?.attendance.attendanceDetails?.signOut : '--:--:-- --'}
                                 </p>
                             </div>
                             <div className="punch-info">
                                 <div className="punch-hours">
-                                    {!punchingData?.attendance?.signOut &&
+                                    {!punchingData?.attendance?.attendanceDetails?.signOut &&
                                         <>
-                                            {punchingData?.attendance?.signIn ?
+                                            {punchingData?.attendance?.attendanceDetails.signIn ?
                                                 setInterval(updateHour, 1000) ?
                                                     <span>{totalWorkingHour} <br /> Hrs</span> : <span>0 <br /> Hrs</span>
                                                 : <span>0 Hrs</span>}
                                         </>
                                     }
 
-                                    {punchingData?.attendance?.signOut &&
-                                        <span>{punchingData?.attendance.totalTime}<br /> Hrs</span>
+                                    {punchingData?.attendance?.attendanceDetails?.signOut &&
+                                        <span>{punchingData?.attendance?.attendanceDetails?.totalTime}<br /> Hrs</span>
                                     }
                                 </div>
                             </div>
                             <div className="punch-btn-section">
-                            {!punchingData?.attendance?.signOut &&
+                            {!punchingData?.attendance?.attendanceDetails?.signOut &&
                             <>
-                                {punchingData?.attendance?.signIn &&
+                                {punchingData?.attendance?.attendanceDetails?.signIn &&
                                     <button className="btn btn-primary" onClick={handlePunchOut}>
                                         Puch OUT
                                     </button>}
-                                {!punchingData?.attendance?.signIn &&
+                                {!punchingData?.attendance?.attendanceDetails?.signIn &&
                                     <button className="btn btn-primary" onClick={handlePunchIn}>
                                         Puch IN
                                     </button>}

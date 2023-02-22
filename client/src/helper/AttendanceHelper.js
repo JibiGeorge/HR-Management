@@ -31,11 +31,12 @@ export const attendanceList = async (token) => {
     }
 }
 
-export const deletAttendance = async (id,token) => {
+export const deletAttendance = async (id,token,empID) => {
     try {
         const deleteStatus = await instance({
             url: '/api/attendance/delete/' + id,
             method: 'DELETE',
+            data: {empID},
             headers:{
                 Authorization : token
             }

@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { attendanceList, deletAttendance } from '../../helper/AttendanceHelper'
 import { setAllAttendance } from '../../redux/features/attendanceSlice'
 
-const DeleteConfirmation = ({ closeModal, id }) => {
+const DeleteConfirmation = ({ closeModal, id,empID }) => {
     const { userDetails } = useSelector(state => state.user);
     const token = userDetails.UserToken;
     const dispatch = useDispatch()
     const attendanceDelete = async () => {
         try {
-            const deleteModal = await deletAttendance(id, token)
+            const deleteModal = await deletAttendance(id, token,empID)
             if (deleteModal.success) {
                 const attendanceData = await attendanceList(token)
                 dispatch(setAllAttendance(attendanceData.data))
