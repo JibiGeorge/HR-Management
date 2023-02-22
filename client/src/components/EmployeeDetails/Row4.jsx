@@ -110,7 +110,9 @@ const Row4 = () => {
             basicSalary: '',
             houseRent: '',
             medical: '',
-            conveyance: ''
+            conveyance: '',
+            fromDate: '',
+            toDate: ''
         },
         onSubmit
     })
@@ -175,32 +177,44 @@ const Row4 = () => {
     const column = [
         {
             name: 'Salary Type',
-            selector: row => row.salaryType
+            selector: row => row?.salaryType
         },
         {
             name: 'Basic Salary',
-            selector: row => row.basicSalary
+            selector: row => row?.basicSalary
         },
         {
             name: 'House Rent',
-            selector: row => row.houseRent
+            selector: row => row?.houseRent
         },
         {
             name: 'Medical',
-            selector: row => row.medical
+            selector: row => row?.medical
         },
         {
             name: 'Conveyance',
-            selector: row => row.conveyance
+            selector: row => row?.conveyance
         },
         {
             name: 'Total Salary',
-            selector: row => row.totalSalary
+            selector: row => row?.totalSalary
+        },
+        {
+            name: 'From Date',
+            selector: row => new Date(row?.fromDate).toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'short', year: 'numeric'
+            })
+        },
+        {
+            name: 'To Date',
+            selector: row => new Date(row?.toDate).toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'short', year: 'numeric'
+            })
         },
         {
             name: "Action",
             cell: (row) => (
-                <button className='btn deleteBtn' onClick={() => handleDeleteSalary(row._id)}><i class="las la-trash"></i></button>)
+                <button className='btn deleteBtn' onClick={() => handleDeleteSalary(row?._id)}><i class="las la-trash"></i></button>)
         }
     ]
     return (
@@ -271,6 +285,25 @@ const Row4 = () => {
                                                 <label>Conveyance</label>
                                                 <input type="number" className='form-control' id='conveyance'
                                                     value={values.conveyance} onChange={handleChange} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div className="col-lg-12">
+                                    <div className="row">
+                                        <h3>Period</h3>
+                                        <div className="col-lg-6">
+                                            <div className="form-group">
+                                                <label>Basic Salary</label>
+                                                <input type="date" className='form-control' id='fromDate'
+                                                    value={values.fromDate} onChange={handleChange} />
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <div className="form-group">
+                                                <label>To Date</label>
+                                                <input type="date" className='form-control' id='toDate'
+                                                    value={values.toDate} onChange={handleChange} />
                                             </div>
                                         </div>
                                     </div>

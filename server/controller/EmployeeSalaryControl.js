@@ -1,7 +1,7 @@
 import SalaryModel from "../model/salaryModel.js";
 
 export const addEmployeeSalaryDetails = async (req, res) => {
-    const { salaryType, totalSalary, basicSalary, houseRent, medical, conveyance } = req.body;
+    const { salaryType, totalSalary, basicSalary, houseRent, medical, conveyance, fromDate, toDate } = req.body;
     const empID = req.params.id;
     try {
         const obj = {
@@ -10,7 +10,9 @@ export const addEmployeeSalaryDetails = async (req, res) => {
             basicSalary,
             houseRent,
             medical,
-            conveyance
+            conveyance,
+            fromDate,
+            toDate
         }
         const exist = await SalaryModel.findOne({ userID: empID });
         if (!exist) {

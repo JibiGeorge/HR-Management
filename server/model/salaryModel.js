@@ -13,7 +13,9 @@ const SalarySchema = Schema({
             basicSalary: Number,
             houseRent: Number,
             medical: Number,
-            conveyance: Number
+            conveyance: Number,
+            fromDate: Date,
+            toDate: Date
         }]
     }
 })
