@@ -42,7 +42,8 @@ export const addEmployee = async (req, res) => {
                 username,
                 email,
                 image,
-                loginPermisionEnabled: false
+                loginPermisionEnabled: false,
+                status: 'Active'
             })
             emp.save().then((response) => {
                 res.status(200).json({ response, success: true, message: 'Successfully Added...!' });

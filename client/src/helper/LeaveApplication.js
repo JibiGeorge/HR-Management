@@ -54,12 +54,14 @@ export const getAllLeaveApplications = async (token) => {
     }
 }
 
-export const updateLeaveStatus = async ( status, docID, applicationsID, token ) => {
+export const updateLeaveStatus = async (status, docID, applicationsID, token, empID) => {
     const data = {
         status: status,
         docID: docID,
-        applicationID: applicationsID
+        applicationID: applicationsID,
+        empID: empID
     }
+    console.log(data);
     try {
         const updateLeaveApplications = await instance({
             url: '/api/leave/allApplications/updateStatus',

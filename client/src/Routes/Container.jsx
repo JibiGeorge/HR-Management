@@ -41,7 +41,7 @@ const Container = () => {
                     <Route exact path='/attendance' element={<Attendance />} />
                     <Route exact path='/leave/jobRole' element={<JobRoleLeave />} />
                     <Route exact path='leaveapplication' element={<LeaveApplication />} />
-                    <Route exact path='/allleaveApplications' element={<AllLeaveApplications />} />
+                    <Route exact path='/alleaveApplications' element={<AllLeaveApplications />} />
                     <Route exact path='/profile' element={<Profile />} />
                     <Route exact path='/notice' element={<NoticePage />} />
                     <Route exact path='/settings' element={<SettingsPage />} />

@@ -8,16 +8,27 @@ import { setAllEmployeeLeaveApplications } from '../../redux/features/leaveAppli
 const ApplicationsList = ({ applications }) => {
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.alerts);
-  const { userDetails } = useSelector(state => state.user);  
+  const { userDetails } = useSelector(state => state.user);
   const token = userDetails.UserToken;
 
-  const handleStatus = async ({ status, docID, applicationsID }) => {
+  const handleStatus = async ({ status, docID, applicationsID, empID }) => {
     try {
-      const update = await updateLeaveStatus(status, docID, applicationsID, token)
-      if(update.success){
+      const update = await updateLeaveStatus(status, docID, applicationsID, token, empID)
+      if (update.success) {
         const allLeaveApplications = await getAllLeaveApplications(token)
+        toast.success(update.message, {
+          style: {
+              border: '1px solid #713200',
+              padding: '16px',
+              color: '#25ab11',
+          },
+          iconTheme: {
+              primary: '#25ab11',
+              secondary: '#FFFAEE',
+          },
+      });
         dispatch(setAllEmployeeLeaveApplications(allLeaveApplications?.applications));
-      }else{
+      } else {
         toast.error(update.message, {
           style: {
             border: '1px solid #713200',
@@ -47,19 +58,25 @@ const ApplicationsList = ({ applications }) => {
   const column = [
     {
       name: 'Employee Name',
-      selector: row => row.employeeDetails[0].firstName + ' ' + row.employeeDetails[0].lastName
+      selector: row => row.employeeDetails[0]?.firstName + ' ' + row.employeeDetails[0]?.lastName
     },
     {
       name: 'Apply Date',
-      selector: row => row.leaveApplications?.applyDate
+      selector: row => new Date(row.leaveApplications?.applyDate).toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric'
+      })
     },
     {
       name: 'From Date',
-      selector: row => row.leaveApplications?.fromDate
+      selector: row => new Date(row.leaveApplications?.fromDate).toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric'
+      })
     },
     {
       name: 'To Date',
-      selector: row => row.leaveApplications?.toDate
+      selector: row => new Date(row.leaveApplications?.toDate).toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric'
+      })
     },
     {
       name: 'Total Days',
@@ -70,7 +87,7 @@ const ApplicationsList = ({ applications }) => {
       selector: row => row.leaveApplications?.modeOfLeave
     },
     {
-      name: 'status',
+      name: 'Status',
       selector: row => row.leaveApplications?.status
     },
     {
@@ -81,9 +98,9 @@ const ApplicationsList = ({ applications }) => {
         </button>
 
         <ul class="dropdown-menu">
-          <li><button class="dropdown-item" onClick={() => handleStatus({ status: 'Approved', docID: row._id, applicationsID: row.leaveApplications?._id })}>Approved</button></li>
-          <li><button class="dropdown-item" onClick={() => handleStatus({ status: 'Cancelled', docID: row._id, applicationsID: row.leaveApplications?._id })}>Cancelled</button></li>
-          <li><button class="dropdown-item" onClick={() => handleStatus({ status: 'Pending', docID: row._id, applicationsID: row.leaveApplications?._id })}>Pending</button></li>
+          <li><button class="dropdown-item" onClick={() => handleStatus({ status: 'Approved', docID: row._id, applicationsID: row.leaveApplications?._id, empID: row.employeeDetails[0]._id })}>Approved</button></li>
+          <li><button class="dropdown-item" onClick={() => handleStatus({ status: 'Cancelled', docID: row._id, applicationsID: row.leaveApplications?._id, empID: row.employeeDetails[0]._id })}>Cancelled</button></li>
+          <li><button class="dropdown-item" onClick={() => handleStatus({ status: 'Pending', docID: row._id, applicationsID: row.leaveApplications?._id, empID: row.employeeDetails[0]._id })}>Pending</button></li>
         </ul>
       </div>])
     }

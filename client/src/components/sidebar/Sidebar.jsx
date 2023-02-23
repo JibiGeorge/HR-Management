@@ -94,7 +94,7 @@ function Sidebar() {
                             <li><Link to='/holiday'>Holiday</Link></li>
                             <li><Link to='/leave/jobRole'>Job Role Leave</Link></li>
                             <li><Link to='/leave'>Leave Type</Link></li>
-                            <li><Link to='/allleaveApplications'>Leave Applications</Link></li>
+                            <li><Link to='/alleaveApplications'>Leave Applications</Link></li>
                         </ul>}
                     {role === 'Employee' &&
                         <ul className="sub-menu">

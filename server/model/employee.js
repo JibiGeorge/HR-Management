@@ -77,7 +77,8 @@ const employeeSchema = Schema({
     loginPermisionEnabled: {
         type: Boolean,
         require: true
-    }
+    },
+    status: String
 
 });
 

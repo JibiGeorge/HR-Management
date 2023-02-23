@@ -16,6 +16,7 @@ import ChangePassword from './ChangePassword';
 function Profile() {
     const location = useLocation();
     let empID = location.state?.id;
+    console.log();
     const { departmentDetails } = useSelector(state => state.department)
     const { designationDetails } = useSelector(state => state.designation)
     const { loading } = useSelector(state => state.alerts);

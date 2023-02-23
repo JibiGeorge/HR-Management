@@ -210,13 +210,13 @@ const Attendance = ({ token }) => {
                                         <>
                                             {punchingData?.attendance?.attendanceDetails.signIn ?
                                                 setInterval(updateHour, 1000) ?
-                                                    <span>{totalWorkingHour} <br /> Hrs</span> : <span>0 <br /> Hrs</span>
+                                                    <span>{totalWorkingHour} </span> : <span>0 </span>
                                                 : <span>0 Hrs</span>}
                                         </>
                                     }
 
                                     {punchingData?.attendance?.attendanceDetails?.signOut &&
-                                        <span>{punchingData?.attendance?.attendanceDetails?.totalTime}<br /> Hrs</span>
+                                        <span>{punchingData?.attendance?.attendanceDetails?.totalTime}</span>
                                     }
                                 </div>
                             </div>

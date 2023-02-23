@@ -326,7 +326,7 @@ export const punchIn = async (req, res) => {
                 signIn: time,
                 signOut: null,
                 totalTime: 0,
-                staus: null
+                status: null
             }]
         }
         const monthExist = await AttendanceModel.findOne({ month: monthYear });

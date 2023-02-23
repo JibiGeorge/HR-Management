@@ -22,12 +22,12 @@ export const leaveApplicationSlice = createSlice({
         setAllEmployeeLeaveApplications: (state, data) => {
             let applications = data.payload;
             for(let i=0; i< applications.length;i++){
-                let apply = applications[i]?.leaveApplications.applyDate
-                let from = applications[i]?.leaveApplications.fromDate
-                let to = applications[i]?.leaveApplications.toDate
-                applications[i].leaveApplications.applyDate = new Date(apply).toISOString().slice(0, 10)
-                applications[i].leaveApplications.fromDate = new Date(from).toISOString().slice(0, 10)
-                applications[i].leaveApplications.toDate = new Date(to).toISOString().slice(0, 10)
+                // let apply = applications[i]?.leaveApplications.applyDate
+                // let from = applications[i]?.leaveApplications.fromDate
+                // let to = applications[i]?.leaveApplications.toDate
+                // applications[i].leaveApplications.applyDate = new Date(apply).toISOString().slice(0, 10)
+                // applications[i].leaveApplications.fromDate = new Date(from).toISOString().slice(0, 10)
+                // applications[i].leaveApplications.toDate = new Date(to).toISOString().slice(0, 10)
             }
             state.allEmployeeLeaveApplications = applications;
         }
