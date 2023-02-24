@@ -14,8 +14,8 @@ const SalarySchema = Schema({
             houseRent: Number,
             medical: Number,
             conveyance: Number,
-            fromDate: Date,
-            toDate: Date
+            fromDate: Date? Date: null,
+            toDate: Date? Date: null
         }]
     }
 })

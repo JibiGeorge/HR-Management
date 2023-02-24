@@ -6,7 +6,8 @@ import cors from 'cors';
 import db from './config/dbConfig.js';
 import dotenv from 'dotenv';
 import route from './router/route.js';
-
+import cron from 'node-cron';
+import { payrolAutoGenerate } from './controller/payrolController.js';
 
 // middleware
 app.use(morgan('tiny'));
@@ -20,6 +21,10 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', route);
+
+cron.schedule('*/20 * * * * *',()=>{
+    payrolAutoGenerate();
+})
 
 db().then(() => {
     try {

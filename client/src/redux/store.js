@@ -23,6 +23,7 @@ import { punchingSlice } from './features/punching';
 import { SalarySlice } from './features/salarySlice';
 import { noticeSlice } from './features/noticeSlice';
 import { companyProfileSlice } from './features/companyProfileSlice';
+import { PayrolSlice } from './features/payrolSlice';
 
 const persistConfig = {
     key: 'root',
@@ -50,7 +51,8 @@ const reducer = combineReducers({
     punching: punchingSlice.reducer,
     employeeSalary: SalarySlice.reducer,
     notices : noticeSlice.reducer,
-    companyProfile: companyProfileSlice.reducer
+    companyProfile: companyProfileSlice.reducer,
+    payrol: PayrolSlice.reducer
 });
 
 const persistReduhcer = persistReducer(persistConfig, reducer);

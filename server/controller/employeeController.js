@@ -90,7 +90,8 @@ export const updateProfile = async (req, res) => {
             dateofBirth: data.dateofBirth,
             place: data.address,
             gender: data.gender,
-            role: data.role
+            role: data.role,
+            taxType: data.taxType
         })
         await userCredential.findOneAndUpdate({ userID }, {
             role: data.role

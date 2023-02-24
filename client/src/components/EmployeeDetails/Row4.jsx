@@ -201,15 +201,15 @@ const Row4 = () => {
         },
         {
             name: 'From Date',
-            selector: row => new Date(row?.fromDate).toLocaleDateString('en-GB', {
+            selector: row => row.fromDate ? new Date(row?.fromDate).toLocaleDateString('en-GB', {
                 day: 'numeric', month: 'short', year: 'numeric'
-            })
+            }) : ''
         },
         {
             name: 'To Date',
-            selector: row => new Date(row?.toDate).toLocaleDateString('en-GB', {
+            selector: row => row.toDate ? new Date(row?.toDate).toLocaleDateString('en-GB', {
                 day: 'numeric', month: 'short', year: 'numeric'
-            })
+            }) : ''
         },
         {
             name: "Action",

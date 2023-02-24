@@ -31,11 +31,9 @@ const employeeSchema = Schema({
     },
     bloodGroup: {
         type: String,
-        required: [true]
     },
     panNumber: {
         type: String,
-        required: [true]
     },
     contactNumber: {
         type: Number,
@@ -51,7 +49,6 @@ const employeeSchema = Schema({
     },
     dateofLeave: {
         type: Date,
-        required: [true]
     },
     username: {
         type: String,
@@ -78,6 +75,7 @@ const employeeSchema = Schema({
         type: Boolean,
         require: true
     },
+    taxType: String,
     status: String
 
 });

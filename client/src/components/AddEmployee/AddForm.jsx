@@ -187,9 +187,9 @@ function AddForm() {
                                             value={values.department}
                                             onChange={handleChange} className={errors.department && touched.department ? "input-error" : ""} >
                                             <option value="">Select Department</option>
-                                            {department.map(values => {
+                                            {department?.map(values => {
                                                 return (
-                                                    <option value={values._id}>{values.department}</option>
+                                                    <option value={values?._id}>{values?.department}</option>
                                                 )
                                             })}
                                         </select>
@@ -209,9 +209,9 @@ function AddForm() {
                                             value={values.designation}
                                             onChange={handleChange} className={errors.designation && touched.designation ? "input-error" : ""}>
                                             <option value="">Select Designation</option>
-                                            {designation.map(values => {
+                                            {designation?.map(values => {
                                                 return (
-                                                    <option value={values._id}>{values.designation}</option>
+                                                    <option value={values?._id}>{values?.designation}</option>
                                                 )
                                             })}
                                         </select>

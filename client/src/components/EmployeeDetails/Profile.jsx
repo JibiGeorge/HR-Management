@@ -88,6 +88,7 @@ function Profile() {
                         secondary: '#FFFAEE',
                     },
                 });
+                actions.resetForm();
                 closeProfileUpdateModal()
                 dispatch(hideLoading())
             } else {
@@ -130,7 +131,8 @@ function Profile() {
             dateofBirth: employeeData?.dateofBirth,
             place: employeeData?.place,
             gender: employeeData?.gender,
-            role: employeeData?.role
+            role: employeeData?.role,
+            taxType: employeeData?.taxType
         },
         onSubmit
     })
@@ -294,6 +296,10 @@ function Profile() {
                                 <div className="title">User Type:</div>
                                 <div className="text">{employeeData?.role}</div>
                             </li>
+                            <li>
+                                <div className="title">Tax Type:(EPF,PT,TDS..)</div>
+                                <div className="text">{employeeData.taxType ? employeeData?.taxType : 'Nil'}</div>
+                            </li>
                         </ul>
                         {role === 'Admin' &&
                             <>
@@ -420,6 +426,19 @@ function Profile() {
                                                     <option value="Employee">Employee</option>
                                                     <option value="HR">HR</option>
                                                     <option value="Admin">Admin</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-6">
+                                            <div className="form-group">
+                                                <label>Tax Type</label>
+                                                <select name="" id="taxType"
+                                                    value={values?.taxType}
+                                                    onChange={handleChange}>
+                                                    <option value="">Select Tax</option>
+                                                    <option value="EPF">EPF</option>
+                                                    <option value="Professional Tax">Professional Tax</option>
+                                                    <option value="TDS">TDS</option>
                                                 </select>
                                             </div>
                                         </div>

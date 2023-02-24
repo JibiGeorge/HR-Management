@@ -14,12 +14,14 @@ export const addEmployeeSalaryDetails = async (req, res) => {
             fromDate,
             toDate
         }
+        console.log('obj',obj);
         const exist = await SalaryModel.findOne({ userID: empID });
         if (!exist) {
             const newData = new SalaryModel({
                 userID: empID,
                 salaryDetails: obj
             });
+            console.log('newData',newData);
             newData.save()
                 .then((resposne) => {
                     res.status(200).json({ success: true, message: 'Successfully Added' });

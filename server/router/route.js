@@ -17,6 +17,7 @@ import { applyLeave, getAllApplications, getUserLeaveApplications, updateLeaveSt
 import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
 import { login, verifyToken } from '../controller/login.js';
 import { addNotice, deleteNotice, getAllNotices, sendEmail } from '../controller/noticeController.js';
+import { generatePaySlip, getGeneratedPayrol, getPaidPayrolData, getPayrolData } from '../controller/payrolController.js';
 import { auth } from '../middleware/auth.js';
 const router = express.Router();
 
@@ -119,10 +120,16 @@ router.delete('/employee/salaryDetails/delete/:id', auth, deleteEmployeeSalaryDe
 router.post('/notice/add', auth, addNotice);
 router.get('/notice/allNotices', auth, getAllNotices);
 router.post('/notice/sendNotices/', auth, sendEmail);
-router.delete('/notice/delete/:id',auth, deleteNotice);
+router.delete('/notice/delete/:id', auth, deleteNotice);
 
 // Company Details
 router.put('/companyProfile/update', auth, updateCompanyDetails);
-router.get('/companyProfile/getDetails',auth,getCompanyDetails)
+router.get('/companyProfile/getDetails', auth, getCompanyDetails);
+
+// payrol
+router.get('/payrol/getGeneratedPayrol', auth, getGeneratedPayrol);
+router.post('/payrol/getPayrolData', auth, getPayrolData);
+router.post('/payrol/generatePayrolSlip', auth, generatePaySlip);
+router.get('/payrol/getPaidPayrols', auth, getPaidPayrolData);
 
 export default router;

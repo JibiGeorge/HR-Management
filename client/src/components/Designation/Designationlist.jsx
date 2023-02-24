@@ -67,12 +67,12 @@ function Designationlist() {
         },
         {
             name: "Designation",
-            selector: row => row.designation,
+            selector: row => row?.designation,
             sortable: true
         },
         {
             name: "Department",
-            selector: row => row.departmentId.department,
+            selector: row => row.departmentId?.department,
             sortable: true
         },
         {

@@ -55,11 +55,11 @@ function Sidebar() {
                         <li><Link to='/employee'>Employees</Link></li>
                         {role === 'Admin' &&
                             <>
-                                <li><Link to=''>Disciplinary</Link></li>
-                                <li><Link>Inactive User</Link></li>
+                                {/* <li><Link to=''>Disciplinary</Link></li>
+                                <li><Link>Inactive User</Link></li> */}
                             </>
                         }
-                        <li><Link to='/profile'state={{ id: userDetails._id }} >Profile</Link></li>
+                        <li><Link to='/profile'state={{ id: userDetails?._id }} >Profile</Link></li>
                     </ul>
                 </li>
                 <li>
@@ -104,7 +104,6 @@ function Sidebar() {
                         </ul>
                     }
                 </li>
-
                 <li>
                     <div className="icon-link">
                         <Link>
@@ -119,6 +118,21 @@ function Sidebar() {
                         </li>
                         <li><Link to='/attendance'>Attendance</Link></li>
                         <li><Link>Attendance Report</Link></li>
+                    </ul>
+                </li>
+                <li>
+                    <div className="icon-link">
+                        <Link>
+                            <i className="bx bx-collection"></i>
+                            <span className="link_name">Payrol</span>
+                        </Link>
+                        <i className="bx bxs-chevron-down arrow"></i>
+                    </div>
+                    <ul className="sub-menu">
+                        <li>
+                            <Link className="link_name" >Payrol</Link>
+                        </li>
+                        <li><Link to='/payrol'>Payrol List</Link></li>
                     </ul>
                 </li>
                 <li>

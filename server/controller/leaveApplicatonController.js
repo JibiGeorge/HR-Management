@@ -148,8 +148,14 @@ export const updateLeaveStatus = async (req, res) => {
                             }
                         })
                     } else {
-                        const dataExist = await AttendanceModel.findOne({ $and: [{ month: monthYear }, { 'attendance.$.employeeID': mongoose.Types.ObjectId(empID) }, { 'attendance.$.attendanceDetails': { date: leaveDate } }] })
-                        if (!dataExist) {
+                        const dataExist = await AttendanceModel.findOne({
+                            $and:[
+                                {month:monthYear},
+                                {'attendance.employeeID':empID},
+                                {'attendance.attendanceDetails.date':leaveDate}
+                            ]
+                        })                        
+                        if (dataExist === null) {
                             await AttendanceModel.findOneAndUpdate({
                                 $and: [
                                     { month: monthYear },
@@ -186,7 +192,9 @@ export const updateLeaveStatus = async (req, res) => {
                                 { month: monthYear },
                                 updateQuery,
                                 options
-                            )
+                            ).then((response)=>{
+                                console.log('response',response);
+                            })
                         }
                     }
                 }
