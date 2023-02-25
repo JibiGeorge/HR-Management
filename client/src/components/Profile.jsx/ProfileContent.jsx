@@ -7,7 +7,6 @@ import Row3 from '../EmployeeDetails/Row3';
 
 const ProfileContent = () => {
   const { employeeData } = useSelector(state => state.employees);
-  console.log('employee', employeeData);
 
   return (
     <>

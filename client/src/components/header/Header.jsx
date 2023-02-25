@@ -12,7 +12,9 @@ function Header() {
   const dispatch = useDispatch();
   const naviagate = useNavigate();
   const { companyProfileData } = useSelector(state => state.companyProfile);
+  const { userDetails } = useSelector(state => state.user);
   const [timer, setTimer] = useState('')
+  let token = userDetails.UserToken
 
   const navbarbtn = () => {
     let sidebar = document.querySelector('.sidebar');
@@ -31,16 +33,16 @@ function Header() {
     const options = { timeZone: timeZone, hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
     setTimer(date.toLocaleString('en-US', options));
   }
-  setInterval(()=>updateTime(companyProfileData.timeZone), 1000);
+  setInterval(() => updateTime(companyProfileData.timeZone), 1000);
 
-  useEffect(()=>{
-    (async()=>{
+  useEffect(() => {
+    (async () => {
       const data = await getCompanyProfile(token);
-        if(data.success){
-          dispatch(setCompanyProfileData(data.details));
-        }
+      if (data.success) {
+        dispatch(setCompanyProfileData(data.details));
+      }
     })();
-  },[]);
+  }, []);
 
   return (
     <div className="home-section d-flex justify-content-between">

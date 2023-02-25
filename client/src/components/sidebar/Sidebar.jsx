@@ -10,6 +10,7 @@ function Sidebar() {
     const { userDetails } = useSelector(state => state.user);
     const { companyProfileData } = useSelector(state => state.companyProfile);
     const role = userDetails.role;
+    let token = userDetails.UserToken
 
     useEffect(()=>{
         (async()=>{

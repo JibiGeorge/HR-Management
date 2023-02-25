@@ -194,21 +194,21 @@ const Attendance = ({ token }) => {
                             <div className="punch-det">
                                 <h6>Punch In at</h6>
                                 <p>
-                                    {punchingData?.attendance.attendanceDetails.date ? punchingData?.attendance.attendanceDetails.date : '--/--/----'},&nbsp;&nbsp;
-                                    {punchingData?.attendance.attendanceDetails.signIn ? punchingData?.attendance.attendanceDetails.signIn : '--:--:-- --'}
+                                    {punchingData?.attendance?.attendanceDetails.date ? punchingData?.attendance.attendanceDetails?.date : '--/--/----'},&nbsp;&nbsp;
+                                    {punchingData?.attendance?.attendanceDetails.signIn ? punchingData?.attendance.attendanceDetails?.signIn : '--:--:-- --'}
                                 </p>
 
                                 <h6>Punch Out at</h6>
                                 <p>
-                                    {punchingData?.attendance.attendanceDetails.date ? punchingData?.attendance.attendanceDetails.date : '--/--/----'},&nbsp;&nbsp;
-                                    {punchingData?.attendance.attendanceDetails.signOut ? punchingData?.attendance.attendanceDetails?.signOut : '--:--:-- --'}
+                                    {punchingData?.attendance?.attendanceDetails.date ? punchingData?.attendance.attendanceDetails?.date : '--/--/----'},&nbsp;&nbsp;
+                                    {punchingData?.attendance?.attendanceDetails.signOut ? punchingData?.attendance.attendanceDetails?.signOut : '--:--:-- --'}
                                 </p>
                             </div>
                             <div className="punch-info">
                                 <div className="punch-hours">
                                     {!punchingData?.attendance?.attendanceDetails?.signOut &&
                                         <>
-                                            {punchingData?.attendance?.attendanceDetails.signIn ?
+                                            {punchingData.attendance.attendanceDetails?.signIn ?
                                                 setInterval(updateHour, 1000) ?
                                                     <span>{totalWorkingHour} </span> : <span>0 </span>
                                                 : <span>0 Hrs</span>}
