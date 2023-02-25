@@ -1,15 +1,18 @@
+import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import { generateEmployeePayslip, getPayrolData } from '../../helper/PayrolHelper';
+import { useDispatch, useSelector } from 'react-redux';
+import { generateEmployeePayslip, getAllPaidPayrolData, getAllPendingPayrolData, getPayrolData } from '../../helper/PayrolHelper';
+import { setGeneratedPayrolData, setPaidPayrolData } from '../../redux/features/payrolSlice';
 
-const PayslipGenerate = ({docID,payrolID}) => {
+const PayslipGenerate = ({ docID, payrolID, closePaySlipForm }) => {
+    const dispatch = useDispatch();
     const { userDetails } = useSelector(state => state.user);
     let token = userDetails.UserToken;
-    
-    const [bankDetails,setBankDetails] = useState('')
-    const [employeePayrolDetails,setEmployeePayrolDetails] = useState('');
-    const [employeeDetails,setEmployeeDetails] = useState('');
+
+    const [bankDetails, setBankDetails] = useState('')
+    const [employeePayrolDetails, setEmployeePayrolDetails] = useState('');
+    const [employeeDetails, setEmployeeDetails] = useState('');
 
     const [paymentMethod, setPaymentMethod] = useState("cash");
     const [bankDetailsVisible, setBankDetailsVisible] = useState(false);
@@ -24,15 +27,15 @@ const PayslipGenerate = ({docID,payrolID}) => {
         }
     };
 
-    useEffect(()=>{
-        (async()=>{
+    useEffect(() => {
+        (async () => {
             try {
                 const payrolData = await getPayrolData(token, docID, payrolID);
-                if(payrolData.success){
+                if (payrolData.success) {
                     setEmployeePayrolDetails(payrolData?.payrolData[0]);
                     setBankDetails(payrolData?.bankDetails);
                     setEmployeeDetails(payrolData.payrolData[0]?.employeeDetails[0])
-                }else{
+                } else {
                     toast.error(payrolData.message, {
                         style: {
                             border: '1px solid #713200',
@@ -59,14 +62,43 @@ const PayslipGenerate = ({docID,payrolID}) => {
                 });
             }
         })()
-    },[])
+    }, [])
 
-    const generatePaySlip = async () =>{
-        console.log(employeePayrolDetails);
-        const payrolDocID =employeePayrolDetails?._id
-        const payrolDataID =employeePayrolDetails.payrolData?._id
+    const onSubmit = async (values) => {
+        const payrolDocID = employeePayrolDetails?._id
+        const payrolDataID = employeePayrolDetails.payrolData?._id
         try {
-            const genrate = await generateEmployeePayslip(token, bankDetails, payrolDocID,paymentMethod,payrolDataID)
+            const generate = await generateEmployeePayslip(token, values, payrolDocID, paymentMethod, payrolDataID)
+            if (generate.success) {
+                const pendingPayrolData = await getAllPendingPayrolData(token);
+                const paidPayrolData = await getAllPaidPayrolData(token);
+                dispatch(setPaidPayrolData(paidPayrolData.payrolData));
+                dispatch(setGeneratedPayrolData(pendingPayrolData.payrolData));
+                closePaySlipForm();
+                toast.success(generate.message, {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#25ab11',
+                    },
+                    iconTheme: {
+                        primary: '#25ab11',
+                        secondary: '#FFFAEE',
+                    },
+                });
+            } else {
+                toast.error(generate.message, {
+                    style: {
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#713200',
+                    },
+                    iconTheme: {
+                        primary: '#713200',
+                        secondary: '#FFFAEE',
+                    },
+                });
+            }
         } catch (error) {
             toast.error('Something went Wrong', {
                 style: {
@@ -81,6 +113,18 @@ const PayslipGenerate = ({docID,payrolID}) => {
             });
         }
     }
+
+    const { values, setFieldValue, handleSubmit } = useFormik({
+        initialValues: {
+            accountNumber: bankDetails?.accountNumber,
+            ifscCode: bankDetails?.ifscCode,
+            bankName: bankDetails?.bankName,
+            branchName: bankDetails?.branchName,
+            paidOn: ''
+        },
+        enableReinitialize: true,
+        onSubmit
+    })
     return (
         <>
             <div className="payslip-section">
@@ -161,7 +205,8 @@ const PayslipGenerate = ({docID,payrolID}) => {
                                                 <label className='col-form-label'>Account Number</label>
                                             </div>
                                             <div>
-                                                <input type="text" value={bankDetails?.accountNumber} />
+                                                <input type="text" id='accountNumber' value={values.accountNumber}
+                                                    onChange={(e) => setFieldValue("accountNumber", e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -171,7 +216,8 @@ const PayslipGenerate = ({docID,payrolID}) => {
                                                 <label className='col-form-label'>IFSC Coder</label>
                                             </div>
                                             <div>
-                                                <input type="text" value={bankDetails?.ifscCode} />
+                                                <input type="text" id='ifscCode' value={values.ifscCode}
+                                                    onChange={(e) => setFieldValue("ifscCode", e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -181,7 +227,8 @@ const PayslipGenerate = ({docID,payrolID}) => {
                                                 <label className='col-form-label'>Bank Name</label>
                                             </div>
                                             <div>
-                                                <input type="text" value={bankDetails?.bankName} />
+                                                <input type="text" id='bankName' value={values.bankName}
+                                                    onChange={(e) => setFieldValue("bankName", e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -191,27 +238,29 @@ const PayslipGenerate = ({docID,payrolID}) => {
                                                 <label className='col-form-label'>Branch Name</label>
                                             </div>
                                             <div>
-                                                <input type="text" value={bankDetails?.branchName} />
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </div>
-                            }
-                        </div>
-                                                           
-                        <div className="col-lg-3 col-sm-6">
-                                        <div className="form-group">
-                                            <div className="title">
-                                                <label className='col-form-label'>Paid On</label>
-                                            </div>
-                                            <div>
-                                                <input type="date" />
+                                                <input type="text" id='branchName' value={values.branchName}
+                                                    onChange={(e) => setFieldValue("branchName", e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div className="col-lg-3 col-sm-6">
+                            <div className="form-group">
+                                <div className="title">
+                                    <label className='col-form-label'>Paid On</label>
+                                </div>
+                                <div>
+                                    <input type="date" id='paidOn' value={values.paidOn}
+                                        onChange={(e) => setFieldValue("paidOn", e.target.value)} />
+                                </div>
+                            </div>
+                        </div>
                         <div className="col-12 mt-3">
                             <div className='form-button'>
-                                <button type='submit' className='btn btn-primary add-btn' onClick={generatePaySlip} >GENERATE</button>
+                                <button type='submit' className='btn btn-primary add-btn' onClick={handleSubmit} >GENERATE</button>
                             </div>
                         </div>
                     </div>

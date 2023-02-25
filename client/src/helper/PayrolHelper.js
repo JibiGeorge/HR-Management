@@ -20,7 +20,7 @@ export const getPayrolData = async (token, docID, payrolID) => {
         const payrolData = await instance({
             url: '/api/payrol/getPayrolData',
             method: 'POST',
-            data: {docID,payrolID},
+            data: { docID, payrolID },
             headers: {
                 Authorization: token
             }
@@ -31,12 +31,12 @@ export const getPayrolData = async (token, docID, payrolID) => {
     }
 }
 
-export const generateEmployeePayslip = async (token, bankDetails, payrolDocID,paymentMethod,payrolDataID)=>{
+export const generateEmployeePayslip = async (token, values, payrolDocID, paymentMethod, payrolDataID) => {
     try {
         const payrolData = await instance({
             url: '/api/payrol/generatePayrolSlip',
             method: 'POST',
-            data: {bankDetails, payrolDocID,paymentMethod,payrolDataID},
+            data: { values, payrolDocID, paymentMethod, payrolDataID },
             headers: {
                 Authorization: token
             }
@@ -58,7 +58,6 @@ export const getAllPaidPayrolData = async (token) => {
         });
         return payrolData.data;
     } catch (error) {
-        console.log(error.message);
         return { message: 'Connection Error' };
     }
 }

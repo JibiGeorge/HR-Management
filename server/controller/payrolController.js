@@ -155,7 +155,6 @@ export const payrolAutoGenerate = async () => {
             }
         })
     } catch (error) {
-        console.log(error.message);
     }
 }
 
@@ -204,14 +203,12 @@ export const getPayrolData = async (req, res) => {
 }
 
 export const generatePaySlip = async (req, res) => {
-    const { bankDetails, payrolDocID, paymentMethod, payrolDataID } = req.body;
-    console.log('bankDetails', bankDetails);
+    const { values, payrolDocID, paymentMethod, payrolDataID } = req.body;
     const obj = {
-        accountNumber: bankDetails?.accountNumber,
-        holderName: bankDetails?.holderName,
-        bankName: bankDetails?.bankName,
-        branchName: bankDetails?.branchName,
-        ifscCode: bankDetails?.ifscCode
+        accountNumber: values?.accountNumber,
+        bankName: values?.bankName,
+        branchName: values?.branchName,
+        ifscCode: values?.ifscCode
     }
     try {
         await PayrolModel.findOneAndUpdate({
@@ -221,25 +218,16 @@ export const generatePaySlip = async (req, res) => {
             ]
         },
             {
-                $and: [
-                    {
-                        $set: {
-                            'payrolData.$.paymentMethod': paymentMethod,
-                            'payrolData.$.status': 'Paid',
-                        }
-                    },
-                    {
-                        $push: {
-                            'payrolData.$.bankAccount': obj
-                        }
-                    }
-                ]
+                $set: {
+                    'payrolData.$.paymentMethod': paymentMethod,
+                    'payrolData.$.status': 'Paid',
+                    'payrolData.$.paidOn': values?.paidOn,
+                    'payrolData.$.bankAccount': obj
+                }
             }).then((response) => {
-                console.log(response);
+                res.status(200).json({ success: true, message: 'PaySlip Generated Successfully' });
             })
     } catch (error) {
-        ``
-        console.log(error.message);
         res.json({ message: 'Internal Server Error' });
     }
 }

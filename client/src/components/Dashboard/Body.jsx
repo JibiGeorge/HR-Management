@@ -11,9 +11,9 @@ function Body() {
   return (
     <div className="section-body">
       <PageHeader />
-      <Cards />
+      <Cards token={token} />
       {role === 'Employee' &&
-        <Attendance token={token}/>
+        <Attendance token={token} />
       }
     </div>
   )

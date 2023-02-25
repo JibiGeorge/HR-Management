@@ -13,13 +13,12 @@ const PayrolGeneratedList = () => {
     const { generatedPayrolData } = useSelector(state => state.payrol);
     let token = userDetails.UserToken;
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         dispatch(showLoading());
         (async () => {
             try {
                 const payrolData = await getAllPendingPayrolData(token);
-                console.log(payrolData.payrolData);
                 if (payrolData.success) {
                     dispatch(setGeneratedPayrolData(payrolData.payrolData));
                     dispatch(hideLoading());
@@ -55,13 +54,16 @@ const PayrolGeneratedList = () => {
     }, []);
 
     const [payslipForm, setPaySlipForm] = useState(false);
-    const [docID, setDocID] =useState('')
-    const [payrolID, setpayrolID] =useState('')
+    const [docID, setDocID] = useState('')
+    const [payrolID, setpayrolID] = useState('')
 
-    const generateSlip = async (docID, payrolID)=>{
+    const generateSlip = async (docID, payrolID) => {
         setPaySlipForm(true);
         setDocID(docID)
         setpayrolID(payrolID)
+    }
+    const closePaySlipForm = () => {
+        setPaySlipForm(false);
     }
 
     const column = [
@@ -136,7 +138,7 @@ const PayrolGeneratedList = () => {
                     highlightOnHover
                 />}
 
-                {payslipForm && <PayslipGenerate docID={docID} payrolID={payrolID} />}
+            {payslipForm && <PayslipGenerate docID={docID} payrolID={payrolID} closePaySlipForm={closePaySlipForm} />}
         </>
     )
 }

@@ -216,3 +216,33 @@ export const allEducationsDetails = async (empID, token) => {
         return { message: 'Connection Error.' };
     }
 }
+
+export const getEmployeeCount = async (token) => {
+    try {
+        const getCounts = await instance({
+            url: '/api/totalEmployeeCount',
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
+        })
+        return getCounts.data;
+    } catch (error) {
+        return { message: 'Connection Error.' };
+    }
+}
+
+export const getPendingLeaveCount = async (token) => {
+    try {
+        const getCounts = await instance({
+            url: '/api/totalPendingLeaveCount',
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
+        })
+        return getCounts.data;
+    } catch (error) {
+        return { message: 'Connection Error.' };
+    }
+}

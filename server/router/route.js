@@ -9,11 +9,11 @@ import { addEducation, getEducation } from '../controller/educationController.js
 import { addEmployeeAddress, getEmployeeAddress } from '../controller/employeeAddressController.js';
 import { addEmployeeBankAccount, getEmployeeBankAccount } from '../controller/employeeBankAccount.js';
 import { addEmergencyContacts, getEmergencyContacts } from '../controller/employeeContacts.js';
-import { addEmployee, getAllEmployees, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
+import { addEmployee, employeeCount, getAllEmployees, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
 import { addEmployeeSalaryDetails, deleteEmployeeSalaryDetails, getEmployeeSalaryDetails } from '../controller/EmployeeSalaryControl.js';
 import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
 import { addJobRoleLeaves, getAllJobRoleLeaves } from '../controller/jobRoleLeavesController.js';
-import { applyLeave, getAllApplications, getUserLeaveApplications, updateLeaveStatus } from '../controller/leaveApplicatonController.js';
+import { applyLeave, getAllApplications, getPendingLeavesCount, getUserLeaveApplications, updateLeaveStatus } from '../controller/leaveApplicatonController.js';
 import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
 import { login, verifyToken } from '../controller/login.js';
 import { addNotice, deleteNotice, getAllNotices, sendEmail } from '../controller/noticeController.js';
@@ -131,5 +131,9 @@ router.get('/payrol/getGeneratedPayrol', auth, getGeneratedPayrol);
 router.post('/payrol/getPayrolData', auth, getPayrolData);
 router.post('/payrol/generatePayrolSlip', auth, generatePaySlip);
 router.get('/payrol/getPaidPayrols', auth, getPaidPayrolData);
+
+// For DashBoard
+router.get('/totalEmployeeCount', auth, employeeCount)
+router.get('/totalPendingLeaveCount',auth, getPendingLeavesCount)
 
 export default router;

@@ -123,3 +123,12 @@ export const updatePersonal = async (req, res) => {
         return res.json({ success: false, message: "Internal Server Error..!" })
     }
 }
+
+export const employeeCount = async (req, res) => {
+    try {
+        const count = await Employee.find().count();
+        return res.status(200).json({ success: true, count })
+    } catch (error) {
+        return res.json({ success: false, error: 'Internal Server Error...!' })
+    }
+}

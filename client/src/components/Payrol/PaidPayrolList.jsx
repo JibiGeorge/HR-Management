@@ -3,21 +3,24 @@ import DataTable from 'react-data-table-component';
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPaidPayrolData } from '../../helper/PayrolHelper';
+import { hideLoading, showLoading } from '../../redux/features/alertSlice';
 import { setPaidPayrolData } from '../../redux/features/payrolSlice';
 
 const PaidPayrolList = () => {
     const { userDetails } = useSelector(state => state.user);
     const { paidPayrolLiist } = useSelector(state => state.payrol);
+    const { loading } = useSelector(state => state.alerts);
     let token = userDetails.UserToken;
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(showLoading());
         (async () => {
             try {
                 const payrolData = await getAllPaidPayrolData(token);
-                console.log('adccadkj',payrolData);
                 if (payrolData.success) {
                     dispatch(setPaidPayrolData(payrolData.payrolData));
+                    dispatch(hideLoading());
                 } else {
                     toast.error(payrolData.message, {
                         style: {
@@ -30,6 +33,7 @@ const PaidPayrolList = () => {
                             secondary: '#FFFAEE',
                         },
                     });
+                    dispatch(hideLoading());
                 }
             } catch (error) {
                 toast.error('Something went Wrong', {
@@ -43,6 +47,7 @@ const PaidPayrolList = () => {
                         secondary: '#FFFAEE',
                     },
                 });
+                dispatch(hideLoading());
             }
         })();
     }, []);
@@ -69,28 +74,18 @@ const PaidPayrolList = () => {
             selector: row => row.payrolData?.grossSalary
         },
         {
-            name: 'EEF',
-            selector: row => row.payrolData?.employeePF
-        },
-        {
-            name: 'ERF',
-            selector: row => row.payrolData?.employeerPF
-        },
-        {
-            name: 'EESI',
-            selector: row => row.payrolData?.employeeESI
-        },
-        {
-            name: 'ERSI',
-            selector: row => row.payrolData?.employeerESI
-        },
-        {
-            name: 'TDS',
-            selector: row => row.payrolData?.TDSAmount
-        },
-        {
             name: 'Net Payable',
             selector: row => row.payrolData?.netPayable
+        },
+        {
+            name: 'Payment Method',
+            selector: row => row.payrolData?.paymentMethod
+        },
+        {
+            name: 'Paid On',
+            selector: (row) => new Date(row.payrolData?.paidOn).toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'short', year: 'numeric'
+            })
         },
         {
             name: 'Status',
@@ -104,15 +99,21 @@ const PaidPayrolList = () => {
                 <div className="form-title">
                     <h3>Paid History</h3>
                 </div>
-            <DataTable
-                columns={column}
-                data={paidPayrolLiist}
-                pagination
-                fixedHeader
-                fixedHeaderScrollHeight='300px'
-                selectableRowsHighlight
-                highlightOnHover
-            />
+                {loading && <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>}
+                {!loading &&
+                    <DataTable
+                        columns={column}
+                        data={paidPayrolLiist}
+                        pagination
+                        fixedHeader
+                        fixedHeaderScrollHeight='300px'
+                        selectableRowsHighlight
+                        highlightOnHover
+                    />}
             </div>
         </>
     )

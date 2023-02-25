@@ -149,12 +149,12 @@ export const updateLeaveStatus = async (req, res) => {
                         })
                     } else {
                         const dataExist = await AttendanceModel.findOne({
-                            $and:[
-                                {month:monthYear},
-                                {'attendance.employeeID':empID},
-                                {'attendance.attendanceDetails.date':leaveDate}
+                            $and: [
+                                { month: monthYear },
+                                { 'attendance.employeeID': empID },
+                                { 'attendance.attendanceDetails.date': leaveDate }
                             ]
-                        })                        
+                        })
                         if (dataExist === null) {
                             await AttendanceModel.findOneAndUpdate({
                                 $and: [
@@ -192,8 +192,7 @@ export const updateLeaveStatus = async (req, res) => {
                                 { month: monthYear },
                                 updateQuery,
                                 options
-                            ).then((response)=>{
-                                console.log('response',response);
+                            ).then((response) => {
                             })
                         }
                     }
@@ -211,7 +210,19 @@ export const updateLeaveStatus = async (req, res) => {
             res.status(200).json({ success: true, message: 'Successfully Changed the Status..' })
         })
     } catch (error) {
-        console.log(error.message);
+        res.send({ message: 'Internal Server Error..!' })
+    }
+}
+
+export const getPendingLeavesCount = async (req, res) => {
+    try {
+        const count = await LeaveApplication.aggregate([
+            { $unwind: '$leaveApplications' },
+            { $match: { 'leaveApplications.status': 'Pending' } },
+            { $count: 'totalcount' }
+        ])
+        return res.status(200).json({ success: true, count: count[0]?.totalcount })
+    } catch (error) {
         res.send({ message: 'Internal Server Error..!' })
     }
 }
