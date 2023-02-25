@@ -12,26 +12,26 @@ function Sidebar() {
     const role = userDetails.role;
     let token = userDetails.UserToken
 
-    useEffect(()=>{
-        (async()=>{
-          const data = await getCompanyProfile(token);
-            if(data.success){
-              dispatch(setCompanyProfileData(data.details));
+    useEffect(() => {
+        (async () => {
+            const data = await getCompanyProfile(token);
+            if (data.success) {
+                dispatch(setCompanyProfileData(data.details));
             }
         })();
-      },[]);
+    }, []);
 
     return (
         <div className="sidebar">
             <div className="logo-details">
                 {/* <i className="bx bxl-c-plus-plus"></i> */}
-                <img src={companyProfileData?.logo} width='40px' height='40px' style={{borderRadius: '50%', backgroundSize: 'contain'}} alt="" />
+                <img src={companyProfileData?.logo} width='40px' height='40px' style={{ borderRadius: '50%', backgroundSize: 'contain' }} alt="" />
                 <span className="logo_name">HR Management</span>
             </div>
             <ul className="nav-links">
                 <li>
                     <Link>
-                        <i className="bx bx-grid-alt"></i>
+                        <i class='bx bxs-dashboard bx-tada bx-rotate-90' ></i>
                         <span className="link_name"><Link to='/dashboard' className="link_name">Dashboard</Link></span>
                     </Link>
                     <ul className="sub-menu">
@@ -43,7 +43,7 @@ function Sidebar() {
                 <li>
                     <div className="icon-link">
                         <Link>
-                            <i className="bx bx-collection"></i>
+                            <i class='bx bxs-buildings bx-tada' ></i>
                             <span className="link_name">Organization</span>
                         </Link>
                         <i className="bx bxs-chevron-down arrow"></i>
@@ -59,7 +59,7 @@ function Sidebar() {
                 <li>
                     <div className="icon-link">
                         <Link>
-                            <i className="bx bx-collection"></i>
+                            <i class='bx bx-group bx-tada' ></i>
                             <span className="link_name">Employees</span>
                         </Link>
                         <i className="bx bxs-chevron-down arrow"></i>
@@ -69,19 +69,19 @@ function Sidebar() {
                             <Link className="link_name" >Employees</Link>
                         </li>
                         <li><Link to='/employee'>Employees</Link></li>
-                        {role === 'Admin' &&
+                        {(role === 'Admin' || role === 'HR') &&
                             <>
                                 {/* <li><Link to=''>Disciplinary</Link></li>
                                 <li><Link>Inactive User</Link></li> */}
                             </>
                         }
-                        <li><Link to='/profile'state={{ id: userDetails?._id }} >Profile</Link></li>
+                        <li><Link to='/profile' state={{ id: userDetails?._id }} >Profile</Link></li>
                     </ul>
                 </li>
                 <li>
                     <div className="icon-link">
                         <Link>
-                            <i className="bx bx-collection"></i>
+                            <i class='bx bxs-package bx-tada' ></i>
                             <span className="link_name">Assets</span>
                         </Link>
                         <i className="bx bxs-chevron-down arrow"></i>
@@ -97,12 +97,12 @@ function Sidebar() {
                 <li>
                     <div className="icon-link">
                         <Link>
-                            <i className="bx bx-collection"></i>
+                            <i class='bx bx-plus-medical bx-tada' ></i>
                             <span className="link_name">Leave</span>
                         </Link>
                         <i className="bx bxs-chevron-down arrow"></i>
                     </div>
-                    {role === 'Admin' &&
+                    {(role === 'Admin' || role === 'HR') &&
                         <ul className="sub-menu">
                             <li>
                                 <Link className="link_name" >Leave</Link>
@@ -120,59 +120,68 @@ function Sidebar() {
                         </ul>
                     }
                 </li>
-                <li>
-                    <div className="icon-link">
-                        <Link>
-                            <i className="bx bx-collection"></i>
-                            <span className="link_name">Attendance</span>
-                        </Link>
-                        <i className="bx bxs-chevron-down arrow"></i>
-                    </div>
-                    <ul className="sub-menu">
+                {(role === 'Admin' || role === 'HR') &&
+                    <li>
+                        <div className="icon-link">
+                            <Link>
+                                <i class='bx bxs-calendar bx-tada' ></i>
+                                <span className="link_name">Attendance</span>
+                            </Link>
+                            <i className="bx bxs-chevron-down arrow"></i>
+                        </div>
+                        <ul className="sub-menu">
+                            <li>
+                                <Link className="link_name" >Leave</Link>
+                            </li>
+                            <li><Link to='/attendance'>Attendance</Link></li>
+                            <li><Link>Attendance Report</Link></li>
+                        </ul>
+                    </li>
+                }
+                {(role === 'Admin' || role === 'HR') &&
+                    <li>
+                        <div className="icon-link">
+                            <Link>
+                                <i class='bx bx-money-withdraw bx-tada' ></i>
+                                <span className="link_name">Payrol</span>
+                            </Link>
+                            <i className="bx bxs-chevron-down arrow"></i>
+                        </div>
+                        <ul className="sub-menu">
+                            <li>
+                                <Link className="link_name" >Payrol</Link>
+                            </li>
+                            <li><Link to='/payrol'>Payrol List</Link></li>
+                        </ul>
+                    </li>
+                }
+
+                {(role === 'Admin' || role === 'HR') &&
+                    <>
                         <li>
-                            <Link className="link_name" >Leave</Link>
+                            <Link>
+                                <i class='bx bxs-paper-plane bx-tada' ></i>
+                                <span className="link_name"><Link to='/notice' className="link_name">Notice</Link></span>
+                            </Link>
+                            <ul className="sub-menu">
+                                <li>
+                                    <Link to='/notice' className='link_name'>Notice</Link>
+                                </li>
+                            </ul>
                         </li>
-                        <li><Link to='/attendance'>Attendance</Link></li>
-                        <li><Link>Attendance Report</Link></li>
-                    </ul>
-                </li>
-                <li>
-                    <div className="icon-link">
-                        <Link>
-                            <i className="bx bx-collection"></i>
-                            <span className="link_name">Payrol</span>
-                        </Link>
-                        <i className="bx bxs-chevron-down arrow"></i>
-                    </div>
-                    <ul className="sub-menu">
                         <li>
-                            <Link className="link_name" >Payrol</Link>
+                            <Link>
+                                <i class='bx bx-cog bx-tada' ></i>
+                                <span className="link_name"><Link to='/settings' className="link_name">Settings</Link></span>
+                            </Link>
+                            <ul className="sub-menu">
+                                <li>
+                                    <Link to='/settings' className='link_name'>Settings</Link>
+                                </li>
+                            </ul>
                         </li>
-                        <li><Link to='/payrol'>Payrol List</Link></li>
-                    </ul>
-                </li>
-                <li>
-                    <Link>
-                        <i className="bx bx-grid-alt"></i>
-                        <span className="link_name"><Link to='/notice' className="link_name">Notice</Link></span>
-                    </Link>
-                    <ul className="sub-menu">
-                        <li>
-                            <Link to='/notice' className='link_name'>Notice</Link>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <Link>
-                        <i className="bx bx-grid-alt"></i>
-                        <span className="link_name"><Link to='/settings' className="link_name">Settings</Link></span>
-                    </Link>
-                    <ul className="sub-menu">
-                        <li>
-                            <Link to='/settings' className='link_name'>Settings</Link>
-                        </li>
-                    </ul>
-                </li>
+                    </>
+                }
             </ul>
         </div>
     )

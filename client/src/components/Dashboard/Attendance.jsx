@@ -208,7 +208,7 @@ const Attendance = ({ token }) => {
                                 <div className="punch-hours">
                                     {!punchingData?.attendance?.attendanceDetails?.signOut &&
                                         <>
-                                            {punchingData.attendance.attendanceDetails?.signIn ?
+                                            {punchingData?.attendance?.attendanceDetails?.signIn ?
                                                 setInterval(updateHour, 1000) ?
                                                     <span>{totalWorkingHour} </span> : <span>0 </span>
                                                 : <span>0 Hrs</span>}
