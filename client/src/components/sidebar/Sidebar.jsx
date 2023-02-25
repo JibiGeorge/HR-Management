@@ -1,15 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Sidebar.css'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCompanyProfile } from '../../helper/CompanySettingsHelper'
+import { setCompanyProfileData } from '../../redux/features/companyProfileSlice'
 
 function Sidebar() {
-    const { userDetails } = useSelector(state => state.user)
+    const dispatch = useDispatch();
+    const { userDetails } = useSelector(state => state.user);
+    const { companyProfileData } = useSelector(state => state.companyProfile);
     const role = userDetails.role;
+
+    useEffect(()=>{
+        (async()=>{
+          const data = await getCompanyProfile(token);
+            if(data.success){
+              dispatch(setCompanyProfileData(data.details));
+            }
+        })();
+      },[]);
+
     return (
         <div className="sidebar">
             <div className="logo-details">
-                <i className="bx bxl-c-plus-plus"></i>
+                {/* <i className="bx bxl-c-plus-plus"></i> */}
+                <img src={companyProfileData?.logo} width='40px' height='40px' style={{borderRadius: '50%', backgroundSize: 'contain'}} alt="" />
                 <span className="logo_name">HR Management</span>
             </div>
             <ul className="nav-links">

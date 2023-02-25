@@ -207,11 +207,11 @@ export const generatePaySlip = async (req, res) => {
     const { bankDetails, payrolDocID, paymentMethod, payrolDataID } = req.body;
     console.log('bankDetails', bankDetails);
     const obj = {
-        accountNumber: bankDetails.accountNumber,
-        holderName: bankDetails.holderName,
-        bankName: bankDetails.bankName,
-        branchName: bankDetails.branchName,
-        ifscCode: bankDetails.ifscCode
+        accountNumber: bankDetails?.accountNumber,
+        holderName: bankDetails?.holderName,
+        bankName: bankDetails?.bankName,
+        branchName: bankDetails?.branchName,
+        ifscCode: bankDetails?.ifscCode
     }
     try {
         await PayrolModel.findOneAndUpdate({
