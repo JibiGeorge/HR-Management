@@ -123,9 +123,9 @@ const Form = ({ companyProfileData }) => {
             <div className='col-lg-3 col-sm-12 mb-2 mt-3' id='email'>
               <div className="title">
                 <span>Time Zone</span>
-                <span className='text-danger ms-2' style={{fontSize:'12px'}}>Time zone can't change</span>
+                <span className='text-danger ms-2' style={{ fontSize: '12px' }}>Time zone can't change</span>
               </div>
-              <input className='form-control' type="text" value={companyProfileData.timeZone} style={{pointerEvents:'none'}} />
+              <input className='form-control' type="text" value={companyProfileData.timeZone} style={{ pointerEvents: 'none' }} />
             </div>
             <div className="sub-btn mt-3 mb-3">
               <button className="btn" onClick={handleSubmit}>SAVE</button>

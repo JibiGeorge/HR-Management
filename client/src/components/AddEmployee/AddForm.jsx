@@ -21,7 +21,8 @@ function AddForm() {
     const [designation, setDesignation] = useState([]);
     const [department, setDepartment] = useState([]);
 
-    let token = userDetails.UserToken
+    let token = userDetails.UserToken;
+    const role = userDetails?.role;
     const onSubmit = async (values, actions) => {
         dispatch(showLoading())
         try {
@@ -232,8 +233,12 @@ function AddForm() {
                                             onChange={handleChange} className={errors.role && touched.role ? "input-error" : ""}>
                                             <option value="">Select Role</option>
                                             <option value="Employee">Employee</option>
-                                            <option value="HR">HR</option>
-                                            <option value="Admin">Admin</option>
+                                            {role === 'Admin' &&
+                                                <>
+                                                    <option value="HR">HR</option>
+                                                    <option value="Admin">Admin</option>
+                                                </>
+                                            }
                                         </select>
                                     </div>
                                 </div>

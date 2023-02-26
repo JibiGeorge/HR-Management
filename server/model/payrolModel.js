@@ -14,7 +14,22 @@ const payrolSchema = Schema({
             salary: {
                 type: Number
             },
+            basicSalary: {
+                type: Number
+            },
+            houseRent: {
+                type: Number
+            },
+            medical: {
+                type: Number
+            },
+            conveyance: {
+                type: Number
+            },
             totalLeaves: {
+                type: Number
+            },
+            leaveDeduction: {
                 type: Number
             },
             grossSalary: {
@@ -32,24 +47,24 @@ const payrolSchema = Schema({
             employeerESI: {
                 type: Number
             },
-            TDSAmount:{
+            TDSAmount: {
                 type: Number
             },
             netPayable: {
                 type: Number
             },
-            paidOn:{
+            paidOn: {
                 type: Date
             },
-            status:{
+            status: {
                 type: String,
                 require: true
             },
-            paymentMethod:{
+            paymentMethod: {
                 type: String
             },
-            bankAccount:{
-                type:[{
+            bankAccount: {
+                type: [{
                     accountNumber: Number,
                     holderName: String,
                     bankName: String,

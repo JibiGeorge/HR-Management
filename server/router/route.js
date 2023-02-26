@@ -17,7 +17,7 @@ import { applyLeave, getAllApplications, getPendingLeavesCount, getUserLeaveAppl
 import { addLeaveType, deleteLeaveType, getAllLeaveTypes, getLeaveTypeData, updateLeaveType } from '../controller/leaveTypeController.js';
 import { login, verifyToken } from '../controller/login.js';
 import { addNotice, deleteNotice, getAllNotices, sendEmail } from '../controller/noticeController.js';
-import { generatePaySlip, getGeneratedPayrol, getPaidPayrolData, getPayrolData } from '../controller/payrolController.js';
+import { generatePaySlip, getEmpPayrolData, getGeneratedPayrol, getPaidPayrolData, getPayrolData } from '../controller/payrolController.js';
 import { auth } from '../middleware/auth.js';
 const router = express.Router();
 
@@ -131,9 +131,10 @@ router.get('/payrol/getGeneratedPayrol', auth, getGeneratedPayrol);
 router.post('/payrol/getPayrolData', auth, getPayrolData);
 router.post('/payrol/generatePayrolSlip', auth, generatePaySlip);
 router.get('/payrol/getPaidPayrols', auth, getPaidPayrolData);
+router.post('/payrol/getEmpData', auth, getEmpPayrolData);
 
 // For DashBoard
-router.get('/totalEmployeeCount', auth, employeeCount)
-router.get('/totalPendingLeaveCount',auth, getPendingLeavesCount)
+router.get('/totalEmployeeCount', auth, employeeCount);
+router.get('/totalPendingLeaveCount', auth, getPendingLeavesCount);
 
 export default router;

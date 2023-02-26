@@ -1,0 +1,61 @@
+.payslip {
+    background: #fff;
+    padding: 20px;
+}
+.payslip .title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 22px;
+}
+.payslip .company {
+    display: flex;
+    align-items: center;
+}
+.payslip .company img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.payslip .company .details {
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #686565;
+}
+.payslip .employee-details ul {
+    list-style: none;
+    padding: 0;
+}
+.payslip .employee-details ul li label {
+    font-size: 15px;
+}
+.payslip .employee-details .name {
+    font-size: 15px;
+    width: 40%;
+}
+.payslip .sub-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: #686565;
+    text-decoration: underline;
+}
+.payslip .payment-details table {
+    border-collapse: collapse;
+    width: 50%;
+    font-size: 14px;
+}
+.payslip .payment-details table th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+    text-align: center;
+}
+.payslip .payment-details table td {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    padding: 2px 10px;
+    border-bottom: 0;
+}
+.payslip .payment-details table tfoot td {
+    border: 1px solid black;
+}

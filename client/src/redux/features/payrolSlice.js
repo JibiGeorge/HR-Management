@@ -2,18 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const PayrolSlice = createSlice({
     name: 'payrol',
-    initialState:{
+    initialState: {
         generatedPayrolData: [],
         paidPayrolLiist: []
     },
-    reducers:{
-        setGeneratedPayrolData:(state,data)=>{
+    reducers: {
+        setGeneratedPayrolData: (state, data) => {
             state.generatedPayrolData = data.payload;
         },
-        setPaidPayrolData:(state,data)=>{
+        setPaidPayrolData: (state, data) => {
             state.paidPayrolLiist = data.payload;
         }
     }
 })
 
-export const {setGeneratedPayrolData,setPaidPayrolData} = PayrolSlice.actions
+export const { setGeneratedPayrolData, setPaidPayrolData } = PayrolSlice.actions

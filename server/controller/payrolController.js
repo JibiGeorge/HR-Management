@@ -71,6 +71,7 @@ export const payrolAutoGenerate = async () => {
                 if (salaryType === "Monthly") {
                     const perdaySalary = totalSalary / 30;
                     const totalWorkingDays = 30 - totalLeaves;
+                    const leaveDeduction = totalLeaves * perdaySalary;
                     const grossSalary = perdaySalary * totalWorkingDays;
                     if (taxType === "EPF") {
                         const EPF = (basicSalary * 12) / 100;
@@ -80,7 +81,12 @@ export const payrolAutoGenerate = async () => {
                         const obj = {
                             employeeName: empID,
                             salary: totalSalary,
+                            basicSalary: basicSalary,
+                            houseRent: salaryData[0].salaryDetails?.houseRent,
+                            medical: salaryData[0].salaryDetails?.medical,
+                            conveyance: salaryData[0].salaryDetails?.conveyance,
                             totalLeaves: totalLeaves,
+                            leaveDeduction: Math.round(leaveDeduction),
                             grossSalary: Math.round(grossSalary),
                             employeePF: Math.round(EPF),
                             employeerPF: Math.round(EPF),
@@ -121,8 +127,12 @@ export const payrolAutoGenerate = async () => {
                         const obj = {
                             employeeName: empID,
                             salary: Math.round(totalSalary),
+                            houseRent: salaryData[0].salaryDetails?.houseRent,
+                            medical: salaryData[0].salaryDetails?.medical,
+                            conveyance: salaryData[0].salaryDetails?.conveyance,
                             totalLeaves: Math.round(totalLeaves),
                             grossSalary: Math.round(grossSalary),
+                            leaveDeduction: Math.round(leaveDeduction),
                             TDSAmount: Math.round(TDSAmount),
                             netPayable: Math.round(netPayable),
                             status: 'UnPaid'
@@ -247,6 +257,50 @@ export const getPaidPayrolData = async (req, res) => {
             }
         ]);
         res.status(200).json({ success: true, payrolData });
+    } catch (error) {
+        res.json({ message: 'Internal Server Error' });
+    }
+}
+
+export const getEmpPayrolData = async (req, res) => {
+    const { employee, month } = req.body;
+    let newmonth = month.split('-');
+    newmonth = newmonth[1] + '-' + newmonth[0];
+    try {
+        const data = await PayrolModel.aggregate([
+            { $match: { month: newmonth } },
+            { $unwind: '$payrolData' },
+            { $match: { $and: [{ 'payrolData.employeeName': mongoose.Types.ObjectId(employee) }, { 'payrolData.status': 'Paid' }] } },
+            {
+                $lookup: {
+                    from: 'employees',
+                    foreignField: '_id',
+                    localField: 'payrolData.employeeName',
+                    as: 'employeeDetails'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'departments',
+                    foreignField: '_id',
+                    localField: 'employeeDetails.department',
+                    as: 'department'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'designations',
+                    foreignField: '_id',
+                    localField: 'employeeDetails.designation',
+                    as: 'designation'
+                }
+            }
+        ])
+        if (data.length > 0) {
+            res.status(200).json({ success: true, data })
+        } else {
+            res.status(200).json({ message: 'Not Data Found' })
+        }
     } catch (error) {
         res.json({ message: 'Internal Server Error' });
     }

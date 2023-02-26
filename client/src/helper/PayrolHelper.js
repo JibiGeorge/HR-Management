@@ -61,3 +61,19 @@ export const getAllPaidPayrolData = async (token) => {
         return { message: 'Connection Error' };
     }
 }
+
+export const getEmpPayrolData = async (token, filterData) => {
+    try {
+        const result = await instance({
+            url: '/api/payrol/getEmpData',
+            method: 'POST',
+            data: filterData,
+            headers: {
+                Authorization: token
+            }
+        })
+        return result.data;
+    } catch (error) {
+        return { message: 'Connection Error' };
+    }
+}

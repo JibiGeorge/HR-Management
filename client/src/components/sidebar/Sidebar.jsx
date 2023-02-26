@@ -152,6 +152,7 @@ function Sidebar() {
                                 <Link className="link_name" >Payrol</Link>
                             </li>
                             <li><Link to='/payrol'>Payrol List</Link></li>
+                            <li><Link to='/payslip'>Pay Slip</Link></li>
                         </ul>
                     </li>
                 }

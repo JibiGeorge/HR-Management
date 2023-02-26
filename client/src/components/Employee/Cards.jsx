@@ -92,7 +92,7 @@ function Cards() {
                                         {(role === 'Admin' || role === 'HR') &&
                                             <Link to='/employeeDetails' state={{ id: values._id }}>{values.firstName} {values.lastName}</Link>
                                         }
-                                        {role === 'Employee' && 
+                                        {role === 'Employee' &&
                                             <p >{values.firstName} {values.lastName}</p>
 
                                         }

@@ -1,7 +1,7 @@
 import axios from "axios";
 import instance from "../utils/serverConfig";
 
-export const updateDetails = async (token,values)=>{
+export const updateDetails = async (token, values) => {
     const data = new FormData();
     data.append('file', values.logo)
     data.append('upload_preset', 'opkf0ic5')
@@ -10,7 +10,6 @@ export const updateDetails = async (token,values)=>{
         const upload = await axios.post('https://api.cloudinary.com/v1_1/dq9kanqi3/image/upload', data)
         if (upload.status === 200) {
             values.logo = upload.data.url;
-            console.log(values.logo);
             const update = await instance({
                 url: '/api/companyProfile/update',
                 method: 'PUT',
@@ -20,15 +19,15 @@ export const updateDetails = async (token,values)=>{
                 }
             })
             return update.data;
-        }else{
-            return {message: 'Image Upload Failed'};
+        } else {
+            return { message: 'Image Upload Failed' };
         }
     } catch (error) {
-        return {message: 'Server Connection Failed'};
+        return { message: 'Server Connection Failed' };
     }
 }
 
-export const getCompanyProfile = async(token)=>{
+export const getCompanyProfile = async (token) => {
     try {
         const profileData = await instance({
             url: '/api/companyProfile/getDetails',
@@ -39,7 +38,6 @@ export const getCompanyProfile = async(token)=>{
         })
         return profileData.data;
     } catch (error) {
-        console.log(error.message);
-        return {message: 'Server Connection Failed'}        
+        return { message: 'Server Connection Failed' }
     }
 }

@@ -16,7 +16,6 @@ import ChangePassword from './ChangePassword';
 function Profile() {
     const location = useLocation();
     let empID = location.state?.id;
-    console.log();
     const { departmentDetails } = useSelector(state => state.department)
     const { designationDetails } = useSelector(state => state.designation)
     const { loading } = useSelector(state => state.alerts);
@@ -424,8 +423,12 @@ function Profile() {
                                                     onChange={handleChange}>
                                                     <option value="">Select Role</option>
                                                     <option value="Employee">Employee</option>
-                                                    <option value="HR">HR</option>
-                                                    <option value="Admin">Admin</option>
+                                                    {role === 'Admin' &&
+                                                        <>
+                                                            <option value="HR">HR</option>
+                                                            <option value="Admin">Admin</option>
+                                                        </>
+                                                    }
                                                 </select>
                                             </div>
                                         </div>

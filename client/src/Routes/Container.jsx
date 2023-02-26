@@ -18,6 +18,7 @@ import LeaveApplication from '../pages/LeaveApplication'
 import LeaveType from '../pages/LeaveType'
 import NoticePage from '../pages/NoticePage'
 import PayrolPage from '../pages/PayrolPage'
+import Payslip from '../pages/Payslip'
 import Profile from '../pages/Profile'
 import SettingsPage from '../pages/SettingsPage'
 import Protect from '../protectorRoute/Protect'
@@ -47,6 +48,7 @@ const Container = () => {
                     <Route exact path='/notice' element={<NoticePage />} />
                     <Route exact path='/settings' element={<SettingsPage />} />
                     <Route exact path='/payrol' element={<PayrolPage />} />
+                    <Route exact path='/payslip' element={<Payslip />} />
                 </Route>
 
             </Routes>
