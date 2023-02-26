@@ -8,7 +8,6 @@ export async function loginUser({ username, password }) {
             method: 'post',
             data: {username, password}
         })
-        data.loggedIn = true;
         localStorage.setItem('usertoken', data.UserToken)
         return data;
     } catch (error) {

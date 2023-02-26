@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './Login.css'
 import { useFormik } from 'formik'
@@ -8,6 +8,7 @@ import { setUserDetails } from '../../redux/features/userLogin'
 import toast, { Toaster } from 'react-hot-toast';
 import { getCompanyProfile } from '../../helper/CompanySettingsHelper';
 import { setCompanyProfileData } from '../../redux/features/companyProfileSlice';
+import { loginSchema } from '../../schemas/loginSchema';
 
 function Login() {
 
@@ -20,12 +21,13 @@ function Login() {
       username: '',
       password: ''
     },
+    validationSchema: loginSchema,
     onSubmit: async values => {
       setBtnLoading(true);
       const res = await loginUser(values)
       if (res.loggedIn) {
         const data = await getCompanyProfile(res.UserToken);
-        if(data.success){
+        if (data.success) {
           dispatch(setCompanyProfileData(data.details));
         }
         dispatch(setUserDetails(res));
@@ -54,33 +56,36 @@ function Login() {
         position="top-right"
         reverseOrder={false}
       />
-        <div className="login">
-          <div className="conatiner-fluid">
-            <div className="wrapper">
-              <div className="title">
-                <h3>LOGIN</h3>
+      <div className="login">
+        <div className="forms-container">
+          <div className="login-form">
+            <form className="form">
+              <h2 className='title'>LOGIN</h2>
+              <span>{formik.errors.username && formik.touched.username && <span className='error'>{formik.errors.username}</span>}</span>
+              <div className="input-field">
+                <i className="fas fa-user"></i>
+                <input type="text" placeholder='Username' id='username' {...formik.getFieldProps('username')} />
               </div>
-              <div>
-                <form>
-                  <div className="row">
-                    <i className="fa-sold fa-user"></i>
-                    <input type="text" placeholder='User Name' {...formik.getFieldProps('username')} />
-                  </div>
-                  <div className="row">
-                    <i className="fa-solid fa-lock"></i>
-                    <input type="password" placeholder='Password' {...formik.getFieldProps('password')} />
-                  </div>
-                  <div className="row">
-                    <button className='button' type="submit" onClick={formik.handleSubmit}>
-                      {btnLoading && 'Checking...'}
-                      {!btnLoading && 'LOGIN'}
-                      </button>
-                  </div>
-                </form>
+              <span>{formik.errors.password && formik.touched.password && <span className='error'>{formik.errors.password}</span>}</span>
+              <div className="input-field">
+                <i className="fas fa-lock"></i>
+                <input type="password" placeholder='Password' id='password' {...formik.getFieldProps('password')} />
               </div>
+              <button type="submit" className='btn solid' onClick={formik.handleSubmit} >
+                {btnLoading && 'Checking...'}
+                {!btnLoading && 'LOGIN'}</button>
+            </form>
+          </div>
+        </div>
+        <div className="panels-container">
+          <div className="panel">
+            <div className="content">
+              <h3>High Range Coffee Curing Pvt. Ltd.</h3>
+              <p>HR Management</p>
             </div>
           </div>
         </div>
+      </div>
     </>
   )
 }

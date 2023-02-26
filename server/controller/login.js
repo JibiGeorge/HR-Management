@@ -10,20 +10,21 @@ export const login = (req, res) => {
                 bcrypt.compare(password, user.password)
                     .then(passwordCheck => {
                         if (!passwordCheck)
-                            return res.status(400).json({ error: 'Don\'t have Password' });
+                            return res.json({ error: 'Account Not Exist' });
                         // Create JWT Token
                         const UserToken = jwt.sign({
                             userId: user._id,
                             username: user.username
                             // eslint-disable-next-line no-undef
-                        }, process.env.JWT_TOKEN, { expiresIn: '1h' });
+                        }, process.env.JWT_TOKEN, { expiresIn: '24h' });
 
                         return res.status(200).json({
                             msg: 'Login Successfull...!',
                             username: user.username,
                             UserToken,
                             role: user.role,
-                            _id: user.userID
+                            _id: user.userID,
+                            loggedIn:true
                         });
                     })
                     // eslint-disable-next-line no-unused-vars
@@ -33,7 +34,7 @@ export const login = (req, res) => {
             })
             // eslint-disable-next-line no-unused-vars
             .catch(error => {
-                return res.send({ error: 'Username not found' });
+                return res.json({ error: 'Username not found' });
             });
     } catch (error) {
         res.json({ message: "Internal Server Error...!" });
@@ -41,7 +42,7 @@ export const login = (req, res) => {
 };
 
 export const verifyToken = async (req, res) => {
-    let token = req.body.user;
+    let token = req.body.token;
     try {
         // eslint-disable-next-line no-undef
         const decoded = await jwt.verify(token, process.env.JWT_TOKEN);
@@ -52,10 +53,10 @@ export const verifyToken = async (req, res) => {
                 if (user) {
                     return res.status(200).json({ user: true });
                 } else {
-                    return res.status(400).json({ user: false });
+                    return res.json({ user: false });
                 }
             });
     } catch (error) {
-        return res.status(401).json({ user: false })
+        return res.json({ user: false })
     }
 };

@@ -5,11 +5,11 @@ import instance from '../utils/serverConfig'
 
 
 const authUser = async () => {
-  const user = localStorage.getItem('usertoken')
+  const token = localStorage.getItem('usertoken')
   const checkToken = await instance({
     url: '/api/verifyToken',
     method: 'post',
-    data: { user }
+    data: { token }
   })
   return checkToken.data.user
 }
