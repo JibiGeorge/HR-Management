@@ -116,7 +116,7 @@ export const getAttendanceList = async (req, res) => {
     try {
         const data = await AttendanceModel.aggregate([
             { $unwind: '$attendance' },
-            {$unwind: '$attendance.attendanceDetails'},
+            { $unwind: '$attendance.attendanceDetails' },
             {
                 $lookup: {
                     from: 'employees',
@@ -124,6 +124,9 @@ export const getAttendanceList = async (req, res) => {
                     foreignField: '_id',
                     as: 'userDetails'
                 }
+            },
+            {
+                $sort: { 'attendance.attendanceDetails.date': -1 }
             }
         ])
         res.status(200).json({ data, success: true })
@@ -133,11 +136,11 @@ export const getAttendanceList = async (req, res) => {
 }
 
 export const deleteAttendance = async (req, res) => {
-    const {empID} = req.body
+    const { empID } = req.body
     try {
-        await AttendanceModel.updateMany({'attendance.employeeID':empID}, {
-            $pull: {'attendance.$.attendanceDetails': {_id:req.params.id}}
-        }).then(()=>{
+        await AttendanceModel.updateMany({ 'attendance.employeeID': empID }, {
+            $pull: { 'attendance.$.attendanceDetails': { _id: req.params.id } }
+        }).then(() => {
             res.status(200).json({ success: true, message: 'Deleted Successfully..!' })
         })
     } catch (error) {

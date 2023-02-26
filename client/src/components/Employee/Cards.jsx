@@ -84,9 +84,9 @@ function Cards() {
                             <div className="col-md-4 col-sm-6 col-lg-4 col-xl-3">
                                 <div className="profile-widget">
                                     <div className="profile-img">
-                                        <a href="" className='avatar'>
+                                        <div className='avatar'>
                                             <img src={values.image} alt="" />
-                                        </a>
+                                        </div>
                                     </div>
                                     <h4 className="user-name mt-10 mb-0 text-ellipsis">
                                         {(role === 'Admin' || role === 'HR') &&

@@ -86,7 +86,8 @@ export const getAllApplications = async (req, res) => {
                     foreignField: '_id',
                     as: 'employeeDetails'
                 }
-            }
+            },
+            { $sort: { 'leaveApplications.applyDate': -1 } }
         ]);
         if (applications.length > 0) {
             res.status(200).json({ success: true, applications });

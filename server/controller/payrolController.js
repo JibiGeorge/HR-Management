@@ -180,6 +180,9 @@ export const getGeneratedPayrol = async (req, res) => {
                     foreignField: '_id',
                     as: 'employeeDetails'
                 }
+            },
+            {
+                $sort: { month: -1 }
             }
         ]);
         res.status(200).json({ success: true, payrolData });
@@ -254,6 +257,9 @@ export const getPaidPayrolData = async (req, res) => {
                     foreignField: '_id',
                     as: 'employeeDetails'
                 }
+            },
+            {
+                $sort: { month: -1 }
             }
         ]);
         res.status(200).json({ success: true, payrolData });

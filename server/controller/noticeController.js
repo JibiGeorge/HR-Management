@@ -55,7 +55,7 @@ export const addNotice = async (req, res) => {
 
 export const getAllNotices = async (req, res) => {
     try {
-        const data = await NoticeModel.find({});
+        const data = await NoticeModel.find().sort({ date: -1 })
         res.status(200).json({ success: true, data })
     } catch (error) {
         res.json({ message: 'Internal Server Connection Failed' });
@@ -121,16 +121,16 @@ export const sendEmail = async (req, res) => {
     }
 }
 
-export const deleteNotice = async (req,res)=>{
+export const deleteNotice = async (req, res) => {
     const noticeId = req.params?.id;
     try {
-        await NoticeModel.findOneAndDelete({_id:noticeId})
-        .then(()=>{
-            res.status(200).json({success:true,message: 'Deleted Successfully'})
-        })
-        .catch((error)=>{
-            res.json({message: 'Failed to Delete Notice'})
-        })
+        await NoticeModel.findOneAndDelete({ _id: noticeId })
+            .then(() => {
+                res.status(200).json({ success: true, message: 'Deleted Successfully' })
+            })
+            .catch((error) => {
+                res.json({ message: 'Failed to Delete Notice' })
+            })
     } catch (error) {
         res.json({ message: 'Internal Server Connection Failed' });
     }

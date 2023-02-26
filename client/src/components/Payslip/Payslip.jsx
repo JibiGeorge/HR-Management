@@ -1,6 +1,22 @@
 import React from 'react'
+import jsPDF from 'jspdf'
 
 const Payslip = ({ filtererdResult, copmpanyData, loading }) => {
+
+    const exportPDF = () => {
+        console.log('exporting....');
+        const report = new jsPDF('landscape', 'pt', 'a4');
+        report.html(document.querySelector('.payslip'), {
+            x: 15,
+            y: 15,
+            html2canvas: {
+                scale: .6
+            },
+            callback: () => {
+                report.save('payslip.pdf');
+            }
+        })
+    }
     return (
         <>
             {!loading &&
@@ -130,6 +146,7 @@ const Payslip = ({ filtererdResult, copmpanyData, loading }) => {
                     </div>
                 </div>
             }
+            <button className='btn btn-primary' onClick={exportPDF}>Export</button>
         </>
     )
 }
