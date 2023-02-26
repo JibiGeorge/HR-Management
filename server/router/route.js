@@ -1,7 +1,7 @@
 import express from 'express';
 import { addAssets, addAssetsCategory, deleteAssets, deleteAssetsCategory, getAllAssetsCategories, getAssetCategoryData, getAssetData, getAssets, updateAsset, updateCategory } from '../controller/assetsController.js';
 import { addAttendance, deleteAttendance, getAttendanceData, getAttendanceList, getPunchedData, punchIn, punchOut, updateAttendance } from '../controller/attendanceController.js';
-import { getCompanyDetails, updateCompanyDetails } from '../controller/companyDetails.js';
+import { getCompanyDetails, getIcon, updateCompanyDetails } from '../controller/companyDetails.js';
 import { changePassword, generateCredentials, reGenerateCredentials } from '../controller/credentialsController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
 import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
@@ -125,6 +125,7 @@ router.delete('/notice/delete/:id', auth, deleteNotice);
 // Company Details
 router.put('/companyProfile/update', auth, updateCompanyDetails);
 router.get('/companyProfile/getDetails', auth, getCompanyDetails);
+router.get('/companyProfile/getIcon', getIcon);
 
 // payrol
 router.get('/payrol/getGeneratedPayrol', auth, getGeneratedPayrol);

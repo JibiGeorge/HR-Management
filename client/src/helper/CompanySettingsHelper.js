@@ -41,3 +41,15 @@ export const getCompanyProfile = async (token) => {
         return { message: 'Server Connection Failed' }
     }
 }
+
+export const getCompanyIcon = async () => {
+    try {
+        const icon = await instance({
+            url: '/api/companyProfile/getIcon',
+            method: 'GET'
+        })
+        return icon.data
+    } catch (error) {
+        return { message: 'Server Connection Failed' }
+    }
+}

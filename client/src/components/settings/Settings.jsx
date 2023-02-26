@@ -10,16 +10,16 @@ import './Style.css'
 
 const Settings = () => {
   const { userDetails } = useSelector(state => state.user);
-  const {companyProfileData} = useSelector(state => state.companyProfile);
+  const { companyProfileData } = useSelector(state => state.companyProfile);
   const token = userDetails.UserToken;
   const dispatch = useDispatch();
-  useEffect(()=>{
-    (async()=>{
+  useEffect(() => {
+    (async () => {
       try {
         const data = await getCompanyProfile(token);
-        if(data.success){
+        if (data.success) {
           dispatch(setCompanyProfileData(data.details));
-        }else{
+        } else {
           toast.error(data.message, {
             style: {
               border: '1px solid #713200',
@@ -47,11 +47,11 @@ const Settings = () => {
         });
       }
     })();
-  },[]);
+  }, []);
   return (
     <div className="section-body">
-        <PageHeader/>
-        <Form companyProfileData={companyProfileData} />
+      <PageHeader />
+      <Form companyProfileData={companyProfileData} />
     </div>
   )
 }

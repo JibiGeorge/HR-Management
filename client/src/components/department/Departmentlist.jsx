@@ -13,7 +13,7 @@ function Departmentlist() {
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.alerts);
     const { departmentDetails } = useSelector(state => state.department)
-    const {userDetails} = useSelector(state => state.user);
+    const { userDetails } = useSelector(state => state.user);
 
     const token = userDetails.UserToken;
 
@@ -33,7 +33,7 @@ function Departmentlist() {
     // Handle Delete Department
     const handleDelete = async (depId) => {
         try {
-            const result = await deleteDepartment(depId,token);
+            const result = await deleteDepartment(depId, token);
             if (result.deleted) {
                 dispatch(deleteDepartmentData(depId))
                 toast.success('Deleted Successfully...!', {
@@ -84,7 +84,7 @@ function Departmentlist() {
     const handleDeptUpdate = async () => {
         try {
             let deptID = document.getElementById('deptUpdateID').value;
-            const res = await updateDepartment(deptID, updatedeptValue,token)
+            const res = await updateDepartment(deptID, updatedeptValue, token)
             if (res.updated) {
                 toast.success(res.message, {
                     style: {
@@ -137,13 +137,13 @@ function Departmentlist() {
         },
         {
             name: "Department",
-            selector: row => row.department,
+            selector: row => row?.department,
             sortable: true
         },
         {
             name: "Action",
-            cell: (row) => ([<button className='btn editBtn' data-bs-toggle="modal" data-bs-target="#updateDepartment" onClick={() => handleEdit(row._id, row.department)}><i class="las la-edit"></i></button>,
-            <button className='btn deleteBtn' onClick={() => handleDelete(row._id)}><i class="las la-trash"></i></button>])
+            cell: (row) => ([<button className='btn editBtn' data-bs-toggle="modal" data-bs-target="#updateDepartment" onClick={() => handleEdit(row?._id, row?.department)}><i class="las la-edit"></i></button>,
+            <button className='btn deleteBtn' onClick={() => handleDelete(row?._id)}><i class="las la-trash"></i></button>])
         }
     ]
     return (
