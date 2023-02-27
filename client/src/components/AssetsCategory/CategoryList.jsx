@@ -69,10 +69,6 @@ const CategoryList = () => {
 
     const column = [
         {
-            name: '#',
-            selector: 'serial'
-        },
-        {
             name: 'Category',
             selector: row => row.categoryName,
         },

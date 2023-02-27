@@ -30,7 +30,7 @@ function Designationlist() {
                     setFilteredDesignation(data.data);
                     dispatch(hideLoading());
                 } else {
-                    toast.error('Internal Server Error....!', {
+                    toast.error(data.message, {
                         style: {
                             border: '1px solid #713200',
                             padding: '16px',
@@ -41,6 +41,7 @@ function Designationlist() {
                             secondary: '#FFFAEE',
                         },
                     });
+                    dispatch(hideLoading());
                 }
             } catch (error) {
                 toast.error('Internal Server Error....!', {
@@ -54,17 +55,13 @@ function Designationlist() {
                         secondary: '#FFFAEE',
                     },
                 });
+                dispatch(hideLoading());
             }
         })();
     }, []);
 
-    // designationDetails.forEach((photo, index) => { photo.serial = index + 1; });
     //   Data Tables
     const column = [
-        {
-            name: '#',
-            selector: 'serial'
-        },
         {
             name: "Designation",
             selector: row => row?.designation,

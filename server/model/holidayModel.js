@@ -3,7 +3,8 @@ import { model, Schema } from "mongoose";
 const HolidaySchema = Schema({
     nameOfTheHoliday: {
         type: String,
-        require: true
+        require: true,
+        trim: true
     },
     startDate: {
         type: String,

@@ -3,11 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 export const assetsSlice = createSlice({
     name: "assets",
     initialState: {
-        assets: null,
+        assets: [],
     },
     reducers: {
         setAssets: (state,data) => {
-            console.log('dadad',data);
             state.assets = data.payload
         }
     }

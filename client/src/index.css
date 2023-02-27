@@ -11,6 +11,13 @@ a {
 p{
     margin: 0;
 }
+.start-loading{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(255, 255, 255);
+}
 
 /* Edit and Delete Button */
 .editBtn{

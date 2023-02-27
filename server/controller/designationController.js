@@ -1,7 +1,11 @@
 import designationModel from "../model/designation.js";
 
 export const addDesignation = async (req, res) => {
-    const { designationData } = req.body;
+    let { designationData } = req.body;
+    designationData.designation = designationData?.designation
+        .split(/\s+/) // split by one or more whitespace characters
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
     try {
         const exist = await designationModel.findOne({ designation: designationData.designation })
         if (exist) {
@@ -16,7 +20,7 @@ export const addDesignation = async (req, res) => {
             })
         }
     } catch (error) {
-        res.status(401).json({ error: 'Internal Server Error' })
+        res.json({ error: 'Internal Server Error' })
     }
 }
 
@@ -25,7 +29,7 @@ export const getAllDesignation = async (req, res) => {
         const data = await designationModel.find().populate('departmentId');
         res.status(200).json({ success: true, data })
     } catch (error) {
-        res.status(401).json({ error: 'Internal Server Error' })
+        res.json({ error: 'Internal Server Error' })
     }
 }
 
@@ -36,9 +40,9 @@ export const deleteDesignation = async (req, res) => {
         if (response) {
             res.status(200).json({ success: true, message: "Deleted Successfully....!" })
         } else {
-            res.status(401).json({ success: false, message: "Not Deleted.....!" })
+            res.json({ success: false, message: "Not Deleted.....!" })
         }
     } catch (error) {
-        res.status(401).json({ message: "Internal Server Error" })
+        res.json({ message: "Internal Server Error" })
     }
 }

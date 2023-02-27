@@ -10,31 +10,30 @@ import EditAssets from './EditAssets';
 
 const AssetsList = () => {
     const { loading } = useSelector(state => state.alerts);
-    const {assets} = useSelector(state => state.assets);
-    const {userDetails} = useSelector(state => state.user);
+    const { assets } = useSelector(state => state.assets);
+    const { userDetails } = useSelector(state => state.user);
     const dispatch = useDispatch();
-    
-    const token = userDetails.UserToken;
-    
-    useEffect(()=>{
-        (async()=>{
-            const assets = await getAssets(token)
-            dispatch(setAssets(assets?.assets))
-        })();
-    },[]);
-
     const [id, setId] = useState('')
     const [deleteModal, setDeleteModal] = useState(false)
     const [updateModal, setUpdateModal] = useState(false)
     const closeDeleteModal = () => setDeleteModal(false)
     const closeUpdateModal = () => setUpdateModal(false)
+    const token = userDetails.UserToken;
 
-    const handleDelete = async (id)=>{
+    useEffect(() => {
+        (async () => {
+            const assets = await getAssets(token);
+            dispatch(setAssets(assets?.assets))
+        })();
+    }, []);
+
+
+    const handleDelete = async (id) => {
         setId(id)
         setDeleteModal(true)
     }
 
-    const handleEdit = async (id) =>{
+    const handleEdit = async (id) => {
         setId(id)
         setUpdateModal(true)
     }
@@ -69,6 +68,12 @@ const AssetsList = () => {
             selector: row => row?.inStock
         },
         {
+            name: 'Purchased On',
+            selector: (row) => new Date(row?.purchasedOn).toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'short', year: 'numeric'
+            })
+        },
+        {
             name: "Action",
             cell: (row) => ([<button className='btn editBtn' onClick={() => handleEdit(row._id)}><i class="las la-edit"></i></button>,
             <button className='btn deleteBtn' onClick={() => handleDelete(row._id)} ><i class="las la-trash"></i></button>])
@@ -81,7 +86,7 @@ const AssetsList = () => {
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>}
-            {!loading && 
+            {!loading &&
                 <DataTable
                     columns={column}
                     data={assets}
@@ -102,8 +107,8 @@ const AssetsList = () => {
                 />
             }
 
-            {deleteModal && <DeleteConfirmation closeModal={closeDeleteModal} id={id} /> }
-            {updateModal && <EditAssets closeModal={closeUpdateModal} id={id}/> }
+            {deleteModal && <DeleteConfirmation closeModal={closeDeleteModal} id={id} />}
+            {updateModal && <EditAssets closeModal={closeUpdateModal} id={id} />}
         </>
     )
 }

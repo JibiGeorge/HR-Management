@@ -4,7 +4,8 @@ const assetsCategorySchema = Schema({
     categoryName: {
         type: String,
         unique: true,
-        require: true
+        require: true,
+        trim:true
     }
 })
 

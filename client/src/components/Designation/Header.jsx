@@ -23,6 +23,7 @@ function PageHeader() {
           const departmentData = await getAllDepartments(token);
           setDepartment(departmentData)
         } catch (error) {
+          console.log('erroe',error.message);
         }
       })();
     } catch (error) {
@@ -112,7 +113,7 @@ function PageHeader() {
                         onChange={e => setDesignationData({ ...designationData, departmentId: e.target.value })}
                       >
                         <option value="" selected>Select A Department</option>
-                        {department.map(res => {
+                        {department?.map(res => {
                           return (
                             <option value={res._id}>{res.department}</option>
                           )

@@ -4,7 +4,8 @@ const LeaveTypeSchema = Schema({
     leaveType: {
         type: String,
         require: true,
-        unique: true
+        unique: true,
+        trim: true
     }
 })
 

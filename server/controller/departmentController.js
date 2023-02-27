@@ -2,6 +2,10 @@ import departmentModel from "../model/department.js";
 
 export const addDepartment = async (req, res) => {
     let { department } = req.body;
+    department = department
+        .split(/\s+/) // split by one or more whitespace characters
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
     try {
         const exist = await departmentModel.findOne({ department: department });
         if (exist) {
@@ -24,7 +28,7 @@ export const getDepartments = async (req, res) => {
         const deptList = await departmentModel.find();
         res.status(200).json(deptList);
     } catch (error) {
-        res.status(401).json({ message: "Internal Server Error...!" });
+        res.json({ message: "Internal Server Error...!" });
     }
 }
 
@@ -35,12 +39,13 @@ export const deleteDeparatment = async (req, res) => {
             res.status(200).json({ deleted: true })
         })
     } catch (error) {
-        res.status(401).json({ message: "Internal Server Error...!" });
+        res.json({ message: "Internal Server Error...!" });
     }
 }
 
 export const updateDepartment = async (req, res) => {
     let { id, text } = req.query;
+    text = text.split(/\s+/).map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
     try {
         await departmentModel.findOneAndUpdate({ _id: id }, { department: text }).then((response) => {
             res.status(200).json({ updated: true, message: "Successfully Updated" })

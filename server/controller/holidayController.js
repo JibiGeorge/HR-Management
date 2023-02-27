@@ -1,6 +1,11 @@
 import Holiday from "../model/holidayModel.js";
 
+const convertCamelCase = (values) => {
+    return values.split(/\s+/).map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+}
+
 export const addHoliday = async (req, res) => {
+    req.body.nameOfTheHoliday = convertCamelCase(req.body.nameOfTheHoliday);
     const { nameOfTheHoliday, startDate, endDate } = req.body;
     const oneDay = 24 * 60 * 60 * 1000;
     const firstDate = new Date(startDate);
@@ -55,6 +60,7 @@ export const getHolidayData = async (req, res) => {
 }
 
 export const updateHolidayData = async (req, res) => {
+    req.body.nameOfTheHoliday = convertCamelCase(req.body.nameOfTheHoliday);
     const { _id, nameOfTheHoliday, startDate, endDate } = req.body;
     const oneDay = 24 * 60 * 60 * 1000;
     const firstDate = new Date(startDate);

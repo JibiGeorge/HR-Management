@@ -7,7 +7,8 @@ const designationSchema = Schema({
     },
     designation: {
         type: String,
-        unique: true
+        unique: true,
+        trim: true
     }
 });
 

@@ -79,6 +79,7 @@ function Departmentlist() {
     const handleEdit = (depId, department) => {
         document.getElementById('deptUpdateValue').value = department
         document.getElementById('deptUpdateID').value = depId
+        setUpdateDeptValue(department);
     }
 
     const handleDeptUpdate = async () => {
@@ -128,13 +129,8 @@ function Departmentlist() {
         }
     }
 
-    // departmentDetails.forEach((photo, index) => { photo.serial = index + 1; });
     // Data Table Customization
     const column = [
-        {
-            name: '#',
-            selector: 'serial'
-        },
         {
             name: "Department",
             selector: row => row?.department,

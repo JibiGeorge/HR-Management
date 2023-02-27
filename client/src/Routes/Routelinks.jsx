@@ -6,11 +6,11 @@ import Container from './Container'
 
 function Routelinks() {
     return (
-            <Routes>
-                <Route exact path="/" element={<Login />} />
-                <Route exact path='/hr/*' element={<Container/>} /> 
-                <Route path='*' element={<PageNotFound/>} />
-            </Routes>
+        <Routes>
+            <Route exact path="/" element={<Login />} />
+            <Route exact path='/hr/*' element={<Container />} />
+            <Route path='*' element={<PageNotFound />} />
+        </Routes>
     )
 }
 

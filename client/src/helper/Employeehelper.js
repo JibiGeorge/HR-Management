@@ -34,10 +34,12 @@ export const addEmployee = async (values, token) => {
                     Authorization: token
                 }
             })
-            return response;
+            return response.data;
         } else {
+            return {message: 'Uplodaing failed'}
         }
     } catch (error) {
+        return {message:error.message}
     }
 }
 

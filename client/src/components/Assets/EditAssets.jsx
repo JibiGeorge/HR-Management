@@ -2,13 +2,13 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAllAssetsCategory, getAssetData, getAssets, updateAsset } from '../../helper/AssetsHelper'
 import { setAssets } from '../../redux/features/assetsSlice'
 
 const EditAssets = ({ closeModal, id }) => {
-    const {userDetails} = useSelector(state => state.user);
-    
+    const { userDetails } = useSelector(state => state.user);
+
     const token = userDetails.UserToken;
     const [assetData, setAssetData] = useState('')
     const [assetCategory, setAssetCategory] = useState([])
@@ -16,7 +16,7 @@ const EditAssets = ({ closeModal, id }) => {
     useEffect(() => {
         try {
             (async () => {
-                const assetData = await getAssetData(id,token);
+                const assetData = await getAssetData(id, token);
                 if (assetData.success) {
                     const assetCategory = await getAllAssetsCategory(token)
                     setAssetCategory(assetCategory.allAssetsCategories)
@@ -48,11 +48,11 @@ const EditAssets = ({ closeModal, id }) => {
                 },
             });
         }
-    }, [])
+    }, []);
 
     const updateAssets = async () => {
         try {
-            const update = await updateAsset(assetData,token)
+            const update = await updateAsset(assetData, token)
             if (update.updated) {
                 const assets = await getAssets(token)
                 dispatch(setAssets(assets.assets))
@@ -143,6 +143,14 @@ const EditAssets = ({ closeModal, id }) => {
                                         <label>In Stock</label>
                                         <input type="number" className='form-control' id='inStock'
                                             value={assetData.inStock} onChange={(e) => setAssetData({ ...assetData, inStock: e.target.value })} />
+                                    </div>
+                                </div>
+                                <div className="col-sm-6">
+                                    <div className="form-group">
+                                        <label>In Stock</label>
+                                        <input type="date" className='form-control' id='purchasedOn'
+                                            defaultValue={assetData?.purchasedOn ?
+                                                new Date(assetData?.purchasedOn).toISOString().slice(0, 10) : ''} onChange={(e) => setAssetData({ ...assetData, purchasedOn: e.target.value })} />
                                     </div>
                                 </div>
                                 <div className="col-sm-12">

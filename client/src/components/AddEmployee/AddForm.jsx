@@ -27,8 +27,8 @@ function AddForm({empCode}) {
         dispatch(showLoading())
         try {
             const result = await addEmployee(values, token);
-            if (result.data.success) {
-                toast.success(result.data.message, {
+            if (result.success) {
+                toast.success(result.message, {
                     style: {
                         border: '1px solid #713200',
                         padding: '16px',
@@ -42,7 +42,7 @@ function AddForm({empCode}) {
                 actions.resetForm();
                 navigate('/hr/employee')
             } else {
-                toast.error(result.data.message, {
+                toast.error(result.message, {
                     style: {
                         border: '1px solid #713200',
                         padding: '16px',
@@ -168,7 +168,7 @@ function AddForm({empCode}) {
                                         </label>
                                     </div>
                                     <div className='select '>
-                                        <input type="text" placeholder='Enter Employee Code' disabled
+                                        <input type="number" placeholder='Enter Employee Code' disabled
                                             value={values.empCode}
                                             onChange={handleChange} id="empCode" className={errors.empCode && touched.empCode ? "input-error" : ""} />
                                     </div>
@@ -305,7 +305,7 @@ function AddForm({empCode}) {
                                         </label>
                                     </div>
                                     <div className='select '>
-                                        <input type="text" id='contactNumber' placeholder='Enter Contact Number'
+                                        <input type="number" id='contactNumber' placeholder='Enter Contact Number'
                                             value={values.contactNumber}
                                             onChange={handleChange} className={errors.contactNumber && touched.contactNumber ? "input-error" : ""} />
                                     </div>

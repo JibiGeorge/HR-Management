@@ -2,13 +2,23 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
-import { getCompanyIcon, getCompanyProfile } from './helper/CompanySettingsHelper';
+import { getCompanyIcon } from './helper/CompanySettingsHelper';
 import { setCompanyIcon } from './redux/features/companyProfileSlice';
 import Routelinks from './Routes/Routelinks'
+import DotLoader  from "react-spinners/DotLoader ";
 
 function App() {
   const dispatch = useDispatch();
-  const { companyIcon } = useSelector(state => state.companyProfile)
+  const { companyIcon } = useSelector(state => state.companyProfile);
+
+  const [loading, setLoading] = useState(false);
+    let [color, setColor] = useState("#0d6efd");
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false)
+        }, 2000)
+    }, []);
 
   useEffect(() => {
     (async () => {
@@ -58,9 +68,20 @@ function App() {
   }, [])
 
   return (
-    <BrowserRouter>
-      <Routelinks />
-    </BrowserRouter>
+    <>
+    {loading ?
+                <div className='start-loading'>
+                    <DotLoader 
+                        color={color}
+                        loading={loading}
+                        size={80}
+                    />
+                </div>
+                : <BrowserRouter>
+                <Routelinks />
+              </BrowserRouter> }
+    </>
+    
   )
 }
 

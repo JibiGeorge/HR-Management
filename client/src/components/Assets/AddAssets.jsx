@@ -10,9 +10,9 @@ import { setAssets } from '../../redux/features/assetsSlice'
 const AddAssets = ({ closeModal }) => {
     const dispatch = useDispatch();
     const { category } = useSelector(state => state.assetsCategory);
-    const {userDetails} = useSelector(state => state.user);
+    const { userDetails } = useSelector(state => state.user);
     const token = userDetails.UserToken;
-    
+
     useEffect(() => {
         (async () => {
             const assetCategory = await getAllAssetsCategory(token);
@@ -22,7 +22,7 @@ const AddAssets = ({ closeModal }) => {
 
     const onSubmit = async (values) => {
         try {
-            const response = await addAssets(values,token);
+            const response = await addAssets(values, token);
             if (response.success) {
                 const assets = await getAssets(token)
                 dispatch(setAssets(assets.assets))
@@ -86,7 +86,8 @@ const AddAssets = ({ closeModal }) => {
             modelNo: '',
             code: '',
             inStock: '',
-            configuration: ''
+            configuration: '',
+            purchasedOn: ''
         },
         onSubmit
     })
@@ -154,6 +155,14 @@ const AddAssets = ({ closeModal }) => {
                                         <label>In Stock</label>
                                         <input type="number" className='form-control' id='inStock'
                                             value={values.inStock}
+                                            onChange={handleChange} />
+                                    </div>
+                                </div>
+                                <div className="col-sm-6">
+                                    <div className="form-group">
+                                        <label>Purchased On</label>
+                                        <input type="date" className='form-control' id='purchasedOn'
+                                            value={values.purchasedOn}
                                             onChange={handleChange} />
                                     </div>
                                 </div>

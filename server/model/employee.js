@@ -3,11 +3,13 @@ import mongoose, { Schema, model } from "mongoose";
 const employeeSchema = Schema({
     firstName: {
         type: String,
-        required: true
+        required: true,
+        trim : true
     },
     lastName: {
         type: String,
-        required: [true]
+        required: [true],
+        trim : true
     },
     empCode: {
         type: String,
@@ -34,6 +36,7 @@ const employeeSchema = Schema({
     },
     panNumber: {
         type: String,
+        trim : true
     },
     contactNumber: {
         type: Number,
@@ -57,20 +60,29 @@ const employeeSchema = Schema({
     },
     email: {
         type: String,
-        required: [true]
+        required: [true],
+        trim : true
     },
     image: {
         type: String
     },
     place: {
-        type: String
+        type: String,
+        trim : true
     },
     nationality:{
-        type: String
+        type: String,
+        trim : true
     },
-    religion: String,
+    religion: {
+        type: String,
+        trim : true
+    },
     maritialStatus: String,
-    passportNumber: String,
+    passportNumber: {
+        type: String,
+        trim : true
+    },
     loginPermisionEnabled: {
         type: Boolean,
         require: true

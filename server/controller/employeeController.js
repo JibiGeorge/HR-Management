@@ -1,7 +1,23 @@
 import Employee from "../model/employee.js"
 import userCredential from "../model/userModel.js";
 
+const convertCamelCase = (values) => {
+    return values.split(/\s+/).map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+}
+
 export const addEmployee = async (req, res) => {
+    let data = req.body.values
+    for (const key in data) {
+        if (key === 'firstName' || key === 'lastName' || key === 'panNumber') {
+            data[key] = convertCamelCase(data[key])
+        }
+        if (key === 'username') {
+            data[key] = data[key].toLowerCase().trim();
+        }
+        if (key === 'panNumber') {
+            data[key] = data[key].toUpperCase().trim();
+        }
+    }
     let {
         firstName,
         lastName,
@@ -19,7 +35,7 @@ export const addEmployee = async (req, res) => {
         username,
         email,
         image
-    } = req.body.values
+    } = data;
     try {
         const exist = await Employee.findOne({ username: username });
         if (exist) {
@@ -50,7 +66,7 @@ export const addEmployee = async (req, res) => {
             })
         }
     } catch (error) {
-        res.status(401).json({ success: false, message: "Internal Server Error...!" })
+        res.json({ success: false, message: "Internal Server Error...!" })
     }
 }
 
@@ -79,7 +95,12 @@ export const getEmployeeData = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     const userID = req.query.id;
-    const data = req.body;
+    let data = req.body;
+    for (const key in data) {
+        if (key === 'address') {
+            data[key] = convertCamelCase(data[key])
+        }
+    }
     try {
         const employee = await Employee.findByIdAndUpdate({ _id: userID }, {
             department: data.department,
@@ -104,7 +125,18 @@ export const updateProfile = async (req, res) => {
 
 export const updatePersonal = async (req, res) => {
     const empID = req.params.id;
-    const data = req.body;
+    let data = req.body;
+    for (const key in data) {
+        if (key === 'firstName' || key === 'lastName') {
+            data[key] = convertCamelCase(data[key])
+        }
+        if (key === 'username') {
+            data[key] = data[key].toLowerCase().trim();
+        }
+        if (key === 'panNumber' || key === 'passportNumber') {
+            data[key] = data[key].toUpperCase().trim();
+        }
+    }
     try {
         const update = await Employee.findByIdAndUpdate({ _id: empID }, {
             firstName: data.firstName,
@@ -133,13 +165,13 @@ export const employeeCount = async (req, res) => {
     }
 }
 
-export const getEmployeeCode = async(req,res)=>{
+export const getEmployeeCode = async (req, res) => {
     try {
-        const employeeCode = await Employee.find().sort({empCode: -1}).limit(1);
+        const employeeCode = await Employee.find().sort({ empCode: -1 }).limit(1);
         const lastEmployeeCode = employeeCode.length > 0 ? employeeCode[0].empCode : 0;
-        const nextEmployeeCode = parseInt(lastEmployeeCode) +1;
-        res.status(200).json({success:true, nextEmployeeCode:nextEmployeeCode.toString().padStart(4, '0')})
+        const nextEmployeeCode = parseInt(lastEmployeeCode) + 1;
+        res.status(200).json({ success: true, nextEmployeeCode: nextEmployeeCode.toString().padStart(4, '0') })
     } catch (error) {
-        res.json({message: 'Internal server Error..!'});
+        res.json({ message: 'Internal server Error..!' });
     }
 }
