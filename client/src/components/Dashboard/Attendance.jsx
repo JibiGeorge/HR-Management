@@ -133,7 +133,6 @@ const Attendance = ({ token }) => {
         currentDate = Math.abs((new Date(currentDate).getTime() / 1000).toFixed(0))
         let signIntime = punchingData?.attendance?.attendanceDetails?.signIn
         signIntime = signIntime.split(' ')[0]
-        console.log('signIntimbjhbve',signIntime);
         signIntime = '2/14/2023, ' + signIntime;
         signIntime = new Date(signIntime)
         signIntime = Math.abs((new Date(signIntime).getTime() / 1000).toFixed(0))
@@ -143,7 +142,6 @@ const Attendance = ({ token }) => {
         var minutes = Math.floor(diff / 60) % 60
         var seconds = diff % 60;
         const totalTime = + hours + ':' + minutes + ':' + seconds
-        console.log('totaltime',totalTime);
         setTotalWorkingHour(totalTime)
     }
 

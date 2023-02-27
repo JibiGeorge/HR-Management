@@ -4,7 +4,6 @@ import jsPDF from 'jspdf'
 const Payslip = ({ filtererdResult, copmpanyData, loading }) => {
 
     const exportPDF = () => {
-        console.log('exporting....');
         const report = new jsPDF('landscape', 'pt', 'a4');
         report.html(document.querySelector('.payslip'), {
             x: 15,
@@ -42,6 +41,9 @@ const Payslip = ({ filtererdResult, copmpanyData, loading }) => {
                         <div className="row p-2">
                             <div className="col-6">
                                 <ul>
+                                <li>
+                                        <label className='name'>Employee Code</label>:<label className='ms-4'>{filtererdResult?.employeeDetails[0]?.empCode}</label>
+                                    </li>
                                     <li>
                                         <label className='name'>Employee Name</label>:<label className='ms-4'>{filtererdResult?.employeeDetails[0]?.firstName} {filtererdResult?.employeeDetails[0]?.lastName}</label>
                                     </li>

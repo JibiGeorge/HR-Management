@@ -16,7 +16,6 @@ const AddAssets = ({ closeModal }) => {
     useEffect(() => {
         (async () => {
             const assetCategory = await getAllAssetsCategory(token);
-            console.log(assetCategory);
             dispatch(setAssetsCategories(assetCategory));
         })();
     }, []);

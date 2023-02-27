@@ -90,14 +90,14 @@ function Cards() {
                                     </div>
                                     <h4 className="user-name mt-10 mb-0 text-ellipsis">
                                         {(role === 'Admin' || role === 'HR') &&
-                                            <Link to='/employeeDetails' state={{ id: values._id }}>{values.firstName} {values.lastName}</Link>
+                                            <Link to='/hr/employeeDetails' state={{ id: values._id }}>{values.firstName} {values.lastName}</Link>
                                         }
                                         {role === 'Employee' &&
                                             <p >{values.firstName} {values.lastName}</p>
 
                                         }
                                     </h4>
-                                    <div className="small text-muted">{values.contactNumber}</div>
+                                    <div className="small text-muted">{values.empCode}</div>
                                 </div>
                             </div>
                         )

@@ -17,6 +17,7 @@ import JobRoleLeave from '../pages/JobRoleLeave'
 import LeaveApplication from '../pages/LeaveApplication'
 import LeaveType from '../pages/LeaveType'
 import NoticePage from '../pages/NoticePage'
+import PageNotFound from '../pages/PageNotFound'
 import PayrolPage from '../pages/PayrolPage'
 import Payslip from '../pages/Payslip'
 import Profile from '../pages/Profile'
@@ -50,8 +51,8 @@ const Container = () => {
                     <Route exact path='/payrol' element={<PayrolPage />} />
                     <Route exact path='/payslip' element={<Payslip />} />
                 </Route>
-
             </Routes>
+
         </>
     )
 }

@@ -12,7 +12,7 @@ function Loginpage() {
       const token = localStorage.getItem('usertoken');
       const res = await verifyToken(token);
       if (res.user) {
-        navigate('/dashboard');
+        navigate('/hr/dashboard');
       } else {
         navigate('/')
       }

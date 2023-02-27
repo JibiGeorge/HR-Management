@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
 import { useNavigate } from 'react-router-dom';
 
-function AddForm() {
+function AddForm({empCode}) {
 
     var dispatch = useDispatch();
     const navigate = useNavigate()
@@ -40,7 +40,7 @@ function AddForm() {
                     },
                 });
                 actions.resetForm();
-                navigate('/employee')
+                navigate('/hr/employee')
             } else {
                 toast.error(result.data.message, {
                     style: {
@@ -100,7 +100,7 @@ function AddForm() {
         initialValues: {
             firstName: "",
             lastName: "",
-            empCode: "",
+            empCode: empCode,
             department: "",
             designation: "",
             role: "",
@@ -116,10 +116,9 @@ function AddForm() {
             image: ""
         },
         validationSchema: employeeSchema,
+        enableReinitialize: true,
         onSubmit
     });
-
-
 
     return (
         <>
@@ -169,7 +168,7 @@ function AddForm() {
                                         </label>
                                     </div>
                                     <div className='select '>
-                                        <input type="text" placeholder='Enter Employee Code'
+                                        <input type="text" placeholder='Enter Employee Code' disabled
                                             value={values.empCode}
                                             onChange={handleChange} id="empCode" className={errors.empCode && touched.empCode ? "input-error" : ""} />
                                     </div>

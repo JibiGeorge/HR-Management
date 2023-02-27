@@ -132,3 +132,14 @@ export const employeeCount = async (req, res) => {
         return res.json({ success: false, error: 'Internal Server Error...!' })
     }
 }
+
+export const getEmployeeCode = async(req,res)=>{
+    try {
+        const employeeCode = await Employee.find().sort({empCode: -1}).limit(1);
+        const lastEmployeeCode = employeeCode.length > 0 ? employeeCode[0].empCode : 0;
+        const nextEmployeeCode = parseInt(lastEmployeeCode) +1;
+        res.status(200).json({success:true, nextEmployeeCode:nextEmployeeCode.toString().padStart(4, '0')})
+    } catch (error) {
+        res.json({message: 'Internal server Error..!'});
+    }
+}

@@ -15,13 +15,10 @@ const Profile = () => {
     const empID = userDetails._id;
 
     const token = userDetails.UserToken;
-    console.log('empID',empID);
-    console.log('token',token);
     useEffect(() => {
         (async () => {
             try {
                 const employeeData = await getEmployeeData(empID, token);
-                console.log('=====',employeeData);
                 const departmentList = await getAllDepartments(token);
                 const designationList = await getAllDesignation(token);
                 let result = employeeData.data
@@ -43,7 +40,6 @@ const Profile = () => {
                     });
                 }
             } catch (error) {
-                console.log(error.message);
                 toast.error('Some Server Issue....!', {
                     style: {
                         border: '1px solid #713200',

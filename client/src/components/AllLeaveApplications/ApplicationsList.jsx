@@ -57,6 +57,10 @@ const ApplicationsList = ({ applications }) => {
   }
   const column = [
     {
+      name: 'Emp Code',
+      selector: row => row.employeeDetails[0]?.empCode
+    },
+    {
       name: 'Employee Name',
       selector: row => row.employeeDetails[0]?.firstName + ' ' + row.employeeDetails[0]?.lastName
     },

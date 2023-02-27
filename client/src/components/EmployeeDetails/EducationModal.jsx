@@ -64,7 +64,6 @@ const EducationModal = ({ closeModal, empID }) => {
                 dispatch(hideLoading());
             }
         } catch (error) {
-            console.log(error.message);
             toast.error('Not Updated. Something Wrong..!', {
                 style: {
                     border: '1px solid #713200',

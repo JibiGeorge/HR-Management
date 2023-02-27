@@ -58,6 +58,10 @@ const PaidPayrolList = () => {
             selector: row => row.employeeDetails[0]?.username
         },
         {
+            name: 'EmpCode',
+            selector: row => row.employeeDetails[0]?.empCode
+        },
+        {
             name: 'Month',
             selector: row => row?.month
         },

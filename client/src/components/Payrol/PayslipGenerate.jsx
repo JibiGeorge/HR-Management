@@ -137,6 +137,10 @@ const PayslipGenerate = ({ docID, payrolID, closePaySlipForm }) => {
                         <div className="col-lg-6">
                             <ul>
                                 <li>
+                                    <div className="title">Employee Code :- </div>
+                                    <div className="text">{employeeDetails?.empCode}</div>
+                                </li>
+                                <li>
                                     <div className="title">Employee Name :- </div>
                                     <div className="text">{employeeDetails?.firstName}</div>
                                 </li>

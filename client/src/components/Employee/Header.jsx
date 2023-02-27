@@ -16,7 +16,7 @@ function PageHeader() {
                 </div>
                 {(role === 'Admin' || role === 'HR') &&
                 <div className="col-sm-3">
-                    <Link to='/addEmployee' class="btn btn-primary add-btn">
+                    <Link to='/hr/addEmployee' class="btn btn-primary add-btn">
                         <i className="fa fa-plus"></i>
                         Add Employee
                     </Link>

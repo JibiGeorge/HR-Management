@@ -1,6 +1,21 @@
 import axios from 'axios';
 import instance from '../utils/serverConfig';
 
+export const getEmpCode = async (token) => {
+    try {
+        const empCode = await instance({
+            url: '/api/employee/getEmpCode',
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
+        })
+        return empCode.data
+    } catch (error) {
+        return { error: "Internal Server Error...!" };
+    }
+}
+
 export const addEmployee = async (values, token) => {
     const data = new FormData();
     data.append('file', values.image)

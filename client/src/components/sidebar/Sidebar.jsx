@@ -32,11 +32,11 @@ function Sidebar() {
                 <li>
                     <Link>
                         <i class='bx bxs-dashboard bx-tada bx-rotate-90' ></i>
-                        <span className="link_name"><Link to='/dashboard' className="link_name">Dashboard</Link></span>
+                        <span className="link_name"><Link to='/hr/dashboard' className="link_name">Dashboard</Link></span>
                     </Link>
                     <ul className="sub-menu">
                         <li>
-                            <Link to='/dashboard' className='link_name'>Dashboard</Link>
+                            <Link to='/hr/dashboard' className='link_name'>Dashboard</Link>
                         </li>
                     </ul>
                 </li>
@@ -52,8 +52,8 @@ function Sidebar() {
                         <li>
                             <Link className="link_name" >Organization</Link>
                         </li>
-                        <li><Link to='/department'>Department</Link></li>
-                        <li><Link to='/designation'>Designation</Link></li>
+                        <li><Link to='/hr/department'>Department</Link></li>
+                        <li><Link to='/hr/designation'>Designation</Link></li>
                     </ul>
                 </li>
                 <li>
@@ -68,9 +68,9 @@ function Sidebar() {
                         <li>
                             <Link className="link_name" >Employees</Link>
                         </li>
-                        <li><Link to='/employee'>Employees</Link></li>
+                        <li><Link to='/hr/employee'>Employees</Link></li>
                         {(role === 'Employee' || role === 'HR') &&
-                            <li><Link to='/profile' state={{ id: userDetails?._id }} >Profile</Link></li>
+                            <li><Link to='/hr/profile' state={{ id: userDetails?._id }} >Profile</Link></li>
                         }
                         {/* <li><Link to=''>Disciplinary</Link></li>
                                 <li><Link>Inactive User</Link></li> */}
@@ -89,8 +89,8 @@ function Sidebar() {
                         <li>
                             <Link className="link_name" >Assets</Link>
                         </li>
-                        <li><Link to='/assetsCategory'>Assets Category</Link></li>
-                        <li><Link to='/assets'>Add Assets</Link></li>
+                        <li><Link to='/hr/assetsCategory'>Assets Category</Link></li>
+                        <li><Link to='/hr/assets'>Add Assets</Link></li>
                     </ul>
                 </li>
                 <li>
@@ -106,15 +106,15 @@ function Sidebar() {
                             <li>
                                 <Link className="link_name" >Leave</Link>
                             </li>
-                            <li><Link to='/holiday'>Holiday</Link></li>
-                            <li><Link to='/leave/jobRole'>Job Role Leave</Link></li>
-                            <li><Link to='/leave'>Leave Type</Link></li>
-                            <li><Link to='/alleaveApplications'>Leave Applications</Link></li>
+                            <li><Link to='/hr/holiday'>Holiday</Link></li>
+                            <li><Link to='/hr/leave/jobRole'>Job Role Leave</Link></li>
+                            <li><Link to='/hr/leave'>Leave Type</Link></li>
+                            <li><Link to='/hr/alleaveApplications'>Leave Applications</Link></li>
                         </ul>}
                     {role === 'Employee' &&
                         <ul className="sub-menu">
                             <li>
-                                <Link to='/leaveapplication' >Leave Application</Link>
+                                <Link to='/hr/leaveapplication' >Leave Application</Link>
                             </li>
                         </ul>
                     }
@@ -132,7 +132,7 @@ function Sidebar() {
                             <li>
                                 <Link className="link_name" >Leave</Link>
                             </li>
-                            <li><Link to='/attendance'>Attendance</Link></li>
+                            <li><Link to='/hr/attendance'>Attendance</Link></li>
                             <li><Link>Attendance Report</Link></li>
                         </ul>
                     </li>
@@ -150,8 +150,8 @@ function Sidebar() {
                             <li>
                                 <Link className="link_name" >Payrol</Link>
                             </li>
-                            <li><Link to='/payrol'>Payrol List</Link></li>
-                            <li><Link to='/payslip'>Pay Slip</Link></li>
+                            <li><Link to='/hr/payrol'>Payrol List</Link></li>
+                            <li><Link to='/hr/payslip'>Pay Slip</Link></li>
                         </ul>
                     </li>
                 }
@@ -161,22 +161,22 @@ function Sidebar() {
                         <li>
                             <Link>
                                 <i class='bx bxs-paper-plane bx-tada' ></i>
-                                <span className="link_name"><Link to='/notice' className="link_name">Notice</Link></span>
+                                <span className="link_name"><Link to='/hr/notice' className="link_name">Notice</Link></span>
                             </Link>
                             <ul className="sub-menu">
                                 <li>
-                                    <Link to='/notice' className='link_name'>Notice</Link>
+                                    <Link to='/hr/notice' className='link_name'>Notice</Link>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <Link>
                                 <i class='bx bx-cog bx-tada' ></i>
-                                <span className="link_name"><Link to='/settings' className="link_name">Settings</Link></span>
+                                <span className="link_name"><Link to='/hr/settings' className="link_name">Settings</Link></span>
                             </Link>
                             <ul className="sub-menu">
                                 <li>
-                                    <Link to='/settings' className='link_name'>Settings</Link>
+                                    <Link to='/hr/settings' className='link_name'>Settings</Link>
                                 </li>
                             </ul>
                         </li>

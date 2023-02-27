@@ -9,7 +9,7 @@ import { addEducation, getEducation } from '../controller/educationController.js
 import { addEmployeeAddress, getEmployeeAddress } from '../controller/employeeAddressController.js';
 import { addEmployeeBankAccount, getEmployeeBankAccount } from '../controller/employeeBankAccount.js';
 import { addEmergencyContacts, getEmergencyContacts } from '../controller/employeeContacts.js';
-import { addEmployee, employeeCount, getAllEmployees, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
+import { addEmployee, employeeCount, getAllEmployees, getEmployeeCode, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
 import { addEmployeeSalaryDetails, deleteEmployeeSalaryDetails, getEmployeeSalaryDetails } from '../controller/EmployeeSalaryControl.js';
 import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
 import { addJobRoleLeaves, getAllJobRoleLeaves } from '../controller/jobRoleLeavesController.js';
@@ -41,6 +41,7 @@ router.get('/employee/getEmployeeData', auth, getEmployeeData)
 router.put('/employee/updateProfile', auth, updateProfile)
 router.put('/employee/personalinfo/update/:id', auth, updatePersonal)
 router.put('/employee/changePassword/:id', auth, changePassword)
+router.get('/employee/getEmpCode',getEmployeeCode)
 
 // Asstes Category
 router.post('/assetsCategory/add', auth, addAssetsCategory)

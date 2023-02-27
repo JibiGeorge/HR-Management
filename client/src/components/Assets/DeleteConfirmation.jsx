@@ -4,46 +4,46 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteAssets, getAssets } from '../../helper/AssetsHelper';
 import { setAssets } from '../../redux/features/assetsSlice';
 
-const DeleteConfirmation = ({closeModal, id}) => {
+const DeleteConfirmation = ({ closeModal, id }) => {
     const dispatch = useDispatch()
-    const {userDetails} = useSelector(state => state.user);
+    const { userDetails } = useSelector(state => state.user);
 
     const assetsDelete = async () => {
         let token = userDetails.UserToken;
         try {
-            const response = await deleteAssets(id,token)
-            if(response.success){
+            const response = await deleteAssets(id, token)
+            if (response.success) {
                 const assets = await getAssets(token)
                 dispatch(setAssets(assets.assets))
                 toast.success(response.message, {
                     style: {
-                      border: '1px solid #713200',
-                      padding: '16px',
-                      color: '#25ab11',
+                        border: '1px solid #713200',
+                        padding: '16px',
+                        color: '#25ab11',
                     },
                     iconTheme: {
-                      primary: '#25ab11',
-                      secondary: '#FFFAEE',
+                        primary: '#25ab11',
+                        secondary: '#FFFAEE',
                     },
-                  });
-                  closeModal()
+                });
+                closeModal()
             }
         } catch (error) {
             toast.error('Something Wrong. Please Check...!', {
                 style: {
-                  border: '1px solid #713200',
-                  padding: '16px',
-                  color: '#713200',
+                    border: '1px solid #713200',
+                    padding: '16px',
+                    color: '#713200',
                 },
                 iconTheme: {
-                  primary: '#713200',
-                  secondary: '#FFFAEE',
+                    primary: '#713200',
+                    secondary: '#FFFAEE',
                 },
-              });
+            });
         }
     }
-  return (
-    <>
+    return (
+        <>
             <div className="modal-wrapper">
                 <div className="modal-container">
                     <div className="modal-content">
@@ -69,7 +69,7 @@ const DeleteConfirmation = ({closeModal, id}) => {
                 </div>
             </div>
         </>
-  )
+    )
 }
 
 export default DeleteConfirmation

@@ -12,7 +12,7 @@ function PageHeader() {
                     <p>Dashboard / Employees / Add Employee</p>
                 </div>
                 <div className="col-sm-3">
-                    <Link to='/employee' type="button" class="btn btn-primary add-btn">Employee List</Link>
+                    <Link to='/hr/employee' type="button" class="btn btn-primary add-btn">Employee List</Link>
                 </div>
             </div>
         </div>

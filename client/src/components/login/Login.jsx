@@ -31,7 +31,7 @@ function Login() {
           dispatch(setCompanyProfileData(data.details));
         }
         dispatch(setUserDetails(res));
-        navigate('/dashboard');
+        navigate('/hr/dashboard');
         setBtnLoading(false);
       } else {
         toast.error(res.error, {

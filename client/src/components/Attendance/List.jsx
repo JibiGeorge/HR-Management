@@ -76,6 +76,10 @@ const List = () => {
       selector: row => row.userDetails[0]?.username
     },
     {
+      name: 'EmpCode',
+      selector: row => row.userDetails[0]?.empCode
+    },
+    {
       name: 'Date',
       selector: row => row.attendance.attendanceDetails?.date
     },
@@ -97,7 +101,6 @@ const List = () => {
       <button className='btn deleteBtn' onClick={()=> handleDelete(row.attendance.attendanceDetails?._id,row.userDetails[0]?._id)} ><i class="las la-trash"></i></button>])
     }
   ]
-  console.log(attendance);
   return (
     <>
       <Toaster
