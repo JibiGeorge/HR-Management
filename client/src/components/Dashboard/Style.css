@@ -58,3 +58,51 @@
     font-size: 16px;
     font-weight: 600;
 }
+
+/* Pending Payrol */
+.dashboard .card{
+    background-color: #16191c;
+    border: 1px solid #2e3840;
+    box-shadow: 0 1px 1px 0 rgb(0 0 0 / 20%);
+    margin-bottom: 30px;
+    width: 100%;
+}
+.dashboard .card-table .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid #2e3840;
+}
+.dashboard .card-title {
+    color: #bbc4cc;
+    font-size: 20px;
+    font-weight: 700;
+}
+.dashboard .card-table .card-body {
+    padding: 0;
+}
+.dashboard .table{
+    color: #777c80;
+    font-weight: 700;
+}
+.table th{
+    text-align: center;
+    color: #bbc4cc;
+    font-weight: 900;
+}
+.table th,
+.table td{
+    border: 1px solid #dfe5ea;
+    min-width: 120px;
+    padding: 5px 10px;
+}   
+.dashboard .card-table .card-footer {
+    background-color: transparent;
+    border-color: #2e3840;
+    text-align: center;
+}
+.dashboard .card-table .card-footer a {
+    color: #04eeff;
+    font-weight: 700;
+}
+.dashboard .card-table .card-footer a:hover{
+    color: #07909a;
+}

@@ -77,3 +77,18 @@ export const getEmpPayrolData = async (token, filterData) => {
         return { message: 'Connection Error' };
     }
 }
+
+export const getSalaryPaidMonthWise = async (token) => {
+    try {
+        const result = await instance({
+            url: '/api/salaryPaymentChart',
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
+        })
+        return result.data;
+    } catch (error) {
+        return { message: 'Connection Error' };
+    }
+}

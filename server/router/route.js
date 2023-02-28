@@ -1,6 +1,7 @@
 import express from 'express';
 import { addAssets, addAssetsCategory, deleteAssets, deleteAssetsCategory, getAllAssetsCategories, getAssetCategoryData, getAssetData, getAssets, updateAsset, updateCategory } from '../controller/assetsController.js';
 import { addAttendance, deleteAttendance, getAttendanceData, getAttendanceList, getPunchedData, punchIn, punchOut, updateAttendance } from '../controller/attendanceController.js';
+import { salaryPaidMonthWise } from '../controller/chartController.js';
 import { getCompanyDetails, getIcon, updateCompanyDetails } from '../controller/companyDetails.js';
 import { changePassword, generateCredentials, reGenerateCredentials } from '../controller/credentialsController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
@@ -41,7 +42,7 @@ router.get('/employee/getEmployeeData', auth, getEmployeeData)
 router.put('/employee/updateProfile', auth, updateProfile)
 router.put('/employee/personalinfo/update/:id', auth, updatePersonal)
 router.put('/employee/changePassword/:id', auth, changePassword)
-router.get('/employee/getEmpCode',getEmployeeCode)
+router.get('/employee/getEmpCode', getEmployeeCode)
 
 // Asstes Category
 router.post('/assetsCategory/add', auth, addAssetsCategory)
@@ -138,5 +139,6 @@ router.post('/payrol/getEmpData', auth, getEmpPayrolData);
 // For DashBoard
 router.get('/totalEmployeeCount', auth, employeeCount);
 router.get('/totalPendingLeaveCount', auth, getPendingLeavesCount);
+router.get('/salaryPaymentChart', auth, salaryPaidMonthWise);
 
 export default router;

@@ -25,7 +25,7 @@ function Sidebar() {
         <div className="sidebar">
             <div className="logo-details">
                 {/* <i className="bx bxl-c-plus-plus"></i> */}
-                <img src={companyProfileData?.logo} width='40px' height='40px' style={{ borderRadius: '50%', backgroundSize: 'contain' }} alt="" />
+                <img src={companyProfileData?.logo} width='40px' height='40px' style={{ borderRadius: '50%', backgroundSize: 'contain', margin: '0 10px' }} alt="" />
                 <span className="logo_name">HR Management</span>
             </div>
             <ul className="nav-links">
