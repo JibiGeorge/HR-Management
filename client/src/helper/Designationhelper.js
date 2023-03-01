@@ -12,7 +12,7 @@ export async function addDesignation({ designationData, token }) {
         })
         return data;
     } catch (error) {
-        return { error: "Internal Server Error" }
+        return { message: "Internal Server Error" }
     }
 }
 
@@ -27,7 +27,7 @@ export async function getAllDesignation(token) {
         })
         return data;
     } catch (error) {
-        return { error: "Internal Server Error", error: error.message }
+        return { message: "Internal Server Error" }
     }
 }
 
@@ -42,20 +42,23 @@ export async function deleteDesignation(id, token) {
         })
         return response;
     } catch (error) {
+        return { message: "Internal Server Error" }
 
     }
 }
 
-export async function updateDesignation(data, token) {
+export async function updateDesignation(token,data) {
     try {
         const response = await instance({
-            url: '/api/updateDesignation/',
+            url: '/api/updateDesignation',
             method: 'PUT',
+            data: data,
             headers: {
                 Authorization: token
             }
         })
-    } catch (error) {
-
+        return response.data;
+    } catch (error) {        
+        return { message: "Internal Server Error" }
     }
 }

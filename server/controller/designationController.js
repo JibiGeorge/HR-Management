@@ -20,7 +20,7 @@ export const addDesignation = async (req, res) => {
             })
         }
     } catch (error) {
-        res.json({ error: 'Internal Server Error' })
+        res.json({ message: 'Internal Server Error' })
     }
 }
 
@@ -29,7 +29,7 @@ export const getAllDesignation = async (req, res) => {
         const data = await designationModel.find().populate('departmentId');
         res.status(200).json({ success: true, data })
     } catch (error) {
-        res.json({ error: 'Internal Server Error' })
+        res.json({ message: 'Internal Server Error' })
     }
 }
 
@@ -43,6 +43,22 @@ export const deleteDesignation = async (req, res) => {
             res.json({ success: false, message: "Not Deleted.....!" })
         }
     } catch (error) {
+        res.json({ message: "Internal Server Error" })
+    }
+}
+
+export const updateDesignationDetails = async (req, res) => {
+    const { docID, designationName, departmentID } = req.body;
+    try {
+        await designationModel.findByIdAndUpdate(
+            { _id: docID },
+            { $set: { departmentId: departmentID, designation: designationName } }
+        )
+            .then(() => {
+                res.status(200).json({success: true, mesage: "Successfully Updated...!"});
+            })
+    } catch (error) {
+        console.log('error',error.message);
         res.json({ message: "Internal Server Error" })
     }
 }

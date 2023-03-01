@@ -7,6 +7,16 @@ const PayementChart = ({ payementChartData }) => {
             chart: {
                 id: "basic-bar"
             },
+            title: {
+                text: "Monthly Salary Payment Chart",
+                align: "center",
+                style: {
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  fontFamily: undefined,
+                  color: "#bbc4cc"
+                }
+              },
             xaxis: {
                 categories: [],
                 labels: {

@@ -3,17 +3,16 @@ import toast, { Toaster } from 'react-hot-toast';
 import DataTable from 'react-data-table-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
-import { deleteDesignation, getAllDesignation, updateDesignation } from '../../helper/Designationhelper';
+import { deleteDesignation, getAllDesignation } from '../../helper/Designationhelper';
 import { getAllDepartments } from '../../helper/Departmenthelper';
 import { deleteDesigntionData, setDesignatonData } from '../../redux/features/designationSlice';
+import EditDesignation from './EditDesignation';
+import { setDepartmentData } from '../../redux/features/departmentSlice';
 
 function Designationlist() {
     const dispatch = useDispatch();
-    const [designation, setDesignation] = useState([]);
-    const [filteredDesignation, setFilteredDesignation] = useState([])
-    const [department, setDepartment] = useState([]);
 
-    const {userDetails} = useSelector(state => state.user);
+    const { userDetails } = useSelector(state => state.user);
     const { loading } = useSelector(state => state.alerts);
     const { designationDetails } = useSelector(state => state.designation)
 
@@ -26,8 +25,6 @@ function Designationlist() {
                 const data = await getAllDesignation(token)
                 if (data.success) {
                     dispatch(setDesignatonData(data.data));
-                    setDesignation(data.data);
-                    setFilteredDesignation(data.data);
                     dispatch(hideLoading());
                 } else {
                     toast.error(data.message, {
@@ -60,6 +57,21 @@ function Designationlist() {
         })();
     }, []);
 
+    const [editDesignationModal, setEditDesignationModal] = useState(false);
+    const closeEditDesignationModal = () => setEditDesignationModal(false);
+    const initialValues = {
+        docID: '',
+        designation: '',
+        departmentID: ''
+    }
+    const [updatingData, setUpdatingData] = useState(initialValues);
+
+    //Designation Data Edit
+    const handleEdit = (docId, designationName, departmentId) => {
+        setUpdatingData({ ...updatingData, docID: docId, designation: designationName, departmentID: departmentId });
+        setEditDesignationModal(updatingData);
+    }
+
     //   Data Tables
     const column = [
         {
@@ -74,7 +86,7 @@ function Designationlist() {
         },
         {
             name: "Action",
-            cell: (row) => ([<button className='btn editBtn' data-bs-toggle="modal" data-bs-target="#updateDepartment" onClick={() => handleEdit(row._id, row.designation)}><i class="las la-edit"></i></button>,
+            cell: (row) => ([<button className='btn editBtn' onClick={() => handleEdit(row?._id, row?.designation, row.departmentId?._id)}><i class="las la-edit"></i></button>,
             <button className='btn deleteBtn' onClick={() => handleDelete(row._id)}><i class="las la-trash"></i></button>])
         }
     ]
@@ -124,18 +136,12 @@ function Designationlist() {
         }
     }
 
-    //Designation Data Edit
-    const handleEdit = (id, designation) => {
-        document.getElementById('desiUpdateValue').value = designation
-        document.getElementById('desiUpdateID').value = id
-    }
-
     useEffect(() => {
         try {
             (async () => {
                 try {
                     const departmentData = await getAllDepartments(token);
-                    setDepartment(departmentData)
+                    dispatch(setDepartmentData(departmentData))
                 } catch (error) {
                     toast.error('Internal Server Error....!', {
                         style: {
@@ -165,26 +171,6 @@ function Designationlist() {
         }
     }, []);
 
-    const handleUpdate = async (e) => {
-        e.preventDefault();
-        // try {
-        //     (async()=>{
-        //         // const result = await updateDesignation(updatingData,token);
-        //     })();
-        // } catch (error) {
-        //     toast.error('Not Updated....!', {
-        //         style: {
-        //             border: '1px solid #713200',
-        //             padding: '16px',
-        //             color: '#713200',
-        //         },
-        //         iconTheme: {
-        //             primary: '#713200',
-        //             secondary: '#FFFAEE',
-        //         },
-        //     });      
-        // }
-    }
     return (
         <>
             <Toaster
@@ -198,7 +184,6 @@ function Designationlist() {
             </div>}
             {!loading &&
                 <DataTable
-                    // title="Department List"
                     columns={column}
                     data={designationDetails}
                     pagination
@@ -207,7 +192,6 @@ function Designationlist() {
                     selectableRows
                     selectableRowsHighlight
                     highlightOnHover
-                    // actions={<button className='btn btn-sm btn-info'>Export</button>}
                     subHeader
                     subHeaderComponent={
                         [<input type="text"
@@ -220,48 +204,8 @@ function Designationlist() {
                 />
             }
 
-            <div className="modal_body">
-                <div class="modal fade" id="updateDepartment" tabindex="-1" aria-labelledby="updateDepartment" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 className='modal-title'>Update Designation</h5>
-                                <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">
-                                    <span>x</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                        <div className="form-group">
-                                            <label>Department Name*</label>
-                                            <select className='form-select' aria-label='Default select example'>
-                                                <option value="" selected>Select A Department</option>
-                                                {department?.map(data => {
-                                                    return (
-                                                        <option value={data._id}>{data.department}</option>
-                                                    )
-                                                })
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-12">
-                                        <div className="form-group">
-                                            <label>Designation Name</label>
-                                            <input type="text" className='form-control' id='desiUpdateValue' />
-                                            <input type="text" className='form-control' id='desiUpdateID' style={{ display: 'none' }} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="submit-section">
-                                    <button className='btn btn-primary submit-btn' type='submit' onClick={handleUpdate}>Update</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {editDesignationModal && <EditDesignation updatingData={updatingData} closeEditDesignationModal={closeEditDesignationModal} />}
+
         </>
     )
 }

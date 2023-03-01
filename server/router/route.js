@@ -5,7 +5,7 @@ import { salaryPaidMonthWise } from '../controller/chartController.js';
 import { getCompanyDetails, getIcon, updateCompanyDetails } from '../controller/companyDetails.js';
 import { changePassword, generateCredentials, reGenerateCredentials } from '../controller/credentialsController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
-import { addDesignation, deleteDesignation, getAllDesignation } from '../controller/designationController.js';
+import { addDesignation, deleteDesignation, getAllDesignation, updateDesignationDetails } from '../controller/designationController.js';
 import { addEducation, getEducation } from '../controller/educationController.js';
 import { addEmployeeAddress, getEmployeeAddress } from '../controller/employeeAddressController.js';
 import { addEmployeeBankAccount, getEmployeeBankAccount } from '../controller/employeeBankAccount.js';
@@ -34,6 +34,7 @@ router.put('/updateDepartment', auth, updateDepartment)
 router.post('/addDesignation', auth, addDesignation)
 router.get('/getAllDesignation', auth, getAllDesignation)
 router.delete('/deleteDesignation', auth, deleteDesignation)
+router.put('/updateDesignation',auth,updateDesignationDetails)
 
 // Employee Routes
 router.post('/employee/add', auth, addEmployee)

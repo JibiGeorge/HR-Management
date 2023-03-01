@@ -1,19 +1,24 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { deleteDepartment, getAllDepartments, updateDepartment } from '../../helper/Departmenthelper.js'
+import { deleteDepartment, getAllDepartments } from '../../helper/Departmenthelper.js'
 import DataTable from 'react-data-table-component';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { showLoading, hideLoading } from '../../redux/features/alertSlice';
 import { setDepartmentData, deleteDepartmentData } from '../../redux/features/departmentSlice.js';
+import EditDepartment from './EditDepartment.jsx';
 
 function Departmentlist() {
     const [search, setSearch] = useState('')
     const [updatedeptValue, setUpdateDeptValue] = useState('');
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.alerts);
-    const { departmentDetails } = useSelector(state => state.department)
+    const { departmentDetails } = useSelector(state => state.department);
     const { userDetails } = useSelector(state => state.user);
+
+    const [departmentEditModal, setDepartmentEditModal] = useState(false);
+    const closeDepartmentEditModal = () => setDepartmentEditModal(false);
+    const [departmentId, setDepartmentId] = useState('');
 
     const token = userDetails.UserToken;
 
@@ -21,7 +26,7 @@ function Departmentlist() {
     useEffect(() => {
         try {
             (async () => {
-                dispatch(showLoading())
+                dispatch(showLoading());
                 const depData = await getAllDepartments(token);
                 dispatch(setDepartmentData(depData))
                 dispatch(hideLoading())
@@ -35,7 +40,7 @@ function Departmentlist() {
         try {
             const result = await deleteDepartment(depId, token);
             if (result.deleted) {
-                dispatch(deleteDepartmentData(depId))
+                dispatch(deleteDepartmentData(depId));  // After deleting the department the deleted department id data will check and remove from the redux
                 toast.success('Deleted Successfully...!', {
                     style: {
                         border: '1px solid #713200',
@@ -75,58 +80,12 @@ function Departmentlist() {
         }
     }
 
+
     // Handle Edit Department
     const handleEdit = (depId, department) => {
-        document.getElementById('deptUpdateValue').value = department
-        document.getElementById('deptUpdateID').value = depId
+        setDepartmentId(depId);
+        setDepartmentEditModal(true)
         setUpdateDeptValue(department);
-    }
-
-    const handleDeptUpdate = async () => {
-        try {
-            let deptID = document.getElementById('deptUpdateID').value;
-            const res = await updateDepartment(deptID, updatedeptValue, token)
-            if (res.updated) {
-                toast.success(res.message, {
-                    style: {
-                        border: '1px solid #713200',
-                        padding: '16px',
-                        color: '#25ab11',
-                    },
-                    iconTheme: {
-                        primary: '#25ab11',
-                        secondary: '#FFFAEE',
-                    },
-                });
-                setTimeout(() => {
-                    location.reload();
-                }, 1000)
-            } else {
-                toast.error(res.message, {
-                    style: {
-                        border: '1px solid #713200',
-                        padding: '16px',
-                        color: '#713200',
-                    },
-                    iconTheme: {
-                        primary: '#713200',
-                        secondary: '#FFFAEE',
-                    },
-                });
-            }
-        } catch (error) {
-            toast.error('Not Updated Please Try Again....!', {
-                style: {
-                    border: '1px solid #713200',
-                    padding: '16px',
-                    color: '#713200',
-                },
-                iconTheme: {
-                    primary: '#713200',
-                    secondary: '#FFFAEE',
-                },
-            });
-        }
     }
 
     // Data Table Customization
@@ -156,7 +115,6 @@ function Departmentlist() {
             {!loading &&
 
                 <DataTable
-                    // title="Department List"
                     columns={column}
                     data={departmentDetails}
                     pagination
@@ -165,7 +123,6 @@ function Departmentlist() {
                     selectableRows
                     selectableRowsHighlight
                     highlightOnHover
-                    // actions={<button className='btn btn-sm btn-info'>Export</button>}
                     subHeader
                     subHeaderComponent={
                         [<input type="text"
@@ -180,34 +137,7 @@ function Departmentlist() {
                 />
             }
 
-            <div className="modal_body">
-                <div class="modal fade" id="updateDepartment" tabindex="-1" aria-labelledby="updateDepartment" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 className='modal-title'>Update Department</h5>
-                                <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">
-                                    <span>x</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div className="row">
-                                    <div className="col-sm-12">
-                                        <div className="form-group">
-                                            <label>Department Name</label>
-                                            <input type="text" className='form-control' id='deptUpdateValue' value={updatedeptValue} onChange={e => setUpdateDeptValue(e.target.value)} />
-                                            <input type="text" className='form-control' id='deptUpdateID' style={{ display: 'none' }} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="submit-section">
-                                    <button className='btn btn-primary submit-btn' type='submit' onClick={handleDeptUpdate}>Update</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {departmentEditModal && <EditDepartment departmentId={departmentId} closeDepartmentEditModal={closeDepartmentEditModal} updatedeptValue={updatedeptValue} />}
         </>
     )
 }
