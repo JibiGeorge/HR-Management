@@ -93,7 +93,6 @@ const AssetsList = () => {
                     pagination
                     fixedHeader
                     fixedHeaderScrollHeight='300px'
-                    // selectableRows
                     selectableRowsHighlight
                     highlightOnHover
                     subHeader

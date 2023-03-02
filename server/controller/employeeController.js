@@ -175,3 +175,13 @@ export const getEmployeeCode = async (req, res) => {
         res.json({ message: 'Internal server Error..!' });
     }
 }
+
+export const allDetails = async (req, res) => {
+    try {
+        const employees = await Employee.find().populate('department').populate('designation');
+        res.status(200).json({ success: true, employees });
+    } catch (error) {
+        console.log(error.message);
+        res.json({ message: 'Internal server Error..!' });
+    }
+}

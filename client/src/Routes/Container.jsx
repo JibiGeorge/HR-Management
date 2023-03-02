@@ -9,6 +9,7 @@ import Attendance from '../pages/Attendance'
 import Dashboard from '../pages/Dashboard'
 import Department from '../pages/Department'
 import Designation from '../pages/Designation'
+import Disciplinary from '../pages/Disciplinary'
 import Employee from '../pages/Employee'
 import Employeeadd from '../pages/Employeeadd'
 import EmployeeDetails from '../pages/EmployeeDetails'
@@ -50,6 +51,7 @@ const Container = () => {
                     <Route exact path='/settings' element={<SettingsPage />} />
                     <Route exact path='/payrol' element={<PayrolPage />} />
                     <Route exact path='/payslip' element={<Payslip />} />
+                    <Route exact path='/disciplinary' element={<Disciplinary />} />
                 </Route>
             </Routes>
 

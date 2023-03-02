@@ -263,3 +263,64 @@ export const getPendingLeaveCount = async (token) => {
         return { message: 'Connection Error.' };
     }
 }
+
+export const getAllEmployeesAllDetails = async (token)=>{
+    try {
+        const employeeDetails = await instance({
+            url: '/api/allDetails-Employees',
+            method: 'GET',
+            headers: {
+                Authorization: token
+            }
+        });
+        return employeeDetails.data;
+    } catch (error) {
+        return { message: 'Connection Error.' };
+    }
+}
+
+export const addEmployeeDisciplinary = async (values,token)=>{
+    try {
+        const addDisciplinary = await instance({
+            url: '/api/employee/disciplinary/add',
+            method: 'POST',
+            data: values,
+            headers:{
+                Authorization: token
+            }
+        });
+        return addDisciplinary.data;
+    } catch (error) {
+        return { message: 'Connection Error.' };
+    }
+}
+
+export const getDisciplinaryData = async (token)=>{
+    try {
+        const disciplinaryData = await instance({
+        url: '/api/employee/disciplinary/get',
+        method: 'GET',
+        headers:{
+            Authorization: token
+        }
+    });
+    return disciplinaryData.data;
+    } catch (error) {
+        return { message: 'Connection Error.' };
+    }
+}
+
+export const deleteDisciplinary = async (token, id)=>{
+    try {
+        const deletData = await instance({
+        url: '/api/employee/disciplinary/delete/'+id,
+        method: 'DELETE',
+        headers:{
+            Authorization: token
+        }
+    });
+    return deletData.data;
+    } catch (error) {
+        return { message: 'Connection Error.' };
+    }
+}

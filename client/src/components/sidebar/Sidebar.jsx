@@ -69,8 +69,11 @@ function Sidebar() {
                             <Link className="link_name" >Employees</Link>
                         </li>
                         <li><Link to='/hr/employee'>Employees</Link></li>
+                        <li><Link to='/hr/disciplinary' >Disciplinary</Link></li>
                         {(role === 'Employee' || role === 'HR') &&
-                            <li><Link to='/hr/profile' state={{ id: userDetails?._id }} >Profile</Link></li>
+                            <>
+                                <li><Link to='/hr/profile' state={{ id: userDetails?._id }} >Profile</Link></li>
+                            </>
                         }
                         {/* <li><Link to=''>Disciplinary</Link></li>
                                 <li><Link>Inactive User</Link></li> */}

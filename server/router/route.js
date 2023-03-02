@@ -6,11 +6,12 @@ import { getCompanyDetails, getIcon, updateCompanyDetails } from '../controller/
 import { changePassword, generateCredentials, reGenerateCredentials } from '../controller/credentialsController.js';
 import { addDepartment, deleteDeparatment, getDepartments, updateDepartment } from '../controller/departmentController.js';
 import { addDesignation, deleteDesignation, getAllDesignation, updateDesignationDetails } from '../controller/designationController.js';
+import { addDesciplinary, deletDisciplinary, getAllDatas } from '../controller/DisciplinaryController.js';
 import { addEducation, getEducation } from '../controller/educationController.js';
 import { addEmployeeAddress, getEmployeeAddress } from '../controller/employeeAddressController.js';
 import { addEmployeeBankAccount, getEmployeeBankAccount } from '../controller/employeeBankAccount.js';
 import { addEmergencyContacts, getEmergencyContacts } from '../controller/employeeContacts.js';
-import { addEmployee, employeeCount, getAllEmployees, getEmployeeCode, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
+import { addEmployee, allDetails, employeeCount, getAllEmployees, getEmployeeCode, getEmployeeData, updatePersonal, updateProfile } from '../controller/employeeController.js';
 import { addEmployeeSalaryDetails, deleteEmployeeSalaryDetails, getEmployeeSalaryDetails } from '../controller/EmployeeSalaryControl.js';
 import { addHoliday, deleteHoliday, getAllHolidays, getHolidayData, updateHolidayData } from '../controller/holidayController.js';
 import { addJobRoleLeaves, getAllJobRoleLeaves } from '../controller/jobRoleLeavesController.js';
@@ -26,71 +27,72 @@ router.post('/login', login);
 router.post('/verifyToken', verifyToken);
 
 router.post('/addDepartment', auth, addDepartment);
-router.get('/getAllDepartments', auth, getDepartments)
-router.delete('/deleteDepartment', auth, deleteDeparatment)
-router.put('/updateDepartment', auth, updateDepartment)
+router.get('/getAllDepartments', auth, getDepartments);
+router.delete('/deleteDepartment', auth, deleteDeparatment);
+router.put('/updateDepartment', auth, updateDepartment);
 
 // Designation Routes
-router.post('/addDesignation', auth, addDesignation)
-router.get('/getAllDesignation', auth, getAllDesignation)
-router.delete('/deleteDesignation', auth, deleteDesignation)
-router.put('/updateDesignation',auth,updateDesignationDetails)
+router.post('/addDesignation', auth, addDesignation);
+router.get('/getAllDesignation', auth, getAllDesignation);
+router.delete('/deleteDesignation', auth, deleteDesignation);
+router.put('/updateDesignation', auth, updateDesignationDetails);
 
 // Employee Routes
-router.post('/employee/add', auth, addEmployee)
-router.get('/employee/getAllEmployees', auth, getAllEmployees)
-router.get('/employee/getEmployeeData', auth, getEmployeeData)
-router.put('/employee/updateProfile', auth, updateProfile)
-router.put('/employee/personalinfo/update/:id', auth, updatePersonal)
-router.put('/employee/changePassword/:id', auth, changePassword)
-router.get('/employee/getEmpCode', getEmployeeCode)
+router.post('/employee/add', auth, addEmployee);
+router.get('/employee/getAllEmployees', auth, getAllEmployees);
+router.get('/employee/getEmployeeData', auth, getEmployeeData);
+router.put('/employee/updateProfile', auth, updateProfile);
+router.put('/employee/personalinfo/update/:id', auth, updatePersonal);
+router.put('/employee/changePassword/:id', auth, changePassword);
+router.get('/employee/getEmpCode', getEmployeeCode);
+router.get('/allDetails-Employees', auth, allDetails)
 
 // Asstes Category
-router.post('/assetsCategory/add', auth, addAssetsCategory)
-router.get('/assetsCategory/get', auth, getAllAssetsCategories)
-router.delete('/assetsCategory/delete', auth, deleteAssetsCategory)
-router.get('/assetsCategory/getData/:id', auth, getAssetCategoryData)
-router.put('/assetsCategory/update', auth, updateCategory)
+router.post('/assetsCategory/add', auth, addAssetsCategory);
+router.get('/assetsCategory/get', auth, getAllAssetsCategories);
+router.delete('/assetsCategory/delete', auth, deleteAssetsCategory);
+router.get('/assetsCategory/getData/:id', auth, getAssetCategoryData);
+router.put('/assetsCategory/update', auth, updateCategory);
 
 // Assets
-router.post('/assets/add', auth, addAssets)
-router.get('/assets/get', auth, getAssets)
-router.delete('/assets/delete/:id', auth, deleteAssets)
-router.get('/assets/getData/:id', auth, getAssetData)
-router.put('/assets/update', auth, updateAsset)
+router.post('/assets/add', auth, addAssets);
+router.get('/assets/get', auth, getAssets);
+router.delete('/assets/delete/:id', auth, deleteAssets);
+router.get('/assets/getData/:id', auth, getAssetData);
+router.put('/assets/update', auth, updateAsset);
 
 // Holiday
-router.post('/holiday/add', auth, addHoliday)
-router.get('/holidays/getAll', auth, getAllHolidays)
-router.delete('/holidays/delete/:id', auth, deleteHoliday)
-router.get('/holidays/getData/:id', auth, getHolidayData)
-router.put('/holidays/update', auth, updateHolidayData)
+router.post('/holiday/add', auth, addHoliday);
+router.get('/holidays/getAll', auth, getAllHolidays);
+router.delete('/holidays/delete/:id', auth, deleteHoliday);
+router.get('/holidays/getData/:id', auth, getHolidayData);
+router.put('/holidays/update', auth, updateHolidayData);
 
 // LeaveType
-router.post('/leaveType/add', auth, addLeaveType)
-router.get('/leaveType/getAll', auth, getAllLeaveTypes)
-router.delete('/leaveType/delete/:id', auth, deleteLeaveType)
-router.get('/leaveType/getLeaveTypeData/:id', auth, getLeaveTypeData)
+router.post('/leaveType/add', auth, addLeaveType);
+router.get('/leaveType/getAll', auth, getAllLeaveTypes);
+router.delete('/leaveType/delete/:id', auth, deleteLeaveType);
+router.get('/leaveType/getLeaveTypeData/:id', auth, getLeaveTypeData);
 router.put('/leaveType/update/', auth, updateLeaveType)
 
 // Attendance
-router.post('/attendance/add', auth, addAttendance)
-router.get('/attendance/getAll', auth, getAttendanceList)
-router.delete('/attendance/delete/:id', auth, deleteAttendance)
-router.get('/attendance/getData/:id', auth, getAttendanceData)
-router.put('/attendance/update', auth, updateAttendance)
+router.post('/attendance/add', auth, addAttendance);
+router.get('/attendance/getAll', auth, getAttendanceList);
+router.delete('/attendance/delete/:id', auth, deleteAttendance);
+router.get('/attendance/getData/:id', auth, getAttendanceData);
+router.put('/attendance/update', auth, updateAttendance);
 
 router.post('/attendance/punchin', auth, punchIn);
 router.get('/attendance/getPunchedData', auth, getPunchedData);
-router.post('/attendance/punchout', auth, punchOut)
+router.post('/attendance/punchout', auth, punchOut);
 
 // Employee Address
-router.get('/employee/address/:id', auth, getEmployeeAddress)
-router.post('/employee/address/add/:id', auth, addEmployeeAddress)
+router.get('/employee/address/:id', auth, getEmployeeAddress);
+router.post('/employee/address/add/:id', auth, addEmployeeAddress);
 
 // Employee Bank Account
-router.put('/employee/bankAccount/add/:id', auth, addEmployeeBankAccount)
-router.get('/employee/bankAccount/get/:id', auth, getEmployeeBankAccount)
+router.put('/employee/bankAccount/add/:id', auth, addEmployeeBankAccount);
+router.get('/employee/bankAccount/get/:id', auth, getEmployeeBankAccount);
 
 // Employee Emergency contacts
 router.put('/employee/contacts/add/:id', auth, addEmergencyContacts);
@@ -141,5 +143,10 @@ router.post('/payrol/getEmpData', auth, getEmpPayrolData);
 router.get('/totalEmployeeCount', auth, employeeCount);
 router.get('/totalPendingLeaveCount', auth, getPendingLeavesCount);
 router.get('/salaryPaymentChart', auth, salaryPaidMonthWise);
+
+// Disciplinary
+router.post('/employee/disciplinary/add', auth, addDesciplinary);
+router.get('/employee/disciplinary/get', auth, getAllDatas);
+router.delete('/employee/disciplinary/delete/:id',auth,deletDisciplinary);
 
 export default router;
