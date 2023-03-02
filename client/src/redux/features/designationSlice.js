@@ -7,8 +7,8 @@ export const designationSlice = createSlice({
     },
     reducers: {
         setDesignatonData: (state, data) => {
-            console.log(data.payload);
             state.designationDetails = data.payload
+            console.log('stat',state.designationDetails);
         },
         deleteDesigntionData: (state, id) => {
             state.designationDetails = state.designationDetails.filter(data => data._id !== id.payload)
