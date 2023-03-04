@@ -9,7 +9,6 @@ import { setDepartmentData, deleteDepartmentData } from '../../redux/features/de
 import EditDepartment from './EditDepartment.jsx';
 
 function Departmentlist() {
-    const [search, setSearch] = useState('')
     const [updatedeptValue, setUpdateDeptValue] = useState('');
     const dispatch = useDispatch();
     const { loading } = useSelector(state => state.alerts);
@@ -19,6 +18,7 @@ function Departmentlist() {
     const [departmentEditModal, setDepartmentEditModal] = useState(false);
     const closeDepartmentEditModal = () => setDepartmentEditModal(false);
     const [departmentId, setDepartmentId] = useState('');
+    const [filteredData, setFilteredData] = useState(departmentDetails)
 
     const token = userDetails.UserToken;
 
@@ -88,6 +88,15 @@ function Departmentlist() {
         setUpdateDeptValue(department);
     }
 
+    // Search or Filter
+    const search = (e) => {
+        const inputData = e.target.value;
+        const searchedData = departmentDetails.filter((values) => {
+            return values.department.toLowerCase().includes(inputData.toLowerCase());
+        })
+        setFilteredData(searchedData);
+    }
+
     // Data Table Customization
     const column = [
         {
@@ -113,10 +122,9 @@ function Departmentlist() {
                 </div>
             </div>}
             {!loading &&
-
                 <DataTable
                     columns={column}
-                    data={departmentDetails}
+                    data={filteredData}
                     pagination
                     fixedHeader
                     fixedHeaderScrollHeight='300px'
@@ -128,8 +136,7 @@ function Departmentlist() {
                         [<input type="text"
                             placeholder="Search By Department"
                             className='w-25 form-control'
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)} />,
+                            onChange={search} />,
                         <button className='btn btn-sm btn-info ms-3'>Export</button>
                         ]
                     }

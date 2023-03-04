@@ -14,6 +14,8 @@ const CategoryList = () => {
     const { loading } = useSelector(state => state.alerts);
     let { category } = useSelector(state => state.assetsCategory);
     const {userDetails} = useSelector(state => state.user);
+
+    const [filteredData, setFilteredData] = useState(category)
     
     useEffect(() => {
         (async () => {
@@ -78,6 +80,14 @@ const CategoryList = () => {
             <button className='btn deleteBtn' onClick={() => handleDelete(row._id)} ><i class="las la-trash"></i></button>])
         }
     ]
+
+    const search = (e)=>{
+        const inputData = e.target.value;
+        const searchedData = category.filter((values)=>{
+            return values.categoryName.toLowerCase().includes(inputData.toLowerCase());
+        })
+        setFilteredData(searchedData);
+    }
     return (
         <>
             <Toaster
@@ -93,7 +103,7 @@ const CategoryList = () => {
                 {!loading &&
                     <DataTable
                         columns={column}
-                        data={category}
+                        data={filteredData}
                         pagination
                         fixedHeader
                         fixedHeaderScrollHeight='300px'
@@ -104,7 +114,8 @@ const CategoryList = () => {
                         subHeaderComponent={
                             [<input type='text'
                                 placeHolder='Search By Category'
-                                className='w-25 form-control' />,
+                                className='w-25 form-control'
+                                onChange={search} />,
                             <button className='btn btn-sm btn-info ms-3'>Export</button>]
                         }
                         subHeaderAlign='left'

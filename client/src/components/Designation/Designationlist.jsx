@@ -14,7 +14,9 @@ function Designationlist() {
 
     const { userDetails } = useSelector(state => state.user);
     const { loading } = useSelector(state => state.alerts);
-    const { designationDetails } = useSelector(state => state.designation)
+    const { designationDetails } = useSelector(state => state.designation);
+
+    const [filteredData, setFilteredData] = useState(designationDetails)
 
     const token = userDetails.UserToken;
 
@@ -171,6 +173,14 @@ function Designationlist() {
         }
     }, []);
 
+    const search = (e)=>{
+        const inputData = e.target.value;
+        const searchedData = designationDetails.filter((values)=>{
+            return values.designation.toLowerCase().includes(inputData.toLowerCase());
+        })
+        setFilteredData(searchedData);
+    }
+
     return (
         <>
             <Toaster
@@ -185,7 +195,7 @@ function Designationlist() {
             {!loading &&
                 <DataTable
                     columns={column}
-                    data={designationDetails}
+                    data={filteredData}
                     pagination
                     fixedHeader
                     fixedHeaderScrollHeight='300px'
@@ -195,8 +205,9 @@ function Designationlist() {
                     subHeader
                     subHeaderComponent={
                         [<input type="text"
-                            placeholder="Search By Department"
-                            className='w-25 form-control' />,
+                            placeholder="Search By Designation"
+                            className='w-25 form-control'
+                            onChange={search} />,
                         <button className='btn btn-sm btn-info ms-3'>Export</button>
                         ]
                     }

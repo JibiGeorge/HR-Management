@@ -101,6 +101,15 @@ const HolidayList = () => {
         setUpdateModal(true)
     }
 
+    const [filteredData,setFilteredData] = useState(holidays);
+    const search = (e)=>{
+        const inputData = e.target.value;
+        const searchedData = holidays.filter((values)=>{
+            return values.nameOfTheHoliday.toLowerCase().includes(inputData.toLowerCase());
+        })
+        setFilteredData(searchedData);
+    }
+
     return (
         <>
             {loading && <div class="d-flex justify-content-center">
@@ -111,7 +120,7 @@ const HolidayList = () => {
             {!loading &&
                 <DataTable
                     columns={column}
-                    data={holidays}
+                    data={filteredData}
                     pagination
                     fixedHeader
                     fixedHeaderScrollHeight='300px'
@@ -120,8 +129,8 @@ const HolidayList = () => {
                     subHeader
                     subHeaderComponent={
                         [<input type='text'
-                            placeHolder='Search By Category'
-                            className='w-25 form-control' />,
+                            placeHolder='Search By Holiday'
+                            className='w-25 form-control' onChange={search} />,
                         <button className='btn btn-sm btn-info ms-3'>Export</button>]
                     }
                     subHeaderAlign='left'

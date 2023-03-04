@@ -18,6 +18,9 @@ const AssetsList = () => {
     const [updateModal, setUpdateModal] = useState(false)
     const closeDeleteModal = () => setDeleteModal(false)
     const closeUpdateModal = () => setUpdateModal(false)
+
+    const [filteredData, setFilteredData] = useState(assets)
+
     const token = userDetails.UserToken;
 
     useEffect(() => {
@@ -79,6 +82,14 @@ const AssetsList = () => {
             <button className='btn deleteBtn' onClick={() => handleDelete(row._id)} ><i class="las la-trash"></i></button>])
         }
     ]
+
+    const search = (e) => {
+        const inputData = e.target.value;
+        const searchedData = assets.filter((values) => {
+            return values.assetName.toLowerCase().includes(inputData.toLowerCase());
+        })
+        setFilteredData(searchedData);
+    }
     return (
         <>
             {loading && <div class="d-flex justify-content-center">
@@ -89,7 +100,7 @@ const AssetsList = () => {
             {!loading &&
                 <DataTable
                     columns={column}
-                    data={assets}
+                    data={filteredData}
                     pagination
                     fixedHeader
                     fixedHeaderScrollHeight='300px'
@@ -98,8 +109,8 @@ const AssetsList = () => {
                     subHeader
                     subHeaderComponent={
                         [<input type='text'
-                            placeHolder='Search By Category'
-                            className='w-25 form-control' />,
+                            placeHolder='Search By Asset Name'
+                            className='w-25 form-control' onChange={search} />,
                         <button className='btn btn-sm btn-info ms-3'>Export</button>]
                     }
                     subHeaderAlign='left'

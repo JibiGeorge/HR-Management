@@ -85,6 +85,17 @@ const List = () => {
             <button className='btn deleteBtn' onClick={() => handleDelete(row._id)}><i class="las la-trash"></i></button>])
         }
     ]
+
+    const [filteredData , setFilteredData] = useState(leaveType)
+
+    const search = (e)=>{
+        const inputData = e.target.value;
+        console.log(inputData);
+        const searchedData = leaveType.filter((values)=>{
+            return values.leaveType.toLowerCase().includes(inputData.toLowerCase());
+        })
+        setFilteredData(searchedData);
+    }
     return (
         <>
             {loading && <div class="d-flex justify-content-center">
@@ -95,7 +106,7 @@ const List = () => {
             {!loading &&
                 <DataTable
                     columns={column}
-                    data={leaveType}
+                    data={filteredData}
                     pagination
                     fixedHeader
                     fixedHeaderScrollHeight='300px'
@@ -103,8 +114,8 @@ const List = () => {
                     subHeader
                     subHeaderComponent={
                         [<input type="text"
-                            placeholder="Search By Department"
-                            className='w-25 form-control' />,
+                            placeholder="Search By Leave Type"
+                            className='w-25 form-control' onChange={search} />,
                         <button className='btn btn-sm btn-info ms-3'>Export</button>
                         ]
                     }

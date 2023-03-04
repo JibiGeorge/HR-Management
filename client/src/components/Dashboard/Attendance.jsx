@@ -223,11 +223,11 @@ const Attendance = ({ token }) => {
                             <>
                                 {punchingData?.attendance?.attendanceDetails?.signIn &&
                                     <button className="btn btn-primary" onClick={handlePunchOut}>
-                                        Puch OUT
+                                        Punch OUT
                                     </button>}
                                 {!punchingData?.attendance?.attendanceDetails?.signIn &&
                                     <button className="btn btn-primary" onClick={handlePunchIn}>
-                                        Puch IN
+                                        Punch IN
                                     </button>}
                             </>}
                             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
@@ -71,6 +71,16 @@ const List = () => {
             <button className='btn deleteBtn' ><i class="las la-trash"></i></button>])
         }
     ]
+
+    const [filteredData, setFilteredData] = useState(jobRoleLeaves);
+
+    const search = (e)=>{
+        const inputData = e.target.value;
+        const searchedData = jobRoleLeaves.filter((values)=>{
+            return values.leaveType?.leaveType.toLowerCase().includes(inputData.toLowerCase());
+        })
+        setFilteredData(searchedData);
+    }
     return (
         <>
             {loading && <div class="d-flex justify-content-center">
@@ -81,7 +91,7 @@ const List = () => {
             {!loading &&
                 <DataTable
                     columns={column}
-                    data={jobRoleLeaves}
+                    data={filteredData}
                     pagination
                     fixedHeader
                     fixedHeaderScrollHeight='300px'
@@ -91,8 +101,8 @@ const List = () => {
                     subHeader
                     subHeaderComponent={
                         [<input type="text"
-                            placeholder="Search By Department"
-                            className='w-25 form-control' />,
+                            placeholder="Search By Leave Type"
+                            className='w-25 form-control' onChange={search} />,
                         <button className='btn btn-sm btn-info ms-3'>Export</button>
                         ]
                     }
