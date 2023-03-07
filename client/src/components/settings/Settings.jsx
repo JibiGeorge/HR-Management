@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCompanyProfile } from '../../helper/CompanySettingsHelper'
+import { hideLoading, showLoading } from '../../redux/features/alertSlice'
 import { setCompanyProfileData } from '../../redux/features/companyProfileSlice'
 import Form from './Form'
 import PageHeader from './PageHeader'
@@ -15,10 +16,12 @@ const Settings = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
+      dispatch(showLoading());
       try {
         const data = await getCompanyProfile(token);
         if (data.success) {
           dispatch(setCompanyProfileData(data.details));
+          dispatch(hideLoading());
         } else {
           toast.error(data.message, {
             style: {
@@ -31,7 +34,8 @@ const Settings = () => {
               secondary: '#FFFAEE',
             },
           });
-          dispatch(setCompanyProfileData())
+          dispatch(setCompanyProfileData());
+          dispatch(hideLoading());
         }
       } catch (error) {
         toast.error('Something Went Wrong..!', {
@@ -45,6 +49,7 @@ const Settings = () => {
             secondary: '#FFFAEE',
           },
         });
+        dispatch(hideLoading());
       }
     })();
   }, []);

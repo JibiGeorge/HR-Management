@@ -18,22 +18,27 @@ function Departmentlist() {
     const [departmentEditModal, setDepartmentEditModal] = useState(false);
     const closeDepartmentEditModal = () => setDepartmentEditModal(false);
     const [departmentId, setDepartmentId] = useState('');
-    const [filteredData, setFilteredData] = useState(departmentDetails)
+    const [filteredData, setFilteredData] = useState(departmentDetails);
 
     const token = userDetails.UserToken;
 
     // Geting all Department Details from Database
     useEffect(() => {
-        try {
-            (async () => {
-                dispatch(showLoading());
+        dispatch(showLoading());
+        (async () => {
+            try {
                 const depData = await getAllDepartments(token);
-                dispatch(setDepartmentData(depData))
+                dispatch(setDepartmentData(depData));
                 dispatch(hideLoading())
-            })();
-        } catch (error) {
-        }
+            } catch (error) {
+                dispatch(hideLoading())
+            }
+        })();
     }, []);
+
+    useEffect(() => {
+        setFilteredData(departmentDetails);
+    }, [departmentDetails]);
 
     // Handle Delete Department
     const handleDelete = async (depId) => {
@@ -91,7 +96,7 @@ function Departmentlist() {
     // Search or Filter
     const search = (e) => {
         const inputData = e.target.value;
-        const searchedData = departmentDetails.filter((values) => {
+        const searchedData = departmentDetails?.filter((values) => {
             return values.department.toLowerCase().includes(inputData.toLowerCase());
         })
         setFilteredData(searchedData);
@@ -106,7 +111,7 @@ function Departmentlist() {
         },
         {
             name: "Action",
-            cell: (row) => ([<button className='btn editBtn' data-bs-toggle="modal" data-bs-target="#updateDepartment" onClick={() => handleEdit(row?._id, row?.department)}><i class="las la-edit"></i></button>,
+            cell: (row) => ([<button className='btn editBtn' onClick={() => handleEdit(row?._id, row?.department)}><i class="las la-edit"></i></button>,
             <button className='btn deleteBtn' onClick={() => handleDelete(row?._id)}><i class="las la-trash"></i></button>])
         }
     ]
@@ -136,8 +141,7 @@ function Departmentlist() {
                         [<input type="text"
                             placeholder="Search By Department"
                             className='w-25 form-control'
-                            onChange={search} />,
-                        <button className='btn btn-sm btn-info ms-3'>Export</button>
+                            onChange={search} />
                         ]
                     }
                     subHeaderAlign="left"

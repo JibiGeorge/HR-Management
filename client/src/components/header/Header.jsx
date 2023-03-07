@@ -52,7 +52,7 @@ function Header() {
       </div>
       <div className='d-flex home-content'>
         <div className="timer">
-          <span className='text'>{timer}</span>
+          <span className='text'>{timer? timer : '00:00:00 AM'}</span>
         </div>
         <div className="logout-btn">
           <button className='btn btn-primary' onClick={handleLogout}>Logout</button>

@@ -59,6 +59,10 @@ function Designationlist() {
         })();
     }, []);
 
+    useEffect(() => {
+        setFilteredData(designationDetails);
+    }, [designationDetails]);
+
     const [editDesignationModal, setEditDesignationModal] = useState(false);
     const closeEditDesignationModal = () => setEditDesignationModal(false);
     const initialValues = {
@@ -173,9 +177,9 @@ function Designationlist() {
         }
     }, []);
 
-    const search = (e)=>{
+    const search = (e) => {
         const inputData = e.target.value;
-        const searchedData = designationDetails.filter((values)=>{
+        const searchedData = designationDetails.filter((values) => {
             return values.designation.toLowerCase().includes(inputData.toLowerCase());
         })
         setFilteredData(searchedData);
@@ -208,7 +212,6 @@ function Designationlist() {
                             placeholder="Search By Designation"
                             className='w-25 form-control'
                             onChange={search} />,
-                        <button className='btn btn-sm btn-info ms-3'>Export</button>
                         ]
                     }
                     subHeaderAlign="left"

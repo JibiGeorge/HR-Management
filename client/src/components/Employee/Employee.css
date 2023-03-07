@@ -146,3 +146,54 @@
 .employee .search-btn button:hover{
     background: #29b039;
 }
+
+/* Card Action toogle */
+.dropdown.profile-action{
+    position: absolute;
+    right: 5px;
+    text-align: right;
+    top: 10px;
+}
+.action-icon{
+    color: #777;
+    font-size: 25px;
+    display: inline-block;
+    transition: .2s ease-in-out;
+}
+.action-icon:hover{
+    cursor: pointer;
+    color: #c3bebe;
+}
+.card-toogle{
+    font-family: material icons;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+.profile-action .dropdown-menu{
+    position: absolute;
+    transform: translate3d(-136px, 32px, 0px);
+    top: 0px;
+    left: 0px;
+    will-change: transform;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 3px;
+    transform-origin: left top 0;
+    box-shadow: inherit;
+    background-color: #fff;
+    display: block;
+}
+.profile-action .dropdown-menu{
+    font-size: .8rem;
+}

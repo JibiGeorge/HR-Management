@@ -7,7 +7,7 @@ export const departmentSlice = createSlice({
     },
     reducers: {
         setDepartmentData: (state, data) => {
-            state.departmentDetails = data.payload;
+            state.departmentDetails = data?.payload;
         },
         deleteDepartmentData: (state, id) => {
             state.departmentDetails = state.departmentDetails.filter(data => data._id !== id.payload)

@@ -120,7 +120,7 @@ function Profile() {
         dispatch(hideLoading())
     }
 
-    const { values, handleChange, handleSubmit } = useFormik({
+    const { values, handleChange, handleSubmit, setFieldValue } = useFormik({
         initialValues: {
             department: employeeData.department?._id,
             designation: employeeData.designation?._id,
@@ -231,6 +231,19 @@ function Profile() {
         }
     }
 
+    const [filteredDesignatinData, setFilteredDesignationData] = useState(designationDetails ? designationDetails : '');
+
+    const designationShow = (departmentID) => {
+        const designationresult = designationDetails?.filter((values) => {
+            if (departmentID == "") {
+                return true;
+            } else {
+                return values.departmentId?._id.toLowerCase().includes(departmentID.toLowerCase());
+            }
+        })
+        setFilteredDesignationData(designationresult)
+    }
+
     const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
     const closeChangePasswordModal = () => setShowChangePasswordModal(false);
 
@@ -335,7 +348,7 @@ function Profile() {
                                                 <label>Department</label>
                                                 <select name="" id="department"
                                                     value={values?.department}
-                                                    onChange={handleChange}>
+                                                    onChange={(e) => { designationShow(e.target.value), setFieldValue("department", e.target.value) }}>
                                                     <option value="">Select Department</option>
                                                     {departmentDetails.map(values => {
                                                         return (
@@ -352,7 +365,7 @@ function Profile() {
                                                     value={values?.designation}
                                                     onChange={handleChange}>
                                                     <option value="">Select Designation</option>
-                                                    {designationDetails.map(values => {
+                                                    {filteredDesignatinData?.map(values => {
                                                         return (
                                                             <option value={values?._id}>{values?.designation}</option>
                                                         )

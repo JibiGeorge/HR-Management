@@ -1,23 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { addDepartment, getAllDepartments } from '../../helper/Departmenthelper';
-import { setDepartmentData } from '../../redux/features/departmentSlice';
+import { employeeDelete, getAllEmployees } from '../../helper/Employeehelper';
+import { setEmployeesData } from '../../redux/features/employee';
 
-const AddDepartment = ({ closeAddDepartmentModal }) => {
-    const [department, setDepartment] = useState('');
+const DeleteConfirmation = ({ profileID, closeDeleteConfirmation }) => {
     const { userDetails } = useSelector(state => state.user);
     const token = userDetails.UserToken;
     const dispatch = useDispatch();
-
-    const handleDepartmentSubmit = async (e) => {
-        e.preventDefault();
+    const deleteEmployee = async () => {
         try {
-            const res = await addDepartment({ department, token });
-            if (res.success) {
-                const depData = await getAllDepartments(token);
-                dispatch(setDepartmentData(depData));
-                toast.success('Successfully Created...!', {
+            const deleted = await employeeDelete(token, profileID);
+            if (deleted.success) {
+                const employeeList = await getAllEmployees(token);
+                dispatch(setEmployeesData(employeeList.list));
+                toast.success(deleted.message, {
                     style: {
                         border: '1px solid #713200',
                         padding: '16px',
@@ -28,9 +25,9 @@ const AddDepartment = ({ closeAddDepartmentModal }) => {
                         secondary: '#FFFAEE',
                     },
                 });
-                closeAddDepartmentModal()
+                closeDeleteConfirmation();
             } else {
-                toast.error(res.message, {
+                toast.error(deleted.message, {
                     style: {
                         border: '1px solid #713200',
                         padding: '16px',
@@ -43,7 +40,7 @@ const AddDepartment = ({ closeAddDepartmentModal }) => {
                 });
             }
         } catch (error) {
-            toast.error(error.message, {
+            toast.error('Something Went Wrong. Please Check...!', {
                 style: {
                     border: '1px solid #713200',
                     padding: '16px',
@@ -56,7 +53,6 @@ const AddDepartment = ({ closeAddDepartmentModal }) => {
             });
         }
     }
-
     return (
         <>
             <div className="modal-wrapper">
@@ -64,28 +60,18 @@ const AddDepartment = ({ closeAddDepartmentModal }) => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <div className="form-header">
-                                <h3>Add Department</h3>
-                            </div>
-                        </div>
-                        <div className="modal-body">
-                            <div className="row">
-                                <div className="col-sm-12 mb-2">
-                                    <div className="form-group">
-                                        <label>Department Name</label>
-                                        <input type="text" className='form-control' id='nameOfTheHoliday'
-                                            value={department} onChange={e => setDepartment(e.target.value)} />
-                                    </div>
-                                </div>
+                                <h3>Delete Confirmation</h3>
+                                <p>Are you Sure want to Delete?</p>
                             </div>
                         </div>
                         <div className="modal-footer">
                             <div className="modal-btn delete-action">
                                 <div className="row">
                                     <div className="col-6">
-                                        <button className='btn btn-primary' onClick={handleDepartmentSubmit}>Save</button>
+                                        <button className='btn btn-primary' onClick={deleteEmployee}>Delete</button>
                                     </div>
                                     <div className="col-6">
-                                        <button className='btn btn-primary' onClick={closeAddDepartmentModal}>Cancel</button>
+                                        <button className='btn btn-primary' onClick={closeDeleteConfirmation}>Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -97,4 +83,4 @@ const AddDepartment = ({ closeAddDepartmentModal }) => {
     )
 }
 
-export default AddDepartment
+export default DeleteConfirmation

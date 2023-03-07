@@ -7,9 +7,7 @@ export const EducationSlice = createSlice({
     },
     reducers:{
         setEducations: (state, data)=>{
-            console.log('hcvjhc',data);
             state.education = data.payload
-            console.log('state.education',state.education);
         }
     }
 })

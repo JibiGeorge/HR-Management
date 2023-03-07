@@ -117,10 +117,10 @@
     padding: 6px 6px 14px 70px;
     margin-top: -10px;
     background: #16191c;
-    /* display: none; */
+    display: none;
 }
 
-.sidebar .nav-links li.showMenu .sub-menu {
+.sidebar .nav-links li.showMenu .sub-menu{
     display: block;
 }
 

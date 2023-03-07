@@ -185,3 +185,14 @@ export const allDetails = async (req, res) => {
         res.json({ message: 'Internal server Error..!' });
     }
 }
+
+export const deleteEmployee = async (req, res) => {
+    const id = req.query.id;
+    try {
+        await Employee.findByIdAndDelete({ _id: id }).then(()=>{
+            res.status(200).json({ success: true, message: 'Deleted Successfully' });
+        })
+    }catch (error) {
+        res.json({ success: false, message: 'Internal Server Error..!' });
+    }
+}

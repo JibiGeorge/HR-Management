@@ -14,7 +14,7 @@ function Filter({ employeesDetails, departmentDetails, designationDetails, hande
                 <div className="form-group form-focus focused">
                     <select className='form-control' name="" id="" onChange={handleFilterWithName}>
                         <option value="">Select Employee</option>
-                        {employeesDetails ? employeesDetails.map((values) => (
+                        {employeesDetails ? employeesDetails?.map((values) => (
                             <option value={values._id}>{values.firstName} {values.lastName}</option>
                         )) : ''}
                     </select>
@@ -25,7 +25,7 @@ function Filter({ employeesDetails, departmentDetails, designationDetails, hande
                 <div className="form-group form-focus focused">
                     <select className='form-control' name="" id="" onChange={handleFilterWithDepartment}>
                         <option value="">Select Department</option>
-                        {departmentDetails ? departmentDetails.map((values) =>
+                        {departmentDetails ? departmentDetails?.map((values) =>
                             <option value={values?._id}>{values?.department}</option>
                         ) : ''}
                     </select>
@@ -36,7 +36,7 @@ function Filter({ employeesDetails, departmentDetails, designationDetails, hande
                 <div className="form-group form-focus focused">
                     <select className='form-control' name="" id="" onChange={handleFilterWithDesignation}>
                         <option value="">Select Designation</option>
-                        {designationDetails ? designationDetails.map((values) => (
+                        {designationDetails ? designationDetails?.map((values) => (
                             <option value={values._id}>{values?.designation}</option>
                         )) : ''}
                         <option value="">WELCOME</option>

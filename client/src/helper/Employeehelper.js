@@ -73,6 +73,21 @@ export const getEmployeeData = async (empID, token) => {
     }
 }
 
+export const employeeDelete = async (token,empID) => {
+    try {
+        const result = await instance({
+            url: '/api/employee/delete/?id=' + empID,
+            method: 'DELETE',
+            headers: {
+                Authorization: token
+            }
+        });
+        return result.data;
+    } catch (error) {
+        return { message: "Internal Server Error...!" }
+    }
+}
+
 export const updateProfile = async (data, userID, token) => {
     try {
         const updateprofileStatus = await instance({

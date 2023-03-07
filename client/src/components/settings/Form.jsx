@@ -9,6 +9,8 @@ const Form = ({ companyProfileData }) => {
   const [image, setImage] = useState('');
   const dispatch = useDispatch();
   const { userDetails } = useSelector(state => state.user);
+  const { loading } = useSelector(state => state.alerts);
+  const [btnLoading, setBtnLoading] = useState(false);
   const token = userDetails.UserToken;
 
   const imageView = (image) => {
@@ -16,11 +18,13 @@ const Form = ({ companyProfileData }) => {
   }
 
   const onSubmit = async (values) => {
+    setBtnLoading(true);
     try {
       const updateCompanyDetails = await updateDetails(token, values);
       const data = await getCompanyProfile(token);
       if (updateCompanyDetails.success) {
-        dispatch(setCompanyProfileData(data.details))
+        dispatch(setCompanyProfileData(data.details));
+        setBtnLoading(false);
         toast.success(updateCompanyDetails.message, {
           style: {
             border: '1px solid #713200',
@@ -44,6 +48,7 @@ const Form = ({ companyProfileData }) => {
             secondary: '#FFFAEE',
           },
         });
+        setBtnLoading(false);
       }
     } catch (error) {
       toast.error('Something Went Wrong..!', {
@@ -57,6 +62,7 @@ const Form = ({ companyProfileData }) => {
           secondary: '#FFFAEE',
         },
       });
+      setBtnLoading(false);
     }
   }
   const { values, handleSubmit, handleChange, setFieldValue } = useFormik({
@@ -71,68 +77,77 @@ const Form = ({ companyProfileData }) => {
   })
   return (
     <>
-      <div className="row">
-        <div className="col-12">
-          <div className="company-profile">
-            {/* Company Logo */}
-            <div className="logo mb-2">
-              <div className='title'>
-                <span>Upload Site Logo</span>
-              </div>
-              <div className="mb-2">
+      {loading && <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>}
+      {!loading &&
+        <div className="row">
+          <div className="col-12">
+            <div className="company-profile">
+              {/* Company Logo */}
+              <div className="logo mb-2">
+                <div className='title'>
+                  <span>Upload Site Logo</span>
+                </div>
+                <div className="mb-2">
 
-                {values?.logo ?
-                  <img className='logo-image' src={!image ?
-                    values?.logo : URL.createObjectURL(image)} alt="1st" />
-                  : image ? <img className='logo-image' src={URL.createObjectURL(image)} alt="change" /> : ''
-                }
+                  {values?.logo ?
+                    <img className='logo-image' src={!image ?
+                      values?.logo : URL.createObjectURL(image)} alt="1st" />
+                    : image ? <img className='logo-image' src={URL.createObjectURL(image)} alt="change" /> : ''
+                  }
 
-                {/* {image && <img className='logo-image' src={URL.createObjectURL(image)} alt="" />} */}
+                  {/* {image && <img className='logo-image' src={URL.createObjectURL(image)} alt="" />} */}
+                </div>
+                <input type="file" id='logo' onChange={(e) => { setFieldValue('logo', e.target.files[0]); imageView(e.target.files[0]) }} />
               </div>
-              <input type="file" id='logo' onChange={(e) => { setFieldValue('logo', e.target.files[0]); imageView(e.target.files[0]) }} />
-            </div>
-            {/* Company Name */}
-            <div id='company-name' className='mb-2 mt-3'>
-              <div className="title">
-                <span>Site Title / Company Name</span>
+              {/* Company Name */}
+              <div id='company-name' className='mb-2 mt-3'>
+                <div className="title">
+                  <span>Site Title / Company Name</span>
+                </div>
+                <input className='form-control' type="text" id='companyName' value={values?.companyName} onChange={handleChange} />
               </div>
-              <input className='form-control' type="text" id='companyName' value={values.companyName} onChange={handleChange} />
-            </div>
-            {/* Descriptions */}
-            <div id='description' className='mb-2 mt-3'>
-              <div className="title">
-                <span>Descriptions</span>
+              {/* Descriptions */}
+              <div id='description' className='mb-2 mt-3'>
+                <div className="title">
+                  <span>Descriptions</span>
+                </div>
+                <textarea className='form-control' name="" id="description" cols="30" rows="5" value={values?.description} onChange={handleChange}></textarea>
               </div>
-              <textarea className='form-control' name="" id="description" cols="30" rows="5" value={values.description} onChange={handleChange}></textarea>
-            </div>
-            {/* Address */}
-            <div id='address' className='mb-2 mt-3'>
-              <div className="title">
-                <span>Address</span>
+              {/* Address */}
+              <div id='address' className='mb-2 mt-3'>
+                <div className="title">
+                  <span>Address</span>
+                </div>
+                <textarea className='form-control' name="" id="address" cols="30" rows="5" value={values?.address} onChange={handleChange}></textarea>
               </div>
-              <textarea className='form-control' name="" id="address" cols="30" rows="5" value={values.address} onChange={handleChange}></textarea>
-            </div>
-            {/* Email */}
-            <div id='email' className='mb-2 mt-3'>
-              <div className="title">
-                <span>Email</span>
+              {/* Email */}
+              <div id='email' className='mb-2 mt-3'>
+                <div className="title">
+                  <span>Email</span>
+                </div>
+                <input className='form-control' type="text" id='email' value={values?.email} onChange={handleChange} />
               </div>
-              <input className='form-control' type="text" id='email' value={values.email} onChange={handleChange} />
-            </div>
-            {/* Time Zone */}
-            <div className='col-lg-3 col-sm-12 mb-2 mt-3' id='email'>
-              <div className="title">
-                <span>Time Zone</span>
-                <span className='text-danger ms-2' style={{ fontSize: '12px' }}>Time zone can't change</span>
+              {/* Time Zone */}
+              <div className='col-lg-3 col-sm-12 mb-2 mt-3' id='email'>
+                <div className="title">
+                  <span>Time Zone</span>
+                  <span className='text-danger ms-2' style={{ fontSize: '12px' }}>Time zone can't change</span>
+                </div>
+                <input className='form-control' type="text" value={companyProfileData?.timeZone} style={{ pointerEvents: 'none' }} readOnly />
               </div>
-              <input className='form-control' type="text" value={companyProfileData.timeZone} style={{ pointerEvents: 'none' }} />
-            </div>
-            <div className="sub-btn mt-3 mb-3">
-              <button className="btn" onClick={handleSubmit}>SAVE</button>
+              <div className="sub-btn mt-3 mb-3">
+                <button className="btn" onClick={handleSubmit}>
+                  {btnLoading && 'Loading...'}
+                  {!btnLoading && 'Save'}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </div>}
     </>
   )
 }

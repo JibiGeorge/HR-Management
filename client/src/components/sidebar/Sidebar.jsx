@@ -21,10 +21,18 @@ function Sidebar() {
         })();
     }, []);
 
+    const arrow = document.querySelectorAll(".arrow");
+    for (let i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener('click', (e) => {
+            let arrowParent = e.target.parentElement.parentElement;
+                arrowParent.classList.add("showMenu");
+        })
+    }
+    
+
     return (
         <div className="sidebar">
             <div className="logo-details">
-                {/* <i className="bx bxl-c-plus-plus"></i> */}
                 <img src={companyProfileData?.logo} width='40px' height='40px' style={{ borderRadius: '50%', backgroundSize: 'contain', margin: '0 10px' }} alt="" />
                 <span className="logo_name">HR Management</span>
             </div>

@@ -21,5 +21,5 @@ const userSchema = Schema({
     }
 });
 
-const userCredential = model('User', userSchema);
+const userCredential = model('users', userSchema);
 export default userCredential;

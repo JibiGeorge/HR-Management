@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { hideLoading, showLoading } from '../../redux/features/alertSlice';
 import { useNavigate } from 'react-router-dom';
 
-function AddForm({empCode}) {
+function AddForm({ empCode }) {
 
     var dispatch = useDispatch();
     const navigate = useNavigate()
@@ -119,6 +119,18 @@ function AddForm({empCode}) {
         enableReinitialize: true,
         onSubmit
     });
+    const [filteredDesignatinData, setFilteredDesignationData] = useState([]);
+
+    const designationShow = (departmentID) => {
+        const designationresult = designation?.filter((values) => {
+            if (departmentID == "") {
+                return true;
+            } else {
+                return values.departmentId?._id.toLowerCase().includes(departmentID.toLowerCase());
+            }
+        })
+        setFilteredDesignationData(designationresult)
+    }
 
     return (
         <>
@@ -185,7 +197,7 @@ function AddForm({empCode}) {
                                     <div className='select '>
                                         <select name="" id="department"
                                             value={values.department}
-                                            onChange={handleChange} className={errors.department && touched.department ? "input-error" : ""} >
+                                            onChange={(e) => { setFieldValue("department", e.target.value); designationShow(e.target.value) }} className={errors.department && touched.department ? "input-error" : ""} >
                                             <option value="">Select Department</option>
                                             {department?.map(values => {
                                                 return (
@@ -209,7 +221,7 @@ function AddForm({empCode}) {
                                             value={values.designation}
                                             onChange={handleChange} className={errors.designation && touched.designation ? "input-error" : ""}>
                                             <option value="">Select Designation</option>
-                                            {designation?.map(values => {
+                                            {filteredDesignatinData?.map(values => {
                                                 return (
                                                     <option value={values?._id}>{values?.designation}</option>
                                                 )

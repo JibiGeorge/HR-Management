@@ -115,8 +115,7 @@ const CategoryList = () => {
                             [<input type='text'
                                 placeHolder='Search By Category'
                                 className='w-25 form-control'
-                                onChange={search} />,
-                            <button className='btn btn-sm btn-info ms-3'>Export</button>]
+                                onChange={search} />]
                         }
                         subHeaderAlign='left'
                     />}

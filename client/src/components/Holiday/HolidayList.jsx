@@ -130,8 +130,7 @@ const HolidayList = () => {
                     subHeaderComponent={
                         [<input type='text'
                             placeHolder='Search By Holiday'
-                            className='w-25 form-control' onChange={search} />,
-                        <button className='btn btn-sm btn-info ms-3'>Export</button>]
+                            className='w-25 form-control' onChange={search} />]
                     }
                     subHeaderAlign='left'
                 />}

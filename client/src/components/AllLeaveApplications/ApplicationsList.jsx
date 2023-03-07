@@ -129,8 +129,7 @@ const ApplicationsList = ({ applications }) => {
           subHeaderComponent={
             [<input type='text'
               placeHolder='Search By Category'
-              className='w-25 form-control' />,
-            <button className='btn btn-sm btn-info ms-3'>Export</button>]
+              className='w-25 form-control' />]
           }
           subHeaderAlign='left'
         />

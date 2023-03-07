@@ -31,7 +31,7 @@ function Employee() {
         dispatch(setDepartmentData(response1))
         dispatch(setDesignatonData(response2.data))
       })
-  }, [])
+  }, []);
 
   useEffect(() => {
     dispatch(showLoading());
@@ -40,8 +40,10 @@ function Employee() {
         const employeeList = await getAllEmployees(token);
         if (employeeList.success) {
           dispatch(setEmployeesData(employeeList.list));
+          setFilteredData(employeeList.list)
           dispatch(hideLoading());
         } else {
+          dispatch(setEmployeesData());
           toast.error(employeeList.message, {
             style: {
               border: '1px solid #713200',
